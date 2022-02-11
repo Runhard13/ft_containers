@@ -18,10 +18,10 @@ public:
 	typedef typename allocator_type::pointer 			pointer;
 	typedef typename allocator_type::const_pointer 		const_pointer;
 
-	typedef vector_iterator<T>			iterator;
-	typedef vector_iterator<const T> 	const_iterator;
-
-	//TODO: reverse iterator
+	typedef vector_iterator<value_type>					iterator;
+	typedef vector_iterator<const value_type> 			const_iterator;
+	typedef vector_iterator_reverse<value_type>			reverse_iterator;
+	typedef vector_iterator_reverse<const value_type>	const_reverse_iterator;
 
 	typedef ptrdiff_t 	difference_type;
 	typedef size_t 		size_type;
@@ -85,18 +85,28 @@ public:
 	//******************************ITERATORS******************************
 
 	iterator
-	begin() { return _head; }
+	begin() { return (iterator(_head)); }
 
 	const_iterator
-	begin() const { return _head; }
+	begin() const { return (iterator(_head)); }
 
 	iterator
-	end() { return _head + _size; }
+	end() { return (iterator(_head + _size)); }
 
 	const_iterator
-	end() const { return _head + _size; }
+	end() const { return (iterator(_head + _size)); }
 
-	//TODO: Reverse iterators
+	reverse_iterator
+	rbegin() { return (reverse_iterator(_head + _size)); }
+
+	const_reverse_iterator
+	rbegin() const { return (reverse_iterator(_head + _size)); }
+
+	reverse_iterator
+	rend() { return (reverse_iterator(_head + _size - 1)); }
+
+	const_reverse_iterator
+	rend()  const { return (reverse_iterator(_head + _size - 1)); }
 
 	//******************************CAPACITY******************************
 
@@ -260,6 +270,60 @@ public:
 			*position++ = val;
 	}
 
+	//range insert
+	template <class InputIterator>
+	void
+	insert (iterator position, InputIterator first, InputIterator last)
+	{
+		difference_type shift = (position - this->begin());
+		size_type n = 0;
+		InputIterator tmp(first);
+		while (tmp != last)
+		{
+			++tmp;
+			++n;
+		}
+		if ((_size + n) > _capacity)
+			reallocate(_size + n);
+		_size += n;
+		iterator it(&_head[_size - n]);
+		iterator insert_pos(&_head[shift]);
+		iterator it_end = this->end();
+		while (it >= insert_pos)
+			*--it_end = *--it;
+		while (first != last)
+			_alloc.construct(&(*insert_pos++), *first++);
+	}
+
+	//single erase
+	iterator
+	erase(iterator position) { return (erase(position, position + 1));}
+
+	//range erase. Удаление элементов с середины - неэффективная операция, потому что требует реаллокации всего массива,
+	//поэтому сначала удаляемые элементы нужно закинуть в конец, а затем, с конца уже удалить. В этом случае реаллоцирование не потребуется
+	iterator
+	erase(iterator first, iterator last)
+	{
+		if (this->empty())
+			return (last);
+		size_type n = last - first;
+		iterator ret(first);
+
+		while (last != this->end())
+			*(first++) = *(last++);
+		while (n--)
+			_alloc.destroy(&_head[--_size]);
+		return (ret);
+	}
+
+	void swap(vector& x)
+	{
+		swap(_size, x._size);
+		swap(_capacity, x._capacity);
+		swap(_alloc, x._alloc);
+		swap(_head, x._head);
+	}
+
 	void
 	clear()
 	{
@@ -268,6 +332,10 @@ public:
 			_alloc.destroy(&_head[i]);
 		_size = 0;
 	}
+
+	//******************************ALLOCATOR******************************
+	allocator_type
+	get_allocator() const { return _alloc; }
 
 private:
 	size_type
@@ -297,5 +365,94 @@ private:
 		_capacity = new_capacity;
 	}
 
+	template<class U>
+	void
+	swap(U& u1, U& u2)
+	{
+		U tmp = u2;
+		u2 = u1;
+		u1 = tmp;
+	}
+
 }; // vector
+
+//******************************RELATION OPERATORS******************************
+
+template <class T, class Alloc>
+bool
+operator==(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+{
+	typename ft::vector<T>::const_iterator lhs_begin = lhs.begin();
+	typename ft::vector<T>::const_iterator lhs_end = lhs.end();
+	typename ft::vector<T>::const_iterator rhs_begin = rhs.begin();
+	typename ft::vector<T>::const_iterator rhs_end = rhs.end();
+
+	if (lhs.size() != rhs.size())
+		return false;
+
+	while ((lhs_begin != lhs_end) && (rhs_begin != rhs_end))
+	{
+		if (*lhs_begin != *rhs_begin)
+			return (false);
+		++lhs_begin;
+		++rhs_begin;
+	}
+	return (true);
+}
+
+template <class T, class Alloc>
+bool
+operator!=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+{
+	return !(lhs == rhs);
+}
+
+template <class T, class Alloc>
+bool
+operator<(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+{
+	typename ft::vector<T>::const_iterator lhs_begin = lhs.begin();
+	typename ft::vector<T>::const_iterator lhs_end = lhs.end();
+	typename ft::vector<T>::const_iterator rhs_begin = rhs.begin();
+	typename ft::vector<T>::const_iterator rhs_end = rhs.end();
+
+	while (lhs_begin != lhs_end)
+	{
+		if (rhs_begin == lhs_end || *rhs_begin < *lhs_begin)
+			return (false);
+		else if (*lhs_begin < *rhs_begin)
+			return (true);
+		++lhs_begin;
+		++rhs_begin;
+	}
+	return (rhs_begin != rhs_end);
+}
+
+template <class T, class Alloc>
+bool
+operator<=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+{
+	return !(rhs < lhs);
+}
+
+template <class T, class Alloc>
+bool
+operator>(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+{
+	return (rhs < lhs);
+}
+
+template <class T, class Alloc>
+bool
+operator>=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+{
+	return !(lhs < rhs);
+}
+
+template <class T, class Alloc>
+void
+swap(vector<T,Alloc>& x, vector<T,Alloc>& y)
+{
+	x.swap(y);
+}
 } // ft
