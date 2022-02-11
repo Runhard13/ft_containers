@@ -1,6 +1,7 @@
 #include <memory>
 #include <stdexcept>
 #include <cstddef>
+#include "./utils/iterators.hpp"
 
 namespace ft
 {
@@ -15,7 +16,9 @@ namespace ft
 		typedef typename allocator_type::pointer			pointer;
 		typedef typename allocator_type::const_pointer		const_pointer;
 
-		// TODO: iterators
+		typedef vector_iterator<T>							iterator;
+		typedef vector_iterator<const T>					const_iterator;
+		//TO DO: reverse iterator
 
 		typedef ptrdiff_t 	difference_type;
 		typedef size_t 		size_type;
@@ -29,7 +32,7 @@ namespace ft
 	public:
 		//дефолтный конструктор. Создает пустой контейнер без элементов
 		explicit vector (const allocator_type& alloc = allocator_type())
-				: _head(null), _size(0), _alloc(alloc), _capacity(0) {};
+				: _head(NULL), _size(0), _alloc(alloc), _capacity(0) {};
 
 		//fill constructor. Создает контейнер из n элементов. Каждый элемент это копия val
 		explicit vector (size_type n, const value_type& val = value_type(),
@@ -105,9 +108,9 @@ namespace ft
 		}
 
 		//Элемент аксесс_________________________________________________
-		reference operator[] (size_type n) {return _vector[n];} // вызвать
+		reference operator[] (size_type n) {return _head[n];} // вызвать
 		// эту функцию с n вне границ контейнера - УБ
-		const_reference operator[] (size_type n) const {return _vector[n];}
+		const_reference operator[] (size_type n) const {return _head[n];}
 
 		//тоже самое, но бросает эксепшн в случае, если n находится вне
 		// границ контейнера
