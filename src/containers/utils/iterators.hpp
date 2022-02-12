@@ -2,8 +2,8 @@
 // Created by ruslan on 11.02.2022.
 //
 
-#ifndef FT_CONTAINERS_ITERATORS_H
-#define FT_CONTAINERS_ITERATORS_H
+#ifndef FT_CONTAINERS_ITERATORS_HPP
+#define FT_CONTAINERS_ITERATORS_HPP
 
 #include <iterator>
 
@@ -410,4 +410,4 @@ public:
 
 }
 
-#endif //FT_CONTAINERS_ITERATORS_H
+#endif //FT_CONTAINERS_ITERATORS_HPP

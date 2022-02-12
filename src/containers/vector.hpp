@@ -1,3 +1,7 @@
+#ifndef FT_CONTAINERS_SRC_CONTAINERS_VECTOR_HPP
+#define FT_CONTAINERS_SRC_CONTAINERS_VECTOR_HPP
+
+
 #include <memory>
 #include <stdexcept>
 #include <cstddef>
@@ -455,4 +459,6 @@ swap(vector<T,Alloc>& x, vector<T,Alloc>& y)
 {
 	x.swap(y);
 }
-} // ft
+} //  namespace ft
+
+#endif //FT_CONTAINERS_SRC_CONTAINERS_VECTOR_HPP
