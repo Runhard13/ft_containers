@@ -1,5 +1,7 @@
 #include <iostream>
 #include "../src/containers/vector.hpp"
+#include "../src/containers/stack.hpp"
+#include "../src/containers/map.hpp"
 
 int main ()
 {
