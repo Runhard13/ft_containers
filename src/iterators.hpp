@@ -274,7 +274,7 @@ public:
 		return (_pointer >= other._pointer);
 	}
 
-}; //итератор
+}; //вектор_итератор
 
 template<class T>
 class vector_iterator_reverse
@@ -424,7 +424,7 @@ public:
 		return (tmp);
 	}
 
-};
+}; //вектор итератор реверс
 
 //Перегрузки операторов для сравнения iterator и const_iterator
 
@@ -475,6 +475,136 @@ public:
     {
         return (lhs.get_pointer() > rhs.get_pointer());
     }
+
+template<class Key, class T, class Compare, typename Node>
+	class Map_iterator
+	{
+		public:
+
+			typedef Key										key_type;
+			typedef T										mapped_type;
+			typedef Compare									key_compare;
+			typedef ft::pair<const key_type, mapped_type>	value_type;
+			typedef ptrdiff_t								difference_type;
+			typedef std::bidirectional_iterator_tag			iterator_category;
+			typedef value_type*								pointer;
+			typedef value_type&								reference;
+			typedef Node*									NodePtr;
+
+		protected:
+
+			NodePtr	m_node;
+			NodePtr	m_endnode;
+
+		private:
+
+			Map_iterator(const Map_const_iterator<Key,T,Compare,Node>& ) {}
+
+		public:
+
+			Map_iterator(NodePtr node = NULL) : m_node(node), m_endnode(node)
+			{
+				if (m_endnode != NULL)
+				{
+					while (m_endnode->parent != NULL)
+						m_endnode = m_endnode->parent;
+					while (m_endnode->right != NULL)
+						m_endnode = m_endnode->right;
+				}
+			}
+			Map_iterator(NodePtr node, NodePtr endnode)
+			: m_node(node), m_endnode(endnode) {}
+			Map_iterator(const Map_iterator& from)
+			: m_node(from.m_node), m_endnode(from.m_endnode) {}
+			~Map_iterator() {}
+
+			NodePtr	getNode() const { return m_node; }
+			Map_iterator& operator=(const Map_iterator& it)
+			{
+				if (this != &it)
+				{
+					m_node = it.m_node;
+					m_endnode = it.m_endnode;
+				}
+				return (*this);
+			}
+
+			bool operator==(const Map_iterator& it) const
+			{
+				return (m_node == it.m_node);
+			}
+			bool operator!=(const Map_iterator& it) const
+			{
+				return (m_node != it.m_node);
+			}
+			reference operator*() const { return (m_node->val); }
+			pointer operator->() const { return (&(m_node->val)); }
+			Map_iterator& operator++()
+			{
+				if (m_node == NULL)
+				{
+					m_node = m_endnode;
+					return (*this);
+				}
+				else if (m_node->right != NULL)
+				{
+					m_node = m_node->right;
+					while (m_node->left != NULL)
+						m_node = m_node->left;
+				}
+				else
+				{
+					Node* origin = m_node;
+					m_node = m_node->parent;
+					while (m_node && m_node->right == origin)
+					{
+						origin = m_node;
+						m_node = m_node->parent;
+					}
+				}
+				return (*this);
+			}
+			Map_iterator operator++(int)
+			{
+				Map_iterator tmp(*this);
+				++(*this);
+				return (tmp);
+			}
+			Map_iterator& operator--()
+			{
+				if (m_node == NULL)
+				{
+					m_node = m_endnode;
+					return (*this);
+				}
+				else if (m_node->left != NULL)
+				{
+					m_node = m_node->left;
+					while (m_node->right != NULL)
+						m_node = m_node->right;
+				}
+				else
+				{
+					Node* origin = m_node;
+					m_node = m_node->parent;
+					while (m_node && m_node->left == origin)
+					{
+						origin = m_node;
+						m_node = m_node->parent;
+					}
+				}
+				return (*this);
+			}
+			Map_iterator operator--(int)
+			{
+				Map_iterator tmp(*this);
+				--(*this);
+				return (tmp);
+			}
+	};
+
 }
+
+
 
 #endif //FT_CONTAINERS_ITERATORS_HPP
