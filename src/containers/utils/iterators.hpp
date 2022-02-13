@@ -9,6 +9,20 @@
 
 namespace ft
 {
+
+//Базовый класс для итераторов. Не обязательно все тайпдефы должны быть во всех итераторах
+template <class Category, class T, class Distance = ptrdiff_t,
+	class Pointer = T*, class Reference = T&>
+class iterator
+{
+public:
+	typedef T           value_type;
+	typedef Distance    difference_type;
+	typedef Pointer     pointer;
+	typedef Reference   reference;
+	typedef Category    iterator_category;
+};
+
 //Пустые классы для идентификации типа итератора
 struct input_iterator_tag {};
 struct forward_iterator_tag {};
