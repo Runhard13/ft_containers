@@ -2,7 +2,6 @@
 // Created by ruslan on 12.02.2022.
 //
 
-
 #ifndef FT_CONTAINERS_SRC_CONTAINERS_MAP_HPP
 #define FT_CONTAINERS_SRC_CONTAINERS_MAP_HPP
 
@@ -13,14 +12,7 @@ namespace ft
 template <class Key, class T, class Compare = ft::less<Key>, class Alloc = std::allocator<ft::pair<const Key, T> > >
 class map
 {
-	struct Node
-	{
-		ft::pair<const Key, T>	val;
-		Node*					parent;
-		Node*					left;
-		Node*					right;
-		int						height;
-	};
+
 
 	//******************************MEMBER TYPES******************************
 
@@ -43,6 +35,14 @@ public:
 	typedef Map_reverse_iterator<Key, T, Compare, Node>		reverse_iterator;
 	typedef ptrdiff_t										difference_type;
 	typedef size_t											size_type;
+
+	private:
+
+	Node*			_root;
+	Node*			_lastinsert;
+	size_type		_size;
+	key_compare		_comp;
+	allocator_type	_alloc;
 
 };
 }

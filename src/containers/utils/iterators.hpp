@@ -167,6 +167,8 @@ public:
 			_pointer = other._pointer;
 		return (*this);
 	}
+	
+	pointer get_pointer() const { return (this->_pointer); }
 
 	//Эквивалентность
 	bool
@@ -271,6 +273,7 @@ public:
 	{
 		return (_pointer >= other._pointer);
 	}
+
 }; //итератор
 
 template<class T>
@@ -420,8 +423,58 @@ public:
 		--(*this);
 		return (tmp);
 	}
+
 };
 
+//Перегрузки операторов для сравнения iterator и const_iterator
+
+    template<typename T_L, typename T_R>
+    typename ft::vector_iterator<T_L>::difference_type
+    operator==(const ft::vector_iterator<T_L> lhs,
+              const ft::vector_iterator<T_R> rhs)
+    {
+        return (lhs.get_pointer() == rhs.get_pointer());
+    }
+
+	template<typename T_L, typename T_R>
+    typename ft::vector_iterator<T_L>::difference_type
+    operator!=(const ft::vector_iterator<T_L> lhs,
+              const ft::vector_iterator<T_R> rhs)
+    {
+        return (lhs.get_pointer() != rhs.get_pointer());
+    }
+
+	template<typename T_L, typename T_R>
+    typename ft::vector_iterator<T_L>::difference_type
+    operator<=(const ft::vector_iterator<T_L> lhs,
+              const ft::vector_iterator<T_R> rhs)
+    {
+        return (lhs.get_pointer() <= rhs.get_pointer());
+    }
+
+	template<typename T_L, typename T_R>
+    typename ft::vector_iterator<T_L>::difference_type
+    operator<(const ft::vector_iterator<T_L> lhs,
+              const ft::vector_iterator<T_R> rhs)
+    {
+        return (lhs.get_pointer() < rhs.get_pointer());
+    }
+
+	template<typename T_L, typename T_R>
+    typename ft::vector_iterator<T_L>::difference_type
+    operator>=(const ft::vector_iterator<T_L> lhs,
+              const ft::vector_iterator<T_R> rhs)
+    {
+        return (lhs.get_pointer() >= rhs.get_pointer());
+    }
+
+	template<typename T_L, typename T_R>
+    typename ft::vector_iterator<T_L>::difference_type
+    operator>(const ft::vector_iterator<T_L> lhs,
+              const ft::vector_iterator<T_R> rhs)
+    {
+        return (lhs.get_pointer() > rhs.get_pointer());
+    }
 }
 
 #endif //FT_CONTAINERS_ITERATORS_HPP
