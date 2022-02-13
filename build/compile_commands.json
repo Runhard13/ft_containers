@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/workspace/ft_containers/build",
+  "command": "/bin/clang++-15 -g -std=gnu++98 -o CMakeFiles/ft_containers.dir/test/test.cpp.o -c /workspace/ft_containers/test/test.cpp",
+  "file": "/workspace/ft_containers/test/test.cpp"
+}
+]
