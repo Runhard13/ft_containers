@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
-#include "../src/containers/vector.hpp"
-#include "../src/containers/stack.hpp"
-//#include "../src/containers/map.hpp"
+#include "../src/vector.hpp"
+#include "../src/stack.hpp"
+//#include "../src/map.hpp"
 
 int main ()
 {

@@ -24,7 +24,7 @@ struct less : binary_function<T, T, bool>
 };
 
 // Класс, который создает пару из значений с разными типами
-template <class T1, class T2>
+template<class T1, class T2>
 struct pair
 {
 	typedef T1 first_type;
@@ -37,13 +37,14 @@ struct pair
 
 	// Создает pair-объект из переданного в конструктор pair-объекта
 	template<class U, class V>
-	pair (const pair<U, V>& pr)
-	: first(pr.first), second(pr.second) {}
+	pair(const pair<U, V> &pr)
+		: first(pr.first), second(pr.second) {}
 
-	pair (const first_type& a, const second_type& b)
-	: first(a), second(b) {}
+	pair(const first_type &a, const second_type &b)
+		: first(a), second(b) {}
 
-	pair& operator= (const pair& pr)
+	pair &
+	operator=(const pair &pr)
 	{
 		if (*this == pr)
 			return (*this);
@@ -55,46 +56,52 @@ struct pair
 
 //******************************Сравнение 2 pair-объектор******************************
 
-template <class T1, class T2>
-bool operator== (const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs)
+template<class T1, class T2>
+bool
+operator==(const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs)
 {
 	return (lhs.first == rhs.first && lhs.second == rhs.second);
 }
 
-
-template <class T1, class T2>
-bool operator!= (const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs)
+template<class T1, class T2>
+bool
+operator!=(const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs)
 {
 	return !(lhs == rhs);
 }
 
-template <class T1, class T2>
-bool operator<  (const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs)
+template<class T1, class T2>
+bool
+operator<(const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs)
 {
 	return (lhs.first < rhs.first || (!(rhs.first < lhs.first) && lhs.second < rhs.second));
 }
 
-template <class T1, class T2>
-bool operator<= (const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs)
+template<class T1, class T2>
+bool
+operator<=(const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs)
 {
 	return !(rhs < lhs);
 }
 
-template <class T1, class T2>
-bool operator>  (const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs)
+template<class T1, class T2>
+bool
+operator>(const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs)
 {
 	return (rhs < lhs);
 }
 
-template <class T1, class T2>
-bool operator>= (const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs)
+template<class T1, class T2>
+bool
+operator>=(const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs)
 {
 	return !(lhs < rhs);
 }
 
 //Тоже самое, что и ft::pair, но не нужно передавать типы
-template <class T1, class T2>
-ft::pair<T1,T2> make_pair(T1 x, T2 y)
+template<class T1, class T2>
+ft::pair<T1, T2>
+make_pair(T1 x, T2 y)
 {
 	return (ft::pair<T1, T2>(x, y));
 }

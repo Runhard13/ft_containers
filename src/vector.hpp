@@ -5,7 +5,7 @@
 #include <memory>
 #include <stdexcept>
 #include <cstddef>
-#include "./utils/iterators.hpp"
+#include "iterators.hpp"
 
 namespace ft
 {
