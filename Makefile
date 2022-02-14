@@ -129,29 +129,53 @@ ft_containers/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ft_containers.dir/build.make CMakeFiles/ft_containers.dir/build
 .PHONY : ft_containers/fast
 
-test/test.o: test/test.cpp.o
-.PHONY : test/test.o
+test/main.o: test/main.cpp.o
+.PHONY : test/main.o
 
 # target to build an object file
-test/test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ft_containers.dir/build.make CMakeFiles/ft_containers.dir/test/test.cpp.o
-.PHONY : test/test.cpp.o
+test/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ft_containers.dir/build.make CMakeFiles/ft_containers.dir/test/main.cpp.o
+.PHONY : test/main.cpp.o
 
-test/test.i: test/test.cpp.i
-.PHONY : test/test.i
+test/main.i: test/main.cpp.i
+.PHONY : test/main.i
 
 # target to preprocess a source file
-test/test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ft_containers.dir/build.make CMakeFiles/ft_containers.dir/test/test.cpp.i
-.PHONY : test/test.cpp.i
+test/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ft_containers.dir/build.make CMakeFiles/ft_containers.dir/test/main.cpp.i
+.PHONY : test/main.cpp.i
 
-test/test.s: test/test.cpp.s
-.PHONY : test/test.s
+test/main.s: test/main.cpp.s
+.PHONY : test/main.s
 
 # target to generate assembly for a file
-test/test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ft_containers.dir/build.make CMakeFiles/ft_containers.dir/test/test.cpp.s
-.PHONY : test/test.cpp.s
+test/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ft_containers.dir/build.make CMakeFiles/ft_containers.dir/test/main.cpp.s
+.PHONY : test/main.cpp.s
+
+test/test_vector.o: test/test_vector.cpp.o
+.PHONY : test/test_vector.o
+
+# target to build an object file
+test/test_vector.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ft_containers.dir/build.make CMakeFiles/ft_containers.dir/test/test_vector.cpp.o
+.PHONY : test/test_vector.cpp.o
+
+test/test_vector.i: test/test_vector.cpp.i
+.PHONY : test/test_vector.i
+
+# target to preprocess a source file
+test/test_vector.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ft_containers.dir/build.make CMakeFiles/ft_containers.dir/test/test_vector.cpp.i
+.PHONY : test/test_vector.cpp.i
+
+test/test_vector.s: test/test_vector.cpp.s
+.PHONY : test/test_vector.s
+
+# target to generate assembly for a file
+test/test_vector.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ft_containers.dir/build.make CMakeFiles/ft_containers.dir/test/test_vector.cpp.s
+.PHONY : test/test_vector.cpp.s
 
 # Help Target
 help:
@@ -162,9 +186,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... ft_containers"
-	@echo "... test/test.o"
-	@echo "... test/test.i"
-	@echo "... test/test.s"
+	@echo "... test/main.o"
+	@echo "... test/main.i"
+	@echo "... test/main.s"
+	@echo "... test/test_vector.o"
+	@echo "... test/test_vector.i"
+	@echo "... test/test_vector.s"
 .PHONY : help
 
 
