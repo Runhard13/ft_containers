@@ -52,7 +52,7 @@ struct iterator_traits<const T *>
 	typedef random_access_iterator_tag	iterator_category;
 };
 
-
+/*
 //Возвращает тип итератора
 template<class Iterator>
 typename iterator_traits<Iterator>::iterator_category
@@ -60,6 +60,7 @@ iterator_category(Iterator I)
 {
 	return typename iterator_traits<Iterator>::iterator_category();
 }
+*/
 
 //Distance - разница между последним и первым элементом
 template<class Iterator>

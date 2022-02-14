@@ -32,7 +32,7 @@ is_equal_content(
 template <class T>
 void printValues(
 	std::vector<T>& stl_vector,
-	ft::vector<T>& ft_vector
+	ft::vector<T>& ft_vector, std::string testName
 )
 {
 	//real vector
@@ -56,21 +56,21 @@ void printValues(
 
 
 
-	std::cout << std::setw(80) << "********************************************************************************" << std::endl;
-	std::cout << std::setw(20) << std::left << "Attribute";
-	std::cout << std::setw(20) << std::left << "STL Vector";
-	std::cout << std::setw(20) << std::left << "FT Vector";
-	std::cout << std::setw(20) << std::left << "Result" << std::endl;
+	std::cout << std::setfill('*') << std::setw(80) << std::left << testName << std::endl;
+	std::cout << std::setfill(' ') << std::setw(20) << std::left << "Attribute";
+	std::cout << std::setfill(' ') << std::setw(20) << std::left << "STL Vector";
+	std::cout << std::setfill(' ') << std::setw(20) << std::left << "FT Vector";
+	std::cout << std::setfill(' ') << std::setw(20) << std::left << "Result" << std::endl;
 
-	std::cout << std::setw(20) << std::left << "Empty";
-	std::cout << std::setw(20) << std::left << stl_empty;
-	std::cout << std::setw(20) << std::left << ft_empty;
-	std::cout << std::setw(20) << std::left << empty << std::endl;
+	std::cout << std::setfill(' ') << std::setw(20) << std::left << "Empty";
+	std::cout << std::setfill(' ') << std::setw(20) << std::left << stl_empty;
+	std::cout << std::setfill(' ') << std::setw(20) << std::left << ft_empty;
+	std::cout << std::setfill(' ') << std::setw(20) << std::left << empty << std::endl;
 
-	std::cout << std::setw(20) << std::left << "Size";
-	std::cout << std::setw(20) << std::left << stl_size;
-	std::cout << std::setw(20) << std::left << ft_size;
-	std::cout << std::setw(20) << std::left << size << std::endl;
+	std::cout << std::setfill(' ') << std::setw(20) << std::left << "Size";
+	std::cout << std::setfill(' ') << std::setw(20) << std::left << stl_size;
+	std::cout << std::setfill(' ') << std::setw(20) << std::left << ft_size;
+	std::cout << std::setfill(' ') << std::setw(20) << std::left << size << std::endl;
 
 	std::cout << std::setw(20) << std::left << "Capacity";
 	std::cout << std::setw(20) << std::left << stl_capacity;
@@ -124,9 +124,18 @@ void printVectors(
 void
 test_vector()
 {
-	//Дефолтный интовый вектор
-	std::vector<int> stl_vector;
-	ft::vector<int> ft_vector;
-	printValues(stl_vector, ft_vector);
-	printVectors(stl_vector, ft_vector);
+	std::string testName;
+
+	testName = "DEFAULT INT VECTOR";
+	std::vector<int> stl_vector_default_int;
+	ft::vector<int> ft_vector_default_int;
+	printValues(stl_vector_default_int, ft_vector_default_int, testName);
+	printVectors(stl_vector_default_int, ft_vector_default_int);
+	std::cout << "\n\n";
+
+	testName = "DEFAULT STRING VECTOR";
+	std::vector<std::string> stl_vector_default_string;
+	ft::vector<std::string> ft_vector_default_string;
+	printValues(stl_vector_default_string, ft_vector_default_string, testName);
+	printVectors(stl_vector_default_string, ft_vector_default_string);
 }
