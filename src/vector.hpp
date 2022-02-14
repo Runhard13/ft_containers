@@ -31,19 +31,19 @@ public:
 	typedef size_t 		size_type;
 
 private:
-	pointer 	_head;
 	size_type 	_size;
-	Alloc 		_alloc;
 	size_type 	_capacity;
+	Alloc 		_alloc;
+	pointer 	_head;
 
 public:
 	//дефолтный конструктор. Создает пустой контейнер без элементов
 	explicit vector(const allocator_type &alloc = allocator_type())
-		: _head(NULL), _size(0), _alloc(alloc), _capacity(0) {};
+		: _size(0),_capacity(0), _alloc(alloc), _head(NULL) {};
 
 	//fill constructor. Создает контейнер из n элементов. Каждый элемент это копия val
 	explicit vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())
-		: _alloc(alloc), _size(n), _capacity(n)
+	: _size(n), _capacity(n), _alloc(alloc)
 	{
 		_head = _alloc.allocate(_capacity);
 		size_type i = 0;
@@ -55,7 +55,7 @@ public:
 	// каждого элемента равно тому же, что и в [first, last]
 	template<class InputIterator>
 	vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type())
-		:_alloc(alloc), _capacity(0), _size(0)
+		: _size(0), _capacity(0), _alloc(alloc)
 	{
 		assign(first, last);
 	}

@@ -86,7 +86,8 @@ void printValues(
 	std::cout << std::left << "Result of content comparison: " << content << std::endl;
 	if (empty == "not ok" || size == "not ok" || max_size == "not ok" || content == "NOT EQUAL")
 		std::cout << "\33[1;31m" << "TOTAL: NOT OK" << "\33[1;0m" << std::endl;
-	std::cout << "\33[1;32m" << "TOTAL: OK" << "\33[1;0m" << std::endl;
+	else
+		std::cout << "\33[1;32m" << "TOTAL: OK" << "\33[1;0m" << std::endl;
 	std::cout << "**********************************************************************" << std::endl;
 }
 
@@ -105,8 +106,10 @@ void printVectors(
 	std::cout << "STL Vector content: ";
 	while (stl_it != stl_vector.end())
 	{
-		std::cout << *stl_it << ", ";
+		std::cout << *stl_it;
 		stl_it++;
+		if (stl_it != stl_vector.end())
+			std::cout << ", ";
 	}
 	std::cout << "\n";
 
@@ -114,11 +117,14 @@ void printVectors(
 	std::cout << "FT Vector content: ";
 	while (ft_it != ft_vector.end())
 	{
-		std::cout << *ft_it << ", ";
+		std::cout << *ft_it;
 		ft_it++;
+		if (ft_it != ft_vector.end())
+			std::cout << ", ";
 	}
 	std::cout << "\n";
 	std::cout << "**********************************************************************" << std::endl;
+	std::cout << "\n\n";
 }
 
 void
@@ -131,11 +137,16 @@ test_vector()
 	ft::vector<int> ft_vector_default_int;
 	printValues(stl_vector_default_int, ft_vector_default_int, testName);
 	printVectors(stl_vector_default_int, ft_vector_default_int);
-	std::cout << "\n\n";
 
 	testName = "DEFAULT STRING VECTOR";
 	std::vector<std::string> stl_vector_default_string;
 	ft::vector<std::string> ft_vector_default_string;
 	printValues(stl_vector_default_string, ft_vector_default_string, testName);
 	printVectors(stl_vector_default_string, ft_vector_default_string);
+
+	testName = "FILL CONSTRUCTOR";
+	std::vector<int> stl_fill_vector(11);
+	ft::vector<int> ft_fill_vector(11);
+	printValues(stl_fill_vector, ft_fill_vector, testName);
+	printVectors(stl_fill_vector, ft_fill_vector);
 }
