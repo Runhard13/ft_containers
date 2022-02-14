@@ -12,57 +12,46 @@ namespace ft
 {
 	//******************************ITERATOR UTILS******************************
 
-//Базовый шаблон класса итератора
-template<class Category, class T, class Distance = ptrdiff_t,
-	class Pointer = T *, class Reference = T &>
-class iterator
-{
-public:
-	typedef T			value_type;
-	typedef Distance 	difference_type;
-	typedef Pointer 	pointer;
-	typedef Reference 	reference;
-	typedef Category 	iterator_category;
-};
 
-//Пустые классы для идентификации типа итератора
+//Структуры для идентификации типа итератора
 struct input_iterator_tag {};
 struct forward_iterator_tag {};
 struct bidirectional_iterator_tag {};
 struct random_access_iterator_tag {};
 
-//Базовый шаблон класса для определения характеристик итераторов
+//Базовый шаблон для определения характеристик итераторов
 template<class Iterator>
 struct iterator_traits
 {
-	typedef typename Iterator::difference_type difference_type;
-	typedef typename Iterator::value_type value_type;
-	typedef typename Iterator::pointer pointer;
-	typedef typename Iterator::reference reference;
-	typedef typename Iterator::iterator_category iterator_category;
+	typedef typename Iterator::difference_type		difference_type;
+	typedef typename Iterator::value_type 			value_type;
+	typedef typename Iterator::pointer 				pointer;
+	typedef typename Iterator::reference 			reference;
+	typedef typename Iterator::iterator_category	iterator_category;
 };
 
-//Специализация iterator_traits для  обычного random_access_iterator в векторе
+//Специализация iterator_traits по умолчанию для обычного объекта
 template<class T>
-struct iterator_traits<T *>
+struct iterator_traits<T*>
 {
-	typedef ptrdiff_t difference_type;
-	typedef T value_type;
-	typedef T *pointer;
-	typedef T &reference;
-	typedef random_access_iterator_tag iterator_category;
+	typedef ptrdiff_t					difference_type;
+	typedef T							value_type;
+	typedef T*							pointer;
+	typedef T&							reference;
+	typedef random_access_iterator_tag	iterator_category;
 };
 
-//Специализация iterator_traits для константного random_access_iterator в векоре
+//Специализация iterator_traits по умолчанию для константного объекта
 template<class T>
 struct iterator_traits<const T *>
 {
-	typedef ptrdiff_t difference_type;
-	typedef T value_type;
-	typedef const T *pointer;
-	typedef const T &reference;
-	typedef random_access_iterator_tag iterator_category;
+	typedef ptrdiff_t					difference_type;
+	typedef T							value_type;
+	typedef const T*					pointer;
+	typedef const T&					reference;
+	typedef random_access_iterator_tag	iterator_category;
 };
+
 
 //Возвращает тип итератора
 template<class Iterator>
@@ -145,20 +134,27 @@ distance(Iterator first, Iterator last, std::random_access_iterator_tag)
 	return last - first;
 }
 
+
+
+//******************************RANDOM ACCESS ITERATOR******************************
+
 template<typename T>
 class vector_iterator
 {
-private:
-	T *_pointer;
-public:
-	typedef T value_type;
-	typedef ptrdiff_t difference_type;
-	typedef value_type *pointer;
-	typedef value_type &reference;
-	typedef random_access_iterator_tag iterator_category;
 
+public:
+	typedef T							value_type;
+	typedef ptrdiff_t					difference_type;
+	typedef value_type*					pointer;
+	typedef value_type&					reference;
+	typedef random_access_iterator_tag	iterator_category;
+
+private:
+	pointer	_pointer;
+
+public:
 	vector_iterator() { _pointer = NULL; }
-	vector_iterator(T *ptr) : _pointer(ptr) {}
+	explicit vector_iterator(T *ptr) : _pointer(ptr) {}
 	vector_iterator(const vector_iterator &copy) : _pointer(copy._pointer) {}
 	~vector_iterator() {}
 
@@ -179,6 +175,7 @@ public:
 	{
 		return (_pointer == it._pointer);
 	}
+
 	bool
 	operator!=(const vector_iterator &it) const
 	{

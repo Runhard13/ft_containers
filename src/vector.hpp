@@ -31,10 +31,10 @@ public:
 	typedef size_t 		size_type;
 
 private:
-	size_type 	_size;
-	size_type 	_capacity;
 	pointer 	_head;
+	size_type 	_size;
 	Alloc 		_alloc;
+	size_type 	_capacity;
 
 public:
 	//дефолтный конструктор. Создает пустой контейнер без элементов
