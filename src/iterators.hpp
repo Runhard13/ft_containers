@@ -404,7 +404,7 @@ public:
 		this->_base.operator--();
 		return (*this);
 	}
-	vector_iterator_reverse
+	const vector_iterator_reverse
 	operator++(int)
 	{
 		vector_iterator_reverse tmp(*this);
@@ -417,7 +417,7 @@ public:
 		this->_base.operator++();
 		return (*this);
 	}
-	vector_iterator_reverse
+	const vector_iterator_reverse
 	operator--(int)
 	{
 		vector_iterator_reverse tmp(*this);

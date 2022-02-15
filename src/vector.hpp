@@ -68,7 +68,7 @@ public:
 	{
 		_head = _alloc.allocate(_capacity);
 		size_type i = 0;
-		while (i++ < _size)
+		while (i++ < _capacity)
 			_alloc.construct(&_head[i], x._head[i]);
 	}
 

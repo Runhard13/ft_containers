@@ -175,10 +175,10 @@ test_vector()
 
 	{
 		testName = "RANGE CONSTRUCTOR";
-		int array[] = {44, 11, 89, 33, 55, 0};
+		int array[] = {44, 11, 89, 33, 55, 80};
 
-		std::vector<int>::iterator stl_iterator(&(array[0]));
-		ft::vector<int>::iterator ft_iterator(&(array[0]));
+		std::vector<int>::const_iterator stl_iterator(&(array[0]));
+		ft::vector<int>::const_iterator ft_iterator(&(array[0]));
 
 		std::vector<int> stl_range_vector(stl_iterator, stl_iterator + 6);
 		ft::vector<int> ft_range_vector(ft_iterator, ft_iterator + 6);
@@ -188,20 +188,7 @@ test_vector()
 	}
 
 	{
-		/* TODO: ABORTED (CORE DUMPED) - нужно пофиксить
-		testName = "COPY CONSTRUCTOR";
-
-		std::vector<int> stl_copy_vector(stl_range_vector);
-		ft::vector<int> ft_copy_vector(ft_range_vector);
-
-		printValues(stl_copy_vector, ft_copy_vector, testName);
-		printVectors(stl_copy_vector, ft_copy_vector);
-		*/
-	}
-
-	{
-		/*	TODO: ABORTED (CORE DUMPED) - нужно пофиксить
-		testName = "COPY CONSTRUCTOR";
+		testName = "ASSIGN";
 		int range_array[] = { -8, 1, 5, 5, 5333, 6323 };
 
 		std::vector<int>::iterator stl_iterator(&(range_array[0]));
@@ -215,7 +202,6 @@ test_vector()
 
 		printValues(stl_assign_vector, ft_assign_vector, testName);
 		printVectors(stl_assign_vector, ft_assign_vector);
-		*/
 	}
 
 	{
@@ -298,7 +284,7 @@ test_vector()
 	}
 	{
 		//TODO: reverse итератор не работает -___-
-		testName = "CONST REVERSE ITER BEGIN() and END()";
+		testName = "CONST REV ITER";
 		int range_array[] = {1, 2, -3, 4, 5};
 
 		std::vector<int>::const_iterator stl_iterator(&(range_array[0]));
@@ -371,30 +357,5 @@ test_vector()
 		printValues(stl_vector, ft_vector, testName);
 		printVectors(stl_vector, ft_vector);
 	}
-
-/* TODO: double free need to be fixed
-{
-	testName = "OPERATOR[]";
-
-	std::vector<int> stl_vector(10);
-	ft::vector<int> ft_vector(00);
-
-	unsigned i = 0;
-	while (i++ < 10)
-		stl_vector[i] = i;
-
-	i = 0;
-
-	while (i++ < 10)
-		ft_vector[i] = i;
-
-	const int stl_const = stl_vector[1];
-	const int ft_const = ft_vector[1];
-
-	printValues(stl_const, ft_const, testName);
-	printVectors(stl_const, ft_const);
-  }
-*/
-
 
 }
