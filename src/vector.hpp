@@ -5,6 +5,7 @@
 #include <memory>
 #include <stdexcept>
 #include <cstddef>
+#include <limits>
 #include "iterators.hpp"
 
 namespace ft
@@ -54,7 +55,9 @@ public:
 	//range constructor. Создает [first, last] элементов. Значение
 	// каждого элемента равно тому же, что и в [first, last]
 	template<class InputIterator>
-	vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type())
+	vector(InputIterator first, InputIterator last,
+		   const allocator_type& alloc = allocator_type(),
+		   typename ft::enable_if<!ft::is_integer<InputIterator>::value, InputIterator>::type* = NULL)
 		: _size(0), _capacity(0), _alloc(alloc)
 	{
 		assign(first, last);
@@ -193,7 +196,8 @@ public:
 	//assign range - элементы контейнера создаются из диапазона [first, last]
 	template<class InputIterator>
 	void
-	assign(InputIterator first, InputIterator last)
+	assign(InputIterator first, InputIterator last,
+		   typename ft::enable_if<!ft::is_integer<InputIterator>::value, InputIterator>::type* = NULL)
 	{
 		// сначала ищем n, затем создаем контейнер с нужным количеством памяти, чтобы при каждом push_back по
 		// новой не аллоцировать память и не копировать туда данные

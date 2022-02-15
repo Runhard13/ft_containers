@@ -106,6 +106,56 @@ make_pair(T1 x, T2 y)
 	return (ft::pair<T1, T2>(x, y));
 }
 
+template<bool Cond, class T = void> struct enable_if {};
+template<class T> struct enable_if<true, T> { typedef T type; };
+
+template <bool is_integer, typename T>
+struct is_integer_res {
+	typedef T type;
+	static const bool value = is_integer;
+};
+
+template <typename>
+struct is_integer_type : public is_integer_res<false, bool> {};
+
+template <>
+struct is_integer_type<bool> : public is_integer_res<true, bool> {};
+
+template <>
+struct is_integer_type<char> : public is_integer_res<true, char> {};
+
+template <>
+struct is_integer_type<signed char> : public is_integer_res<true, signed char> {};
+
+template <>
+struct is_integer_type<short int> : public is_integer_res<true, short int> {};
+
+template <>
+struct is_integer_type<int> : public is_integer_res<true, int> {};
+
+template <>
+struct is_integer_type<long int> : public is_integer_res<true, long int> {};
+
+template <>
+struct is_integer_type<long long int> : public is_integer_res<true, long long int> {};
+
+template <>
+struct is_integer_type<unsigned char> : public is_integer_res<true, unsigned char> {};
+
+template <>
+struct is_integer_type<unsigned short int> : public is_integer_res<true, unsigned short int> {};
+
+template <>
+struct is_integer_type<unsigned int> : public is_integer_res<true, unsigned int> {};
+
+template <>
+struct is_integer_type<unsigned long int> : public is_integer_res<true, unsigned long int> {};
+
+template <>
+struct is_integer_type<unsigned long long int> : public is_integer_res<true, unsigned long long int> {};
+
+template <typename T>
+struct is_integer : public is_integer_type<T> { };
 }
 
 #endif //FT_CONTAINERS_SRC_CONTAINERS_UTILS_UTILS_HPP
