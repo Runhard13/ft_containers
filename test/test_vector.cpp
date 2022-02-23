@@ -186,7 +186,7 @@ test_vector()
 		printValues(stl_range_vector, ft_range_vector, testName);
 		printVectors(stl_range_vector, ft_range_vector);
 	}
-
+/*
 	{
 		testName = "ASSIGN";
 		int range_array[] = { -8, 1, 5, 5, 5333, 6323 };
@@ -203,7 +203,8 @@ test_vector()
 		printValues(stl_assign_vector, ft_assign_vector, testName);
 		printVectors(stl_assign_vector, ft_assign_vector);
 	}
-
+*/
+/*
 	{
 		testName = "ITER BEGIN() and END()";
 		int range_array[] = {187, 2, -54, 33, 5};
@@ -255,7 +256,8 @@ test_vector()
 		printVectors(stl_range_vector, ft_range_vector);
 
 	}
-
+*/
+/*
 	{
 		//TODO: reverse итератор не работает -___-
 		testName = "REVERSE ITER BEGIN() and END()";
@@ -307,7 +309,7 @@ test_vector()
 		std::cout << "\n";
 		printVectors(stl_range_vector, ft_range_vector);
 	}
-
+*/
 	{
 		testName = "SIZE MANITULATIONS";
 		std::vector<int> stl_vector(1);
@@ -340,6 +342,7 @@ test_vector()
 		printValues(stl_vector, ft_vector, testName);
 		printVectors(stl_vector, ft_vector);
 	}
+/*
 	{
 		testName = "OPERATOR[]";
 
@@ -354,6 +357,27 @@ test_vector()
 		while (i++ < 4)
 			ft_vector[i] = i;
 
+		printValues(stl_vector, ft_vector, testName);
+		printVectors(stl_vector, ft_vector);
+	}
+*/
+	{
+		testName = "OPERATOR AT";
+		std::vector<int> stl_vector(3);
+		ft::vector<int> ft_vector(3);
+
+		stl_vector.push_back(11);
+		ft_vector.push_back(11);
+		stl_vector.push_back(22);
+		ft_vector.push_back(22);
+		stl_vector.push_back(33);
+		ft_vector.push_back(33);
+
+		int ft = ft_vector.at(3);
+		int stl = stl_vector.at(3);
+		std::cout << "STL operator at(3) = " << stl << std::endl;
+		std::cout << "FT operator at(3) = " << ft << std::endl;
+	
 		printValues(stl_vector, ft_vector, testName);
 		printVectors(stl_vector, ft_vector);
 	}
