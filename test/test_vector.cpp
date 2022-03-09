@@ -133,6 +133,8 @@ void
 test_vector()
 {
 	std::string testName;
+	std::vector<int> myvector;
+	for (int i=1; i<=5; i++) myvector.push_back(i);
 
 	{
 		testName = "DEFAULT INT VECTOR";
@@ -175,27 +177,19 @@ test_vector()
 
 	{
 		testName = "RANGE CONSTRUCTOR";
-		int array[] = {44, 11, 89, 33, 55, 80};
 
-		std::vector<int>::const_iterator stl_iterator(&(array[0]));
-		ft::vector<int>::const_iterator ft_iterator(&(array[0]));
-
-		std::vector<int> stl_range_vector(stl_iterator, stl_iterator + 6);
-		ft::vector<int> ft_range_vector(ft_iterator, ft_iterator + 6);
+		std::vector<int> stl_range_vector(myvector.begin(), myvector.end());
+		ft::vector<int> ft_range_vector(myvector.begin(), myvector.end());
 
 		printValues(stl_range_vector, ft_range_vector, testName);
 		printVectors(stl_range_vector, ft_range_vector);
 	}
-/*
+
 	{
 		testName = "ASSIGN";
-		int range_array[] = { -8, 1, 5, 5, 5333, 6323 };
 
-		std::vector<int>::iterator stl_iterator(&(range_array[0]));
-		ft::vector<int>::iterator ft_iterator(&(range_array[0]));
-
-		std::vector<int> stl_range_vector(stl_iterator, stl_iterator + 6);
-		ft::vector<int> ft_range_vector(ft_iterator, ft_iterator + 6);
+		std::vector<int> stl_range_vector(myvector.begin(), myvector.end());
+		ft::vector<int> ft_range_vector(myvector.begin(), myvector.end());
 
 		std::vector<int> stl_assign_vector = stl_range_vector;
 		ft::vector<int> ft_assign_vector = ft_range_vector;
@@ -203,17 +197,13 @@ test_vector()
 		printValues(stl_assign_vector, ft_assign_vector, testName);
 		printVectors(stl_assign_vector, ft_assign_vector);
 	}
-*/
-/*
+
 	{
 		testName = "ITER BEGIN() and END()";
-		int range_array[] = {187, 2, -54, 33, 5};
 
-		std::vector<int>::iterator stl_iterator(&(range_array[0]));
-		ft::vector<int>::iterator ft_iterator(&(range_array[0]));
 
-		std::vector<int> stl_range_vector(stl_iterator, stl_iterator + 5);
-		ft::vector<int> ft_range_vector(ft_iterator, ft_iterator + 5);
+		std::vector<int> stl_range_vector(myvector.begin(), myvector.end());
+		ft::vector<int> ft_range_vector(myvector.begin(), myvector.end());
 
 		int from_stl = *(stl_range_vector.begin());
 		int from_ft = *(ft_range_vector.begin());
@@ -233,13 +223,9 @@ test_vector()
 
 	{
 		testName = "CONST ITER BEGIN() and END()";
-		int range_array[] = {94, 342, -2354, 33, 84};
 
-		std::vector<int>::const_iterator stl_iterator(&(range_array[0]));
-		ft::vector<int>::const_iterator ft_iterator(&(range_array[0]));
-
-		std::vector<int> stl_range_vector(stl_iterator, stl_iterator + 5);
-		ft::vector<int> ft_range_vector(ft_iterator, ft_iterator + 5);
+		std::vector<int> stl_range_vector(myvector.begin(), myvector.end());
+		ft::vector<int> ft_range_vector(myvector.begin(), myvector.end());
 
 		int from_stl = *(stl_range_vector.begin());
 		int from_ft = *(ft_range_vector.begin());
@@ -256,18 +242,13 @@ test_vector()
 		printVectors(stl_range_vector, ft_range_vector);
 
 	}
-*/
-/*
+
 	{
 		//TODO: reverse итератор не работает -___-
 		testName = "REVERSE ITER BEGIN() and END()";
-		int range_array[] = {1, 2, -3, 4, 5};
 
-		std::vector<int>::iterator stl_iterator(&(range_array[0]));
-		ft::vector<int>::iterator ft_iterator(&(range_array[0]));
-
-		std::vector<int> stl_range_vector(stl_iterator, stl_iterator + 5);
-		ft::vector<int> ft_range_vector(ft_iterator, ft_iterator + 5);
+		std::vector<int> stl_range_vector(myvector.begin(), myvector.end());
+		ft::vector<int> ft_range_vector(myvector.begin(), myvector.end());
 
 		int from_stl = *(stl_range_vector.rbegin());
 		int from_ft = *(ft_range_vector.rbegin());
@@ -285,15 +266,10 @@ test_vector()
 
 	}
 	{
-		//TODO: reverse итератор не работает -___-
 		testName = "CONST REV ITER";
-		int range_array[] = {1, 2, -3, 4, 5};
 
-		std::vector<int>::const_iterator stl_iterator(&(range_array[0]));
-		ft::vector<int>::const_iterator ft_iterator(&(range_array[0]));
-
-		std::vector<int> stl_range_vector(stl_iterator, stl_iterator + 5);
-		ft::vector<int> ft_range_vector(ft_iterator, ft_iterator + 5);
+		std::vector<int> stl_range_vector(myvector.begin(), myvector.end());
+		ft::vector<int> ft_range_vector(myvector.begin(), myvector.end());
 
 		int from_stl = *(stl_range_vector.rbegin());
 		int from_ft = *(ft_range_vector.rbegin());
@@ -309,7 +285,7 @@ test_vector()
 		std::cout << "\n";
 		printVectors(stl_range_vector, ft_range_vector);
 	}
-*/
+
 	{
 		testName = "SIZE MANITULATIONS";
 		std::vector<int> stl_vector(1);
@@ -342,7 +318,7 @@ test_vector()
 		printValues(stl_vector, ft_vector, testName);
 		printVectors(stl_vector, ft_vector);
 	}
-/*
+
 	{
 		testName = "OPERATOR[]";
 
@@ -360,9 +336,9 @@ test_vector()
 		printValues(stl_vector, ft_vector, testName);
 		printVectors(stl_vector, ft_vector);
 	}
-*/
+
 	{
-		testName = "OPERATOR AT";
+		testName = "OPERATOR AT.  VALID";
 		std::vector<int> stl_vector(3);
 		ft::vector<int> ft_vector(3);
 
@@ -375,11 +351,31 @@ test_vector()
 
 		int ft = ft_vector.at(3);
 		int stl = stl_vector.at(3);
+
 		std::cout << "STL operator at(3) = " << stl << std::endl;
 		std::cout << "FT operator at(3) = " << ft << std::endl;
 	
 		printValues(stl_vector, ft_vector, testName);
 		printVectors(stl_vector, ft_vector);
+	}
+
+	{
+	    testName = "OPERATOR AT. OUT OF RANGE";
+
+	    ft::vector<int> ft_vector(3);
+
+	    ft_vector.push_back(11);
+	    ft_vector.push_back(22);
+	    ft_vector.push_back(33);
+
+	    try
+	    {
+	        ft_vector.at(3333333) = 50;
+	    }
+	    catch (const std::out_of_range& e)
+	    {
+	        std::cerr <<  "Error: "  << e.what() << std::endl;
+	    }
 	}
 
 }

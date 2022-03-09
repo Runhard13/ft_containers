@@ -104,16 +104,16 @@ public:
 	end() const { return (iterator(_head + _size)); }
 
 	reverse_iterator
-	rbegin() { return (reverse_iterator(_head + _size)); }
+	rbegin() { return (reverse_iterator(this->end())); }
 
 	const_reverse_iterator
-	rbegin() const { return (reverse_iterator(_head + _size)); }
+	rbegin() const { return (reverse_iterator(this->end())); }
 
 	reverse_iterator
-	rend() { return (reverse_iterator(_head + _size - 1)); }
+	rend() { return (reverse_iterator(this->begin())); }
 
 	const_reverse_iterator
-	rend()  const { return (reverse_iterator(_head + _size - 1)); }
+	rend()  const { return (reverse_iterator(this->begin())); }
 
 	//******************************CAPACITY******************************
 
