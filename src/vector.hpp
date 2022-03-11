@@ -44,9 +44,10 @@ public:
 
 	//fill constructor. Создает контейнер из n элементов. Каждый элемент это копия val
 	explicit vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())
-	: _size(n), _capacity(n), _alloc(alloc)
+	: _size(n), _capacity(n), _alloc(alloc), _head(NULL)
 	{
-		_head = _alloc.allocate(_capacity);
+
+        _head = _alloc.allocate(_capacity);
 		size_type i = 0;
 		while (i++ < _size)
 			_alloc.construct(&_head[i], val);
@@ -244,8 +245,6 @@ public:
 	iterator
 	insert(iterator position, const value_type &val)
 	{
-		if (_size + 1 > _capacity)
-			reallocate(capacity_extension(_size + 1));
 		difference_type shift = (position - this->begin());
 		if (_size + 1 > _capacity)
 			reallocate(capacity_extension(_size + 1));
@@ -281,7 +280,7 @@ public:
 	//range insert
 	template <class InputIterator>
 	void
-	insert (iterator position, InputIterator first, InputIterator last)
+    insert (iterator position, typename ft::enable_if<!ft::is_integer<InputIterator>::value, InputIterator>::type first, InputIterator last)
 	{
 		difference_type shift = (position - this->begin());
 		size_type n = 0;

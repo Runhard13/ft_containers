@@ -186,7 +186,7 @@ test_vector()
 	}
 
 	{
-		testName = "ASSIGN";
+		testName = "OPERATOR=";
 
 		std::vector<int> stl_range_vector(myvector.begin(), myvector.end());
 		ft::vector<int> ft_range_vector(myvector.begin(), myvector.end());
@@ -244,7 +244,6 @@ test_vector()
 	}
 
 	{
-		//TODO: reverse итератор не работает -___-
 		testName = "REVERSE ITER BEGIN() and END()";
 
 		std::vector<int> stl_range_vector(myvector.begin(), myvector.end());
@@ -338,7 +337,7 @@ test_vector()
 	}
 
 	{
-		testName = "OPERATOR AT.  VALID";
+		testName = "OPERATOR AT.VALID";
 		std::vector<int> stl_vector(3);
 		ft::vector<int> ft_vector(3);
 
@@ -351,31 +350,115 @@ test_vector()
 
 		int ft = ft_vector.at(3);
 		int stl = stl_vector.at(3);
-
-		std::cout << "STL operator at(3) = " << stl << std::endl;
-		std::cout << "FT operator at(3) = " << ft << std::endl;
 	
 		printValues(stl_vector, ft_vector, testName);
+        std::cout << "STL operator at(3) = " << stl << std::endl;
+        std::cout << "FT operator at(3) = " << ft << std::endl;
 		printVectors(stl_vector, ft_vector);
 	}
 
-	{
-	    testName = "OPERATOR AT. OUT OF RANGE";
+    {
+        testName = "FRONT / BACK";
 
-	    ft::vector<int> ft_vector(3);
+        std::vector<int> stl_vector(myvector.begin(), myvector.end());
+        ft::vector<int> ft_vector(myvector.begin(), myvector.end());
 
-	    ft_vector.push_back(11);
-	    ft_vector.push_back(22);
-	    ft_vector.push_back(33);
+        printValues(stl_vector, ft_vector, testName);
+        std::cout << "STL.front = " << stl_vector.front() << std::endl;
+        std::cout << "STL.back = " << stl_vector.back() << std::endl;
+        std::cout << "FT.front = " << ft_vector.front() << std::endl;
+        std::cout << "FT.back = " << ft_vector.back() << std::endl;
+        printVectors(stl_vector, ft_vector);
 
-	    try
-	    {
-	        ft_vector.at(3333333) = 50;
-	    }
-	    catch (const std::out_of_range& e)
-	    {
-	        std::cerr <<  "Error: "  << e.what() << std::endl;
-	    }
-	}
+        printValues(stl_vector, ft_vector, testName);
+        printVectors(stl_vector, ft_vector);
+    }
+
+    {
+        testName = "ASSIGN RANGE";
+
+        std::vector<int> stl_vector(3);
+        ft::vector<int> ft_vector(3);
+
+        stl_vector.assign(myvector.begin(), myvector.end());
+        ft_vector.assign(myvector.begin(), myvector.end());
+
+        printValues(stl_vector, ft_vector, testName);
+        printVectors(stl_vector, ft_vector);
+    }
+
+    {
+        testName = "ASSIGN FILL";
+
+        std::vector<int> stl_vector(3);
+        ft::vector<int> ft_vector(3);
+
+        stl_vector.assign(10, 1);
+        ft_vector.assign(10, 1);
+
+        printValues(stl_vector, ft_vector, testName);
+        printVectors(stl_vector, ft_vector);
+    }
+
+    {
+        testName = "PUSH BACK";
+
+        std::vector<int> stl_vector(3);
+        ft::vector<int> ft_vector(3);
+
+        stl_vector.push_back(11);
+        ft_vector.push_back(11);
+        stl_vector.push_back(22);
+        ft_vector.push_back(22);
+        stl_vector.push_back(33);
+        ft_vector.push_back(33);
+
+        printValues(stl_vector, ft_vector, testName);
+        printVectors(stl_vector, ft_vector);
+
+        testName = "POP BACK";
+
+        stl_vector.pop_back();
+        stl_vector.pop_back();
+        stl_vector.pop_back();
+        ft_vector.pop_back();
+        ft_vector.pop_back();
+        ft_vector.pop_back();
+
+        printValues(stl_vector, ft_vector, testName);
+        printVectors(stl_vector, ft_vector);
+
+    }
+
+    {
+        testName = "INSERT SINGLE ELEMENT";
+
+        std::vector<int> stl_vector(3);
+        ft::vector<int> ft_vector(3);
+
+        stl_vector.insert(stl_vector.begin() + 1, 99);
+        ft_vector.insert(ft_vector.begin() + 1, 99);
+
+        printValues(stl_vector, ft_vector, testName);
+        printVectors(stl_vector, ft_vector);
+    }
+
+    //тестируем эксепшн, который должен бросать at при попытке получить доступ к элементу вне границ контейнера
+    {
+        ft::vector<int> ft_vector(3);
+
+        ft_vector.push_back(11);
+        ft_vector.push_back(22);
+        ft_vector.push_back(33);
+
+        try
+        {
+            ft_vector.at(3333333) = 50;
+        }
+        catch (const std::out_of_range& e)
+        {
+            std::cerr <<  "Error: "  << e.what() << std::endl;
+        }
+    }
 
 }
