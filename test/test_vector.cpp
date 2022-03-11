@@ -54,7 +54,7 @@ printValues(
 	std::string empty = is_equal(ft_empty, stl_empty);
 	std::string size = is_equal(ft_size, stl_size);
 	std::string max_size = is_equal(ft_max_size, stl_max_size);
-	std::string capacity = is_equal(ft_capacity, stl_capacity); // в текущей реализации не всегда равны эти параметры
+	std::string capacity = is_equal(ft_capacity, stl_capacity);
 	std::string content = is_equal_content(stl_vector, ft_vector);
 
 	std::cout << std::setfill('*') << std::setw(70) << std::left << testName << std::endl;
@@ -85,7 +85,7 @@ printValues(
 	std::cout << "\n";
 
 	std::cout << std::left << "Result of content comparison: " << content << std::endl;
-	if (empty == "not ok" || size == "not ok" || max_size == "not ok" || content == "NOT EQUAL")
+	if (empty == "not ok" || size == "not ok" || max_size == "not ok" || content == "NOT EQUAL" || capacity == "not ok")
 		std::cout << "\33[1;31m" << "TOTAL: NOT OK" << "\33[1;0m" << std::endl;
 	else
 		std::cout << "\33[1;32m" << "TOTAL: OK" << "\33[1;0m" << std::endl;
@@ -441,8 +441,97 @@ test_vector()
 
         printValues(stl_vector, ft_vector, testName);
         printVectors(stl_vector, ft_vector);
+
+        testName = "INSERT RANGE";
+
+        int array [] = { 501,502,503};
+        stl_vector.insert (stl_vector.begin(), array, array+3);
+        ft_vector.insert (ft_vector.begin(), array, array+3);
+
+        printValues(stl_vector, ft_vector, testName);
+        printVectors(stl_vector, ft_vector);
+
+        testName = "INSERT FILL";
+
+        stl_vector.insert(stl_vector.begin() + 3, 3,88);
+        ft_vector.insert(ft_vector.begin() + 3, 3,88);
+
+        printValues(stl_vector, ft_vector, testName);
+        printVectors(stl_vector, ft_vector);
     }
 
+    {
+        testName = "ERASE SINGLE";
+
+        std::vector<int> stl_vector(myvector.begin(), myvector.end());
+        ft::vector<int> ft_vector(myvector.begin(), myvector.end());
+
+        stl_vector.erase(stl_vector.begin());
+        ft_vector.erase(ft_vector.begin());
+
+        printValues(stl_vector, ft_vector, testName);
+        printVectors(stl_vector, ft_vector);
+
+        testName = "ERASE RANGE";
+
+        stl_vector.erase(stl_vector.begin() + 1, stl_vector.begin() + 4);
+        ft_vector.erase(ft_vector.begin() + 1, ft_vector.begin() + 4);
+
+        printValues(stl_vector, ft_vector, testName);
+        printVectors(stl_vector, ft_vector);
+
+        testName = "CLEAR";
+
+        stl_vector.clear();
+        ft_vector.clear();
+
+        printValues(stl_vector, ft_vector, testName);
+        printVectors(stl_vector, ft_vector);
+
+    }
+
+    {
+        testName = "SWAP";
+
+        std::vector<int> stl_vector(5);
+        ft::vector<int> ft_vector(5);
+        ft::vector<int> ft_for_swap(myvector.begin(), myvector.end());
+        std::vector<int> stl_for_swap(myvector.begin(), myvector.end());
+
+
+        ft_vector.swap(ft_for_swap);
+        stl_vector.swap(stl_for_swap);
+
+        printValues(stl_vector, ft_vector, testName);
+        printVectors(stl_vector, ft_vector);
+
+    }
+    {
+        testName = "RELATIONAL OPERATORS";
+
+        std::vector<int> stl_vector(myvector.begin(), myvector.end());
+        ft::vector<int> ft_vector(myvector.begin(), myvector.end());
+
+        std::vector<int> stl_compare(5);
+        ft::vector<int> ft_compare(5);
+
+        printValues(stl_vector, ft_vector, testName);
+
+        bool stl = false;
+        bool ft = false;
+        std::string okay = "NOT OK";
+
+        if (stl_vector == stl_compare)
+            stl = true;
+        if (ft_vector == ft_compare)
+            ft = true;
+        if (stl == ft)
+            okay = "OK";
+        std::cout << "Operator == " << okay << std::endl;
+
+        printVectors(stl_vector, ft_vector);
+
+    }
     //тестируем эксепшн, который должен бросать at при попытке получить доступ к элементу вне границ контейнера
     {
         ft::vector<int> ft_vector(3);

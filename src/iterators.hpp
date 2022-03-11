@@ -277,6 +277,7 @@ public:
 
 }; //вектор_итератор
 
+
 template<class T>
 class vector_iterator_reverse
 {
@@ -426,8 +427,6 @@ public:
 	}
 
 }; //вектор итератор реверс
-
-//Перегрузки операторов для сравнения iterator и const_iterator
 
 template<typename T_L, typename T_R>
 typename ft::vector_iterator<T_L>::difference_type

@@ -48,9 +48,8 @@ public:
 	{
 
         _head = _alloc.allocate(_capacity);
-		size_type i = 0;
-		while (i++ < _size)
-			_alloc.construct(&_head[i], val);
+        for (size_type i = 0; i < _size; i++)
+            _alloc.construct(&_head[i], val);
 	}
 
 	//range constructor. Создает [first, last] элементов. Значение
@@ -68,8 +67,7 @@ public:
 	vector(const vector &x) : _size(x._size), _capacity(x._capacity), _alloc(x._alloc)
 	{
 		_head = _alloc.allocate(_capacity);
-		size_type i = 0;
-		while (i++ < _capacity)
+        for (size_type i = 0; i < _size; i++)
 			_alloc.construct(&_head[i], x._head[i]);
 	}
 
@@ -291,7 +289,12 @@ public:
 			++n;
 		}
 		if ((_size + n) > _capacity)
-			reallocate(_size + n);
+        {
+            size_type i = _capacity;
+            while ((_size + n) > i)
+                i = i*2;
+            reallocate(i);
+        }
 		_size += n;
 		iterator it(&_head[_size - n]);
 		iterator insert_pos(&_head[shift]);
@@ -387,7 +390,7 @@ private:
 
 template <class T, class Alloc>
 bool
-operator==(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+operator==(const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs)
 {
 	typename ft::vector<T>::const_iterator lhs_begin = lhs.begin();
 	typename ft::vector<T>::const_iterator lhs_end = lhs.end();
@@ -418,10 +421,10 @@ template <class T, class Alloc>
 bool
 operator<(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 {
-	typename ft::vector<T>::const_iterator lhs_begin = lhs.begin();
-	typename ft::vector<T>::const_iterator lhs_end = lhs.end();
-	typename ft::vector<T>::const_iterator rhs_begin = rhs.begin();
-	typename ft::vector<T>::const_iterator rhs_end = rhs.end();
+	typename ft::vector<T, Alloc>::const_iterator lhs_begin = lhs.begin();
+	typename ft::vector<T, Alloc>::const_iterator lhs_end = lhs.end();
+	typename ft::vector<T, Alloc>::const_iterator rhs_begin = rhs.begin();
+	typename ft::vector<T, Alloc>::const_iterator rhs_end = rhs.end();
 
 	while (lhs_begin != lhs_end)
 	{
