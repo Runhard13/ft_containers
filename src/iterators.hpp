@@ -167,9 +167,6 @@ public:
 		return (*this);
 	}
 
-	pointer
-	get_pointer() const { return (this->_pointer); }
-
 	//Эквивалентность
 	bool
 	operator==(const vector_iterator &it) const
@@ -267,7 +264,7 @@ public:
 	bool
 	operator<=(const vector_iterator &other) const
 	{
-		return (_pointer <= other.m_ptr);
+		return (_pointer <= other._pointer);
 	}
 	bool
 	operator>=(const vector_iterator &other) const
@@ -276,7 +273,6 @@ public:
 	}
 
 }; //вектор_итератор
-
 
 template<class T>
 class vector_iterator_reverse
@@ -427,54 +423,6 @@ public:
 	}
 
 }; //вектор итератор реверс
-
-template<typename T_L, typename T_R>
-typename ft::vector_iterator<T_L>::difference_type
-operator==(const ft::vector_iterator<T_L> lhs,
-		   const ft::vector_iterator<T_R> rhs)
-{
-	return (lhs.get_pointer() == rhs.get_pointer());
-}
-
-template<typename T_L, typename T_R>
-typename ft::vector_iterator<T_L>::difference_type
-operator!=(const ft::vector_iterator<T_L> lhs,
-		   const ft::vector_iterator<T_R> rhs)
-{
-	return (lhs.get_pointer() != rhs.get_pointer());
-}
-
-template<typename T_L, typename T_R>
-typename ft::vector_iterator<T_L>::difference_type
-operator<=(const ft::vector_iterator<T_L> lhs,
-		   const ft::vector_iterator<T_R> rhs)
-{
-	return (lhs.get_pointer() <= rhs.get_pointer());
-}
-
-template<typename T_L, typename T_R>
-typename ft::vector_iterator<T_L>::difference_type
-operator<(const ft::vector_iterator<T_L> lhs,
-		  const ft::vector_iterator<T_R> rhs)
-{
-	return (lhs.get_pointer() < rhs.get_pointer());
-}
-
-template<typename T_L, typename T_R>
-typename ft::vector_iterator<T_L>::difference_type
-operator>=(const ft::vector_iterator<T_L> lhs,
-		   const ft::vector_iterator<T_R> rhs)
-{
-	return (lhs.get_pointer() >= rhs.get_pointer());
-}
-
-template<typename T_L, typename T_R>
-typename ft::vector_iterator<T_L>::difference_type
-operator>(const ft::vector_iterator<T_L> lhs,
-		  const ft::vector_iterator<T_R> rhs)
-{
-	return (lhs.get_pointer() > rhs.get_pointer());
-}
 
 template<class Key, class T, class Compare, typename Node> class Map_const_iterator;
 template<class Key, class T, class Compare, typename Node>
