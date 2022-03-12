@@ -8,6 +8,131 @@
 namespace ft
 {
 
+//******************************ITERATOR UTILS******************************
+
+
+//Структуры для идентификации типа итератора
+struct input_iterator_tag {};
+struct forward_iterator_tag {};
+struct bidirectional_iterator_tag {};
+struct random_access_iterator_tag {};
+
+//Базовый шаблон для определения характеристик итераторов
+template<class Iterator>
+struct iterator_traits
+{
+  typedef typename Iterator::difference_type difference_type;
+  typedef typename Iterator::value_type value_type;
+  typedef typename Iterator::pointer pointer;
+  typedef typename Iterator::reference reference;
+  typedef typename Iterator::iterator_category iterator_category;
+};
+
+//Специализация iterator_traits по умолчанию для обычного объекта
+template<class T>
+struct iterator_traits<T *>
+{
+  typedef ptrdiff_t difference_type;
+  typedef T value_type;
+  typedef T *pointer;
+  typedef T &reference;
+  typedef random_access_iterator_tag iterator_category;
+};
+
+//Специализация iterator_traits по умолчанию для константного объекта
+template<class T>
+struct iterator_traits<const T *>
+{
+  typedef ptrdiff_t difference_type;
+  typedef T value_type;
+  typedef const T *pointer;
+  typedef const T &reference;
+  typedef random_access_iterator_tag iterator_category;
+};
+
+/*
+//Возвращает тип итератора
+template<class Iterator>
+typename iterator_traits<Iterator>::iterator_category
+iterator_category(Iterator I)
+{
+	return typename iterator_traits<Iterator>::iterator_category();
+}
+*/
+
+//Distance - разница между последним и первым элементом
+template<class Iterator>
+typename iterator_traits<Iterator>::difference_type
+distance(Iterator first, Iterator last)
+{
+  typename iterator_traits<Iterator>::difference_type dist = 0;
+  while (first != last)
+  {
+	first++;
+	dist++;
+  }
+  return dist;
+}
+
+// Специализации для всех видов итераторов. Царский рандом аксесс умеет вычитать, для всех остальных distance
+// должна считаться через инкремент
+template<class Iterator>
+typename iterator_traits<Iterator>::difference_type
+distance(Iterator first, Iterator last, input_iterator_tag)
+{
+  return ft::distance(first, last);
+}
+
+template<class Iterator>
+typename iterator_traits<Iterator>::difference_type
+distance(Iterator first, Iterator last, forward_iterator_tag)
+{
+  return ft::distance(first, last);
+}
+
+template<class Iterator>
+typename iterator_traits<Iterator>::difference_type
+distance(Iterator first, Iterator last, bidirectional_iterator_tag)
+{
+  return ft::distance(first, last);
+}
+
+template<class Iterator>
+typename iterator_traits<Iterator>::difference_type
+distance(Iterator first, Iterator last, random_access_iterator_tag)
+{
+  return last - first;
+}
+
+//Тоже самое, но для итераторов из стандартной библиотеки
+template<class Iterator>
+typename iterator_traits<Iterator>::difference_type
+distance(Iterator first, Iterator last, std::input_iterator_tag)
+{
+  return ft::distance(first, last);
+}
+
+template<class Iterator>
+typename iterator_traits<Iterator>::difference_type
+distance(Iterator first, Iterator last, std::forward_iterator_tag)
+{
+  return ft::distance(first, last);
+}
+
+template<class Iterator>
+typename iterator_traits<Iterator>::difference_type
+distance(Iterator first, Iterator last, std::bidirectional_iterator_tag)
+{
+  return ft::distance(first, last);
+}
+
+template<class Iterator>
+typename iterator_traits<Iterator>::difference_type
+distance(Iterator first, Iterator last, std::random_access_iterator_tag)
+{
+  return last - first;
+}
+
 template<class Arg1, class Arg2, class Result>
 struct binary_function
 {
@@ -20,8 +145,7 @@ template<class T>
 struct less : binary_function<T, T, bool>
 {
   bool
-  operator()(const T &x, const T &y) const
-  { return (x < y); }
+  operator()(const T &x, const T &y) const { return (x < y); }
 };
 
 // Класс, который создает пару из значений с разными типами
@@ -35,18 +159,15 @@ struct pair
   second_type second;
 
   pair()
-	  : first(), second()
-  {}
+	  : first(), second() {}
 
   // Создает pair-объект из переданного в конструктор pair-объекта
   template<class U, class V>
   pair(const pair<U, V> &pr)
-	  : first(pr.first), second(pr.second)
-  {}
+	  : first(pr.first), second(pr.second) {}
 
   pair(const first_type &a, const second_type &b)
-	  : first(a), second(b)
-  {}
+	  : first(a), second(b) {}
 
   pair &
   operator=(const pair &pr)

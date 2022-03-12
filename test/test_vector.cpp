@@ -12,7 +12,8 @@ std::string
 is_equal_content(
 	std::vector<T> &stl_vector,
 	ft::vector<T> &ft_vector
-) {
+)
+{
   typename ft::vector<T>::iterator ft_it;
   typename std::vector<T>::iterator stl_it;
 
@@ -20,7 +21,8 @@ is_equal_content(
 	return ("NOT EQUAL");
   stl_it = stl_vector.begin();
   ft_it = ft_vector.begin();
-  while (ft_it != ft_vector.end()) {
+  while (ft_it != ft_vector.end())
+  {
 	if (*ft_it != *stl_it)
 	  return ("NOT EQUAL");
 	stl_it++;
@@ -34,7 +36,8 @@ void
 printValues(
 	std::vector<T> &stl_vector,
 	ft::vector<T> &ft_vector, std::string testName
-) {
+)
+{
   //real vector
   std::string stl_empty = ((stl_vector.empty() == 1) ? "true" : "false");
   size_t stl_size = stl_vector.size();
@@ -94,7 +97,8 @@ void
 printVectors(
 	std::vector<T> &stl_vector,
 	ft::vector<T> &ft_vector
-) {
+)
+{
   typename std::vector<T>::iterator stl_it;
   typename ft::vector<T>::iterator ft_it;
   stl_it = stl_vector.begin();
@@ -102,7 +106,8 @@ printVectors(
 
   //печать STL
   std::cout << "STL Vector content: ";
-  while (stl_it != stl_vector.end()) {
+  while (stl_it != stl_vector.end())
+  {
 	std::cout << *stl_it;
 	stl_it++;
 	if (stl_it != stl_vector.end())
@@ -112,7 +117,8 @@ printVectors(
 
   //печать FT
   std::cout << "FT Vector content: ";
-  while (ft_it != ft_vector.end()) {
+  while (ft_it != ft_vector.end())
+  {
 	std::cout << *ft_it;
 	ft_it++;
 	if (ft_it != ft_vector.end())
@@ -124,7 +130,8 @@ printVectors(
 }
 
 void
-test_vector() {
+test_vector()
+{
   std::string testName;
   std::vector<int> myvector;
   for (int i = 1; i <= 5; i++)
@@ -513,39 +520,49 @@ test_vector() {
 
 	printValues(stl_vector, ft_vector, testName);
 
-	bool stl = false;
-	bool ft = false;
+	bool stl;
+	bool ft;
 
-	if (stl_vector == stl_not_equal)
-	  stl = true;
-	if (ft_vector == ft_not_equal)
-	  ft = true;
+	stl = (stl_vector == stl_not_equal);
+	ft = (ft_vector == ft_not_equal);
 	std::cout << "STL: vector1 == vector2? " << stl << std::endl;
 	std::cout << "FT: vector1 == vector2? " << ft << std::endl;
 	std::cout << "\n";
 
-	if (stl_vector == stl_equal)
-	  stl = true;
-	if (ft_vector == ft_equal)
-	  ft = true;
+	stl = (stl_vector == stl_equal);
+	ft = (ft_vector == ft_equal);
 	std::cout << "STL: vector1 == vector2? " << stl << std::endl;
 	std::cout << "FT: vector1 == vector2? " << ft << std::endl;
 	std::cout << "\n";
 
-	if (stl_vector != stl_not_equal)
-	  stl = true;
-	if (ft_vector != ft_not_equal)
-	  ft = true;
+	stl = (stl_vector != stl_not_equal);
+	ft = (ft_vector != ft_not_equal);
 	std::cout << "STL: vector1 != vector2? " << stl << std::endl;
 	std::cout << "FT: vector1 != vector2? " << ft << std::endl;
 	std::cout << "\n";
 
-	if (stl_vector < stl_not_equal)
-	  stl = true;
-	if (ft_vector < ft_not_equal)
-	  ft = true;
+	stl = (stl_vector < stl_not_equal);
+	ft = (ft_vector < ft_not_equal);
 	std::cout << "STL: vector1 < vector2? " << stl << std::endl;
 	std::cout << "FT: vector1 < vector2? " << ft << std::endl;
+	std::cout << "\n";
+
+	stl = (stl_vector > stl_not_equal);
+	ft = (ft_vector > ft_not_equal);
+	std::cout << "STL: vector1 > vector2? " << stl << std::endl;
+	std::cout << "FT: vector1 > vector2? " << ft << std::endl;
+	std::cout << "\n";
+
+	stl = (stl_vector <= stl_not_equal);
+	ft = (ft_vector <= ft_not_equal);
+	std::cout << "STL: vector1 <= vector2? " << stl << std::endl;
+	std::cout << "FT: vector1 <= vector2? " << ft << std::endl;
+	std::cout << "\n";
+
+	stl = (stl_vector >= stl_not_equal);
+	ft = (ft_vector >= ft_not_equal);
+	std::cout << "STL: vector1 >= vector2? " << stl << std::endl;
+	std::cout << "FT: vector1 >= vector2? " << ft << std::endl;
 	std::cout << "\n";
 
 	printVectors(stl_vector, ft_vector);
@@ -559,10 +576,12 @@ test_vector() {
 	ft_vector.push_back(22);
 	ft_vector.push_back(33);
 
-	try {
+	try
+	{
 	  ft_vector.at(3333333) = 50;
 	}
-	catch (const std::out_of_range &e) {
+	catch (const std::out_of_range &e)
+	{
 	  std::cerr << "Error: " << e.what() << std::endl;
 	}
   }
