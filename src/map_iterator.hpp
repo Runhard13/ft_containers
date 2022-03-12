@@ -7,8 +7,8 @@
 
 namespace ft
 {
-
 template<class Key, class T, class Compare, typename Node> class Map_const_iterator;
+
 template<class Key, class T, class Compare, typename Node>
 class Map_iterator
 {
@@ -124,6 +124,7 @@ public:
 	}
 	return (*this);
   }
+
   Map_iterator operator--(int)
   {
 	Map_iterator tmp(*this);
@@ -324,5 +325,4 @@ public:
   const_pointer operator->() const { return (&this->operator*()); }
 };
 }
-
 #endif //FT_CONTAINERS_SRC_MAP_ITERATOR_HPP

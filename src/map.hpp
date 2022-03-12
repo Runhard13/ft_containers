@@ -6,10 +6,11 @@
 #define FT_CONTAINERS_SRC_CONTAINERS_MAP_HPP
 
 #include "utils.hpp"
+#include "map_iterator.hpp"
 
 namespace ft
 {
-template<class Key, class T, class Compare = ft::less<Key>, class Alloc = std::allocator <ft::pair<const Key, T>>>
+template<class Key, class T, class Compare = ft::less<Key>, class Alloc = std::allocator<ft::pair<const Key, T> > >
 class map
 {
   struct Node
@@ -36,17 +37,18 @@ public:
   typedef typename allocator_type::const_reference const_reference;
   typedef typename allocator_type::pointer pointer;
   typedef typename allocator_type::const_pointer const_pointer;
-  typedef Map_iterator <Key, T, Compare, Node> iterator;
-  typedef Map_const_iterator <Key, T, Compare, Node> const_iterator;
-  typedef Map_const_reverse_iterator <Key, T, Compare, Node> const_reverse_iterator;
-  typedef Map_reverse_iterator <Key, T, Compare, Node> reverse_iterator;
+
+  typedef Map_iterator<Key, T, Compare, Node> iterator;
+  typedef Map_const_iterator<Key, T, Compare, Node> const_iterator;
+  typedef Map_const_reverse_iterator<Key, T, Compare, Node> const_reverse_iterator;
+  typedef Map_reverse_iterator<Key, T, Compare, Node> reverse_iterator;
   typedef ptrdiff_t difference_type;
   typedef size_t size_type;
 
 private:
 
   Node *_root;
-  Node *_lastinsert;
+  Node *_last_inserted;
   size_type _size;
   key_compare _comp;
   allocator_type _alloc;
@@ -57,10 +59,20 @@ public:
 
   explicit map(const key_compare &comp = key_compare(),
 			   const allocator_type &alloc = allocator_type())
-	  : _root(NULL), _lastinsert(NULL), _size(0), _comp(comp), _alloc(alloc) {}
+	  : _root(NULL), _last_inserted(NULL), _size(0), _comp(comp), _alloc(alloc) {}
+
+  template<class InputIterator>
+  map(InputIterator first, InputIterator last,
+	  const key_compare &comp = key_compare(),
+	  const allocator_type &alloc = allocator_type())
+	  : _root(NULL), _last_inserted(NULL), _size(0), _comp(comp), _alloc(alloc)
+  {
+	while (first != last)
+	  this->insert(*first++);
+  }
 
   map(const map &x)
-	  : _root(NULL), _lastinsert(NULL), _size(0), _comp(key_compare()), _alloc(allocator_type())
+	  : _root(NULL), _last_inserted(NULL), _size(0), _comp(key_compare()), _alloc(allocator_type())
   {
 	const_iterator ite = x.end();
 	for (const_iterator it = x.begin(); it != ite; it++)
@@ -148,8 +160,8 @@ public:
   {
 	size_type size_before = this->size();
 	_root = this->tree_insert(_root, NULL, val);
-	Node *newnode = _lastinsert;
-	_lastinsert = NULL;
+	Node *newnode = _last_inserted;
+	_last_inserted = NULL;
 	return (ft::pair<iterator, bool>(iterator(newnode),
 									 (this->size() > size_before)));
   }
@@ -181,15 +193,13 @@ public:
 		_root = _root->parent;
 	  _root = this->tree_balance(_root);
 	}
-	Node *new_node = _lastinsert;
-	_lastinsert = NULL;
+	Node *new_node = _last_inserted;
+	_last_inserted = NULL;
 	return (iterator(new_node));
   }
 
   template<class InputIterator>
-  void
-  insert(typename ft::enable_if<!std::numeric_limits<InputIterator>
-  ::is_integer, InputIterator>::type first, InputIterator last)
+  void insert(InputIterator first, InputIterator last)
   {
 	while (first != last)
 	  this->insert(*first++);
@@ -338,20 +348,20 @@ public:
 	return (upper);
   }
 
-  pair <const_iterator, const_iterator>
+  pair<const_iterator, const_iterator>
   equal_range(const key_type &k) const
   {
-	pair <const_iterator, const_iterator> range;
+	pair<const_iterator, const_iterator> range;
 
 	range.first = this->lower_bound(k);
 	range.second = this->upper_bound(k);
 	return (range);
   }
 
-  pair <iterator, iterator>
+  pair<iterator, iterator>
   equal_range(const key_type &k)
   {
-	pair <iterator, iterator> range;
+	pair<iterator, iterator> range;
 
 	range.first = this->lower_bound(k);
 	range.second = this->upper_bound(k);
@@ -401,8 +411,8 @@ private:
 	if (new_parent->left)
 	  new_parent->left->parent = node;
 	new_parent->left = node;
-	node->height = std::max(tree_height(node->left), tree_height(node->right)) + 1;
-	new_parent->height = std::max(tree_height(new_parent->left), tree_height(new_parent->right)) + 1;
+	node->height = ft::max(tree_height(node->left), tree_height(node->right)) + 1;
+	new_parent->height = ft::max(tree_height(new_parent->left), tree_height(new_parent->right)) + 1;
 	return (new_parent);
   }
 
@@ -417,8 +427,8 @@ private:
 	if (new_parent->right)
 	  new_parent->right->parent = node;
 	new_parent->right = node;
-	node->height = std::max(tree_height(node->left), tree_height(node->right)) + 1;
-	new_parent->height = std::max(tree_height(new_parent->left), tree_height(new_parent->right)) + 1;
+	node->height = ft::max(tree_height(node->left), tree_height(node->right)) + 1;
+	new_parent->height = ft::max(tree_height(new_parent->left), tree_height(new_parent->right)) + 1;
 	return (new_parent);
   }
 
@@ -463,7 +473,7 @@ private:
 	new_node->parent = parent;
 	_alloc.construct(&new_node->val, val);
 	_size++;
-	_lastinsert = new_node;
+	_last_inserted = new_node;
 	return (new_node);
   }
 
@@ -476,8 +486,8 @@ private:
 	else if (_comp(node->val.first, val.first))
 	  node->right = tree_insert(node->right, node, val);
 	else
-	  return (_lastinsert = node);
-	node->height = 1 + std::max(tree_height(node->left), tree_height(node->right));
+	  return (_last_inserted = node);
+	node->height = 1 + ft::max(tree_height(node->left), tree_height(node->right));
 	int factor = tree_getbalance(node);
 	if (factor > 1)
 	{
@@ -588,9 +598,7 @@ private:
   }
 };
 
-/*
-** -------------------------------- OVERLOADS ----------------------------------
-*/
+//******************************RELATION OPERATORS******************************
 
 template<class Key, class T, class Compare, class Alloc>
 bool operator<(const map<Key, T, Compare, Alloc> &lhs,
@@ -642,9 +650,6 @@ void swap(map<Key, T, Compare, Alloc> &x, map<Key, T, Compare, Alloc> &y)
 {
   x.swap(y);
 }
-}
-
-};
-}
+} // ft
 
 #endif //FT_CONTAINERS_SRC_CONTAINERS_MAP_HPP
