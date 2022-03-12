@@ -8,7 +8,7 @@
 namespace ft = std;
 #else
 #include <src/map.hpp>
-#include <srcstack.hpp>
+#include <src/stack.hpp>
 #include <src/vector.hpp>
 #endif
 
@@ -25,10 +25,12 @@ struct Buffer
 #define COUNT (MAX_RAM / (int)sizeof(Buffer))
 
 void test_vector();
+void test_stack();
 
 int main()
 {
 
-  test_vector();
+  //test_vector();
+  test_stack();
   return (0);
 }

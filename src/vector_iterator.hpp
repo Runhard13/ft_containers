@@ -10,21 +10,17 @@
 
 namespace ft
 {
-
-
-
 //******************************RANDOM ACCESS ITERATOR******************************
 
 template<typename T>
 class vector_iterator
 {
-
 public:
-  typedef T value_type;
-  typedef ptrdiff_t difference_type;
-  typedef value_type *pointer;
-  typedef value_type &reference;
-  typedef random_access_iterator_tag iterator_category;
+  typedef T								value_type;
+  typedef ptrdiff_t 					difference_type;
+  typedef value_type 					*pointer;
+  typedef value_type 					&reference;
+  typedef random_access_iterator_tag 	iterator_category;
 
 private:
   pointer _pointer;
@@ -46,7 +42,7 @@ public:
   bool
   operator==(const vector_iterator &it) const
   {
-	return (_pointer == it._pointer);
+    return (_pointer == it._pointer);
   }
 
   bool
@@ -55,7 +51,6 @@ public:
 	return (_pointer != it._pointer);
   }
 
-  //Разыменование
   reference
   operator*() const { return (*_pointer); }
   pointer
@@ -63,13 +58,14 @@ public:
   reference
   operator[](size_t n) { return _pointer[n]; }
 
-  virtual //Инкремент, декремент с префиксом и постфиксом
+  virtual
   vector_iterator &
   operator++()
   {
 	_pointer++;
 	return (*this);
   }
+
   virtual const vector_iterator
   operator++(int)
   {
@@ -91,7 +87,6 @@ public:
 	return (tmp);
   }
 
-  // Плюс, минус
   vector_iterator
   operator+(difference_type n) const
   {
@@ -125,7 +120,6 @@ public:
 	return (*this);
   }
 
-  //Неравенства
   bool
   operator<(const vector_iterator &other) const
   {
@@ -153,20 +147,20 @@ template<class T>
 class vector_iterator_reverse
 {
 public:
-  typedef T value_type;
-  typedef ptrdiff_t difference_type;
-  typedef value_type *pointer;
-  typedef value_type &reference;
-  typedef random_access_iterator_tag iterator_category;
+  typedef T 							value_type;
+  typedef ptrdiff_t 					difference_type;
+  typedef value_type 					*pointer;
+  typedef value_type 					&reference;
+  typedef random_access_iterator_tag 	iterator_category;
 protected:
   vector_iterator<T> _base;
 
 public:
 
-  explicit vector_iterator_reverse(pointer ptr = NULL)
-	  : _base(vector_iterator<T>(ptr)) {}
-  explicit vector_iterator_reverse(vector_iterator<T> from)
-	  : _base(--from) {}
+  vector_iterator_reverse(pointer ptr = NULL)
+  : _base(vector_iterator<T>(ptr)) {};
+  vector_iterator_reverse(vector_iterator<T> from)
+  : _base(--from) {}
 
   vector_iterator<T>
   base() const

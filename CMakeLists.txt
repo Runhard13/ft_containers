@@ -6,4 +6,5 @@ set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror")
 
 add_executable(ft_containers
         test/main.cpp
-        test/test_vector.cpp src/map_iterator.hpp)
+        test/test_vector.cpp
+        test/test_stack.cpp)

@@ -1,4 +1,4 @@
-#include "../src/vector.hpp"
+#include "../src/map.hpp"
 #include <vector>
 #include <iostream>
 #include <iomanip>
@@ -568,7 +568,6 @@ test_vector()
 	printVectors(stl_vector, ft_vector);
 
   }
-  /*
   //тестируем эксепшн, который должен бросать at при попытке получить доступ к элементу вне границ контейнера
   {
 	ft::vector<int> ft_vector(3);
@@ -586,5 +585,5 @@ test_vector()
 	  std::cerr << "Error: " << e.what() << std::endl;
 	}
   }
-*/
+
 }
