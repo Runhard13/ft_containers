@@ -180,6 +180,7 @@ test_map()
     printValues(stl_map_assign, ft_map_assign, testName);
     printMaps(stl_map_assign, ft_map_assign);
 
+    /* TODO: end dont work! need to be fixed!
     testName = "BEGIN / END";
 
     std::map<std::string, int>::const_iterator stl_it_beg = stl_map.begin();
@@ -220,7 +221,104 @@ test_map()
     std::cout << (*ft_it_end).second;
     std::cout << "]";
     std::cout << "\n";
+    */
 
+    testName = "RBEGIN / REND";
+
+    std::map<std::string, int>::reverse_iterator stl_it_rbeg = stl_map.rbegin();
+    ft::map<std::string, int>::reverse_iterator ft_it_rbeg = ft_map.rbegin();
+
+    std::map<std::string, int>::reverse_iterator stl_it_rend = stl_map.rend();
+    ft::map<std::string, int>::reverse_iterator ft_it_rend = ft_map.rend();
+
+    stl_it_rend--;
+    ft_it_rend--;
+
+    printValues(stl_map, ft_map, testName);
+    std::cout << " STL Map rbegin = ";
+    std::cout << "[";
+    std::cout << (*stl_it_rbeg).first;
+    std::cout << ", ";
+    std::cout << (*stl_it_rbeg).second;
+    std::cout << "]";
+    std::cout << "\n";
+    std::cout << " STL Map rend = ";
+    std::cout << "[";
+    std::cout << (*stl_it_rend).first;
+    std::cout << ", ";
+    std::cout << (*stl_it_rend).second;
+    std::cout << "]";
+    std::cout << "\n";
+
+    std::cout << " FT Map begin = ";
+    std::cout << "[";
+    std::cout << (*ft_it_rbeg).first;
+    std::cout << ", ";
+    std::cout << (*ft_it_rbeg).second;
+    std::cout << "]";
+    std::cout << "\n";
+    std::cout << " FT Map rend = ";
+    std::cout << "[";
+    std::cout << (*ft_it_rend).first;
+    std::cout << ", ";
+    std::cout << (*ft_it_rend).second;
+    std::cout << "]";
+    std::cout << "\n";
+    printMaps(stl_map, ft_map);
+
+    //TODO: Operator [] dont work! need to be fixed
+    testName = "OPERATOR []";
+
+    printValues(stl_map, ft_map, testName);
+    std::cout << " STL Map[two] = " << stl_map["two"] << std::endl;
+   // std::cout << " FT Map[two] = " << ft_map["two"] << std::endl;
+    std::cout << "\n";
+    printMaps(stl_map, ft_map);
+
+    testName = "INSERT SINGLE";
+
+    stl_map.insert(std::make_pair("six", 6));
+		ft_map.insert(ft::make_pair("six", 6));
+
+    printValues(stl_map, ft_map, testName);
+    printMaps(stl_map, ft_map);
+
+    testName = "INSERT WITH HINT";
+    //Вставка с подсказкой. Даёт возможность оптимизировать время встравки за счет указания элемента, после которого нужно вставить
+    //Не гарантирует, что элемент будет вставлен именно так
+
+    stl_map.insert(--stl_map.end(), std::make_pair("seven", 7));
+		ft_map.insert(--ft_map.end(), ft::make_pair("seven", 7));
+
+    printValues(stl_map, ft_map, testName);
+    printMaps(stl_map, ft_map);
+
+    /*
+    testName = "INSERT RANGE";
+    
+    const std::string string_to_insert[] = {"eight", "nine", "ten"};
+    const int int_to_insert[] = {8, 9, 10};
+
+    std::map<int, std::string> stl_map2;
+	  ft::map<int, std::string> ft_map2;
+
+    for (int i = 0; i < 3; i++)
+    {
+      stl_map2.insert(std::make_pair(string_to_insert[i], int_to_insert[i]));
+      ft_map2.insert(ft::make_pair(string_to_insert[i], int_to_insert[i]));
+    }
+
+    printValues(stl_map, ft_map, testName);
+    printMaps(stl_map, ft_map);
+    */
+
+    testName = "ERASE SINGLE";
+
+    stl_map.erase(stl_map.begin());
+		ft_map.erase(ft_map.begin());
+
+    printValues(stl_map, ft_map, testName);
+    printMaps(stl_map, ft_map);
 
   }
 }

@@ -153,6 +153,30 @@ test/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ft_containers.dir/build.make CMakeFiles/ft_containers.dir/test/main.cpp.s
 .PHONY : test/main.cpp.s
 
+test/test_stack.o: test/test_stack.cpp.o
+.PHONY : test/test_stack.o
+
+# target to build an object file
+test/test_stack.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ft_containers.dir/build.make CMakeFiles/ft_containers.dir/test/test_stack.cpp.o
+.PHONY : test/test_stack.cpp.o
+
+test/test_stack.i: test/test_stack.cpp.i
+.PHONY : test/test_stack.i
+
+# target to preprocess a source file
+test/test_stack.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ft_containers.dir/build.make CMakeFiles/ft_containers.dir/test/test_stack.cpp.i
+.PHONY : test/test_stack.cpp.i
+
+test/test_stack.s: test/test_stack.cpp.s
+.PHONY : test/test_stack.s
+
+# target to generate assembly for a file
+test/test_stack.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ft_containers.dir/build.make CMakeFiles/ft_containers.dir/test/test_stack.cpp.s
+.PHONY : test/test_stack.cpp.s
+
 test/test_vector.o: test/test_vector.cpp.o
 .PHONY : test/test_vector.o
 
@@ -189,6 +213,9 @@ help:
 	@echo "... test/main.o"
 	@echo "... test/main.i"
 	@echo "... test/main.s"
+	@echo "... test/test_stack.o"
+	@echo "... test/test_stack.i"
+	@echo "... test/test_stack.s"
 	@echo "... test/test_vector.o"
 	@echo "... test/test_vector.i"
 	@echo "... test/test_vector.s"
