@@ -293,7 +293,7 @@ test_map()
     printValues(stl_map, ft_map, testName);
     printMaps(stl_map, ft_map);
 
-    /*
+    /* TODO: Insert range dont work. Need to be fixed!
     testName = "INSERT RANGE";
     
     const std::string string_to_insert[] = {"eight", "nine", "ten"};
@@ -315,10 +315,96 @@ test_map()
     testName = "ERASE SINGLE";
 
     stl_map.erase(stl_map.begin());
-		ft_map.erase(ft_map.begin());
+	ft_map.erase(ft_map.begin());
 
     printValues(stl_map, ft_map, testName);
     printMaps(stl_map, ft_map);
 
+	testName = "ERASE RANGE";
+
+	std::map<std::string, int>::iterator stl_erase_start = stl_map.begin();
+	std::map<std::string, int>::iterator stl_erase_end = stl_map.end();
+
+	ft::map<std::string, int>::iterator ft_erase_start = ft_map.begin();
+	ft::map<std::string, int>::iterator ft_erase_end = ft_map.end();
+
+	for (int i = 0; i < 3 ; i++)
+	{
+	  stl_erase_start++;
+	  ft_erase_start++;
+	}
+
+	stl_map.erase(stl_erase_start, stl_erase_end);
+	ft_map.erase(ft_erase_start, ft_erase_end);
+
+	printValues(stl_map, ft_map, testName);
+	printMaps(stl_map, ft_map);
+
+	testName = "SWAP";
+
+	std::map<std::string , int> stl_map_swap;
+	ft::map<std::string , int> ft_map_swap;
+
+	stl_map_swap = stl_map_assign;
+	ft_map_swap = ft_map_assign;
+
+	stl_map.swap(stl_map_swap);
+	ft_map.swap(ft_map_swap);
+
+	printValues(stl_map, ft_map, testName);
+	printMaps(stl_map, ft_map);
+
+	testName = "CLEAR";
+
+	stl_map.clear();
+	ft_map.clear();
+
+	printValues(stl_map, ft_map, testName);
+	printMaps(stl_map, ft_map);
+
+	testName = "KEY COMPARE";
+
+	std::map<std::string, int>::key_compare stl_key = std::map<std::string, int>().key_comp();
+	ft::map<std::string, int>::key_compare ft_key = ft::map<std::string, int>().key_comp();
+
+	printValues(stl_map, ft_map, testName);
+	bool stl_res = stl_key("A", "B");
+	std::cout << "STL key compare result (A < B?) = " << stl_res << std::endl;
+	stl_res = stl_key("X", "A");
+	std::cout << "STL key compare result (X < A?) = " << stl_res << std::endl;
+	std::cout << "\n";
+
+	bool ft_res = ft_key("A", "B");
+	std::cout << "FT key compare result (A < B?) = " << ft_res << std::endl;
+	ft_res = ft_key("X", "A");
+	std::cout << "FT key compare result (X < A?) = " << ft_res << std::endl;
+	std::cout << "\n";
+	printMaps(stl_map, ft_map);
+  }
+
+  {
+	testName = "VALUE COMPARE";
+
+	std::map<std::string, int> stl_map;
+	ft::map<std::string, int> ft_map;
+
+	std::map<std::string, int>::value_compare stl_key = std::map<std::string, int>().value_comp();
+	ft::map<std::string, int>::value_compare ft_key = ft::map<std::string, int>().value_comp();
+
+	printValues(stl_map, ft_map, testName);
+
+	bool stl_res = stl_key(std::make_pair("A", 1), std::make_pair("A", 2));
+	std::cout << "STL value compare result (1 < 2?) = " << stl_res << std::endl;
+	stl_res = stl_key(std::make_pair("A", 10), std::make_pair("A", 2));
+	std::cout << "STL value compare result (10 < 2?) = " << stl_res << std::endl;
+	std::cout << "\n";
+
+	bool ft_res = ft_key(ft::make_pair("A", 1), ft::make_pair("B", 2));
+	std::cout << "FT value compare result (1 < 2?) = " << ft_res << std::endl;
+	ft_res = ft_key(ft::make_pair("A", 10), ft::make_pair("B", 2));
+	std::cout << "FT value compare result (10 < 2?) = " << ft_res << std::endl;
+	std::cout << "\n";
+
+	printMaps(stl_map, ft_map);
   }
 }

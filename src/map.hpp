@@ -247,6 +247,7 @@ public:
   key_compare
   key_comp() const { return (_comp); }
 
+
   class value_compare
   {
 	// in C++98, it is required to inherit binary_function<value_type,value_type,bool>
@@ -265,10 +266,8 @@ public:
 	}
 
   protected:
-
 	key_compare comp;
-
-	value_compare(Compare c) : comp(c) {}
+	value_compare(Compare c) : comp(c) {} // constructed with map's comparison object
   };
 
   value_compare
