@@ -46,8 +46,7 @@ void vector_perform() {
 
   //удаление
   start = clock();
-  for (size_t i = 0; i < stl_vector.size(); i++)
-	stl_vector.erase(stl_vector.begin() + i);
+  stl_vector.erase(stl_vector.begin(), stl_vector.begin() + 200);
   end = clock();
 
   time_taken = end - start;
@@ -81,8 +80,7 @@ void vector_perform() {
 
   //удаление
   start = clock();
-  for (size_t i = 0; i < ft_vector.size(); i++)
-	ft_vector.erase(ft_vector.begin() + i);
+  ft_vector.erase(ft_vector.begin(), ft_vector.begin() + 200);
   end = clock();
 
   time_taken = end - start;
@@ -94,7 +92,7 @@ void vector_perform() {
   if (total_ft / total_stl > 1)
 	std::cout << "FT vector slower in " << total_ft / total_stl << " times";
   else
-	std::cout << "FT vector faster in" << total_stl / total_ft << " times";
+	std::cout << "FT vector faster in " << total_stl / total_ft << " times";
 
 }
 
@@ -186,9 +184,9 @@ void map_perform() {
   std::cout << "\n";
 
   if (total_ft / total_stl > 1)
-	std::cout << "FT vector slower in " << total_ft / total_stl << " times";
+	std::cout << "FT map slower in " << total_ft / total_stl << " times";
   else
-	std::cout << "FT vector faster in " << total_stl / total_ft << " times";
+	std::cout << "FT map faster in " << total_stl / total_ft << " times";
 }
 
 void stack_perform() {
