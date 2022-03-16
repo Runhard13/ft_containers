@@ -6,4 +6,8 @@ cmake_install.cmake
 CMakeCache.txt
 build/
 start
+performance_test
+performance_test_result.txt
+main_test
+main_test_result.txt
 test_result.txt

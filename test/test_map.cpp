@@ -7,34 +7,30 @@ template<class T>
 std::string
 is_equal(const T &t1, const T &t2) { return t1 == t2 ? "ok" : "not ok"; }
 
-
-template <class Ta, class Tb>
-	std::string is_equal_content(
-		const std::map<Ta, Tb> & stl_map,
-		const ft::map<Ta, Tb> & ft_map
-		)
-  {
-    typename ft::map<Ta, Tb>::const_iterator ft_it;
-    typename std::map<Ta, Tb>::const_iterator stl_it;
-    if (ft_map.size() != stl_map.size())
-      return ("NOT EQUAL");
-    stl_it = stl_map.begin();
-    for(ft_it = ft_map.begin(); ft_it != ft_map.end(); ft_it++)
-    {
-      if ((*ft_it).first != (*stl_it).first || (*ft_it).second != (*stl_it).second)
-        return ("NOT EQUAL");
-      stl_it++;
-    }
-    return ("EQUAL");
+template<class Ta, class Tb>
+std::string is_equal_content(
+	const std::map<Ta, Tb> &stl_map,
+	const ft::map<Ta, Tb> &ft_map
+) {
+  typename ft::map<Ta, Tb>::const_iterator ft_it;
+  typename std::map<Ta, Tb>::const_iterator stl_it;
+  if (ft_map.size() != stl_map.size())
+	return ("NOT EQUAL");
+  stl_it = stl_map.begin();
+  for (ft_it = ft_map.begin(); ft_it != ft_map.end(); ft_it++) {
+	if ((*ft_it).first != (*stl_it).first || (*ft_it).second != (*stl_it).second)
+	  return ("NOT EQUAL");
+	stl_it++;
   }
+  return ("EQUAL");
+}
 
 template<class Ta, class Tb>
 void
 printValues(
 	std::map<Ta, Tb> &stl_map,
-	ft::map<Ta, Tb> &ft_map, const std::string& testName
-)
-{
+	ft::map<Ta, Tb> &ft_map, const std::string &testName
+) {
   //stl map
   std::string stl_empty = ((stl_map.empty() == 1) ? "true" : "false");
   size_t stl_size = stl_map.size();
@@ -86,8 +82,7 @@ void
 printMaps(
 	std::map<Ta, Tb> &stl_map,
 	ft::map<Ta, Tb> &ft_map
-)
-{
+) {
   typename ft::map<Ta, Tb>::const_iterator ft_it;
   typename std::map<Ta, Tb>::const_iterator stl_it;
   stl_it = stl_map.begin();
@@ -95,31 +90,29 @@ printMaps(
 
   //печать STL
   std::cout << "STL Map content: ";
-  while (stl_it != stl_map.end())
-  {
-    std::cout << "[";
-    std::cout << (*stl_it).first;
-    std::cout << ", ";
-    std::cout << (*stl_it).second;
-    std::cout << "]";
-    stl_it++;
-    if (stl_it != stl_map.end())
-      std::cout << ", ";
+  while (stl_it != stl_map.end()) {
+	std::cout << "[";
+	std::cout << (*stl_it).first;
+	std::cout << ", ";
+	std::cout << (*stl_it).second;
+	std::cout << "]";
+	stl_it++;
+	if (stl_it != stl_map.end())
+	  std::cout << ", ";
   }
   std::cout << "\n";
 
   //печать FT
   std::cout << "FT Map content: ";
-  while (ft_it != ft_map.end())
-  {
-    std::cout << "[";
-    std::cout << (*ft_it).first;
-    std::cout << ", ";
-    std::cout << (*ft_it).second;
-    std::cout << "]";
-    ft_it++;
-    if (ft_it != ft_map.end())
-      std::cout << ", ";
+  while (ft_it != ft_map.end()) {
+	std::cout << "[";
+	std::cout << (*ft_it).first;
+	std::cout << ", ";
+	std::cout << (*ft_it).second;
+	std::cout << "]";
+	ft_it++;
+	if (ft_it != ft_map.end())
+	  std::cout << ", ";
   }
 
   std::cout << "\n";
@@ -128,12 +121,11 @@ printMaps(
 }
 
 void
-test_map()
-{
+test_map() {
+  std::cout << "**********MAP TEST**********\n";
   std::string testName;
   const std::string string_array[] = {"one", "two", "three", "four", "five"};
   const int int_array[] = {1, 2, 3, 4, 5};
-
 
   {
 	testName = "DEFAULT CONSTRUCTOR";
@@ -147,178 +139,184 @@ test_map()
   }
 
   {
-    testName = "RANGE CONSTRUCTOR";
+	testName = "RANGE CONSTRUCTOR";
 
-    std::map<std::string , int> stl_map;
-    ft::map<std::string , int> ft_map;
+	std::map<std::string, int> stl_map;
+	ft::map<std::string, int> ft_map;
 
-    for (int i = 0; i < 5; i++)
-    {
-      stl_map.insert(std::make_pair(string_array[i], int_array[i]));
-      ft_map.insert(ft::make_pair(string_array[i], int_array[i]));
-    }
+	for (int i = 0; i < 5; i++) {
+	  stl_map.insert(std::make_pair(string_array[i], int_array[i]));
+	  ft_map.insert(ft::make_pair(string_array[i], int_array[i]));
+	}
 
-    printValues(stl_map, ft_map, testName);
-    printMaps(stl_map, ft_map);
+	printValues(stl_map, ft_map, testName);
+	printMaps(stl_map, ft_map);
 
-    testName = "COPY CONSTRUCTOR";
+	testName = "COPY CONSTRUCTOR";
 
-    ft::map<std::string, int> ft_map_copy(ft_map);
-    std::map<std::string, int> stl_map_copy(stl_map);
+	ft::map<std::string, int> ft_map_copy(ft_map);
+	std::map<std::string, int> stl_map_copy(stl_map);
 
-    printValues(stl_map_copy, ft_map_copy, testName);
-    printMaps(stl_map_copy, ft_map_copy);
+	printValues(stl_map_copy, ft_map_copy, testName);
+	printMaps(stl_map_copy, ft_map_copy);
 
-    testName = "OPERATOR=";
+	testName = "OPERATOR=";
 
-    ft::map<std::string, int> ft_map_assign(ft_map);
-    std::map<std::string, int> stl_map_assign(stl_map);
+	ft::map<std::string, int> ft_map_assign(ft_map);
+	std::map<std::string, int> stl_map_assign(stl_map);
 
-    ft_map_assign = ft_map;
-    stl_map_assign = stl_map;
+	ft_map_assign = ft_map;
+	stl_map_assign = stl_map;
 
-    printValues(stl_map_assign, ft_map_assign, testName);
-    printMaps(stl_map_assign, ft_map_assign);
+	printValues(stl_map_assign, ft_map_assign, testName);
+	printMaps(stl_map_assign, ft_map_assign);
 
-    /* TODO: end dont work! need to be fixed!
-    testName = "BEGIN / END";
+	testName = "BEGIN / END";
 
-    std::map<std::string, int>::const_iterator stl_it_beg = stl_map.begin();
-    ft::map<std::string, int>::const_iterator ft_it_beg = ft_map.begin();
+	std::map<std::string, int>::iterator stl_it_beg = stl_map.begin();
+	ft::map<std::string, int>::iterator ft_it_beg = ft_map.begin();
 
-    std::map<std::string, int>::const_iterator stl_it_end = stl_map.end();
-    ft::map<std::string, int>::const_iterator ft_it_end = ft_map.end();
-    stl_it_end--;
-    ft_it_end--;
+	std::map<std::string, int>::iterator stl_it_end = stl_map.end();
+	ft::map<std::string, int>::iterator ft_it_end = ft_map.end();
+	stl_it_end--;
+	ft_it_end--;
 
+	printValues(stl_map, ft_map, testName);
+	std::cout << " STL Map begin = ";
+	std::cout << "[";
+	std::cout << (*stl_it_beg).first;
+	std::cout << ", ";
+	std::cout << (*stl_it_beg).second;
+	std::cout << "]";
+	std::cout << "\n";
+	std::cout << " STL Map end = ";
+	std::cout << "[";
+	std::cout << (*stl_it_end).first;
+	std::cout << ", ";
+	std::cout << (*stl_it_end).second;
+	std::cout << "]";
+	std::cout << "\n";
 
-    std::cout << " STL Map begin = ";
-    std::cout << "[";
-    std::cout << (*stl_it_beg).first;
-    std::cout << ", ";
-    std::cout << (*stl_it_beg).second;
-    std::cout << "]";
-    std::cout << "\n";
-    std::cout << " STL Map end = ";
-    std::cout << "[";
-    std::cout << (*stl_it_end).first;
-    std::cout << ", ";
-    std::cout << (*stl_it_end).second;
-    std::cout << "]";
-    std::cout << "\n";
+	std::cout << " FT Map begin = ";
+	std::cout << "[";
+	std::cout << (*ft_it_beg).first;
+	std::cout << ", ";
+	std::cout << (*ft_it_beg).second;
+	std::cout << "]";
+	std::cout << "\n";
+	std::cout << " STL Map end = ";
+	std::cout << "[";
+	std::cout << (*ft_it_end).first;
+	std::cout << ", ";
+	std::cout << (*ft_it_end).second;
+	std::cout << "]";
+	std::cout << "\n";
+	printMaps(stl_map, ft_map);
 
-    std::cout << " FT Map begin = ";
-    std::cout << "[";
-    std::cout << (*ft_it_beg).first;
-    std::cout << ", ";
-    std::cout << (*ft_it_beg).second;
-    std::cout << "]";
-    std::cout << "\n";
-    std::cout << " STL Map end = ";
-    std::cout << "[";
-    std::cout << (*ft_it_end).first;
-    std::cout << ", ";
-    std::cout << (*ft_it_end).second;
-    std::cout << "]";
-    std::cout << "\n";
-    */
+	testName = "RBEGIN / REND";
 
-    testName = "RBEGIN / REND";
+	std::map<std::string, int>::reverse_iterator stl_it_rbeg = stl_map.rbegin();
+	ft::map<std::string, int>::reverse_iterator ft_it_rbeg = ft_map.rbegin();
 
-    std::map<std::string, int>::reverse_iterator stl_it_rbeg = stl_map.rbegin();
-    ft::map<std::string, int>::reverse_iterator ft_it_rbeg = ft_map.rbegin();
+	std::map<std::string, int>::reverse_iterator stl_it_rend = stl_map.rend();
+	ft::map<std::string, int>::reverse_iterator ft_it_rend = ft_map.rend();
 
-    std::map<std::string, int>::reverse_iterator stl_it_rend = stl_map.rend();
-    ft::map<std::string, int>::reverse_iterator ft_it_rend = ft_map.rend();
+	stl_it_rend--;
+	ft_it_rend--;
 
-    stl_it_rend--;
-    ft_it_rend--;
+	printValues(stl_map, ft_map, testName);
+	std::cout << " STL Map rbegin = ";
+	std::cout << "[";
+	std::cout << (*stl_it_rbeg).first;
+	std::cout << ", ";
+	std::cout << (*stl_it_rbeg).second;
+	std::cout << "]";
+	std::cout << "\n";
+	std::cout << " STL Map rend = ";
+	std::cout << "[";
+	std::cout << (*stl_it_rend).first;
+	std::cout << ", ";
+	std::cout << (*stl_it_rend).second;
+	std::cout << "]";
+	std::cout << "\n";
 
-    printValues(stl_map, ft_map, testName);
-    std::cout << " STL Map rbegin = ";
-    std::cout << "[";
-    std::cout << (*stl_it_rbeg).first;
-    std::cout << ", ";
-    std::cout << (*stl_it_rbeg).second;
-    std::cout << "]";
-    std::cout << "\n";
-    std::cout << " STL Map rend = ";
-    std::cout << "[";
-    std::cout << (*stl_it_rend).first;
-    std::cout << ", ";
-    std::cout << (*stl_it_rend).second;
-    std::cout << "]";
-    std::cout << "\n";
+	std::cout << " FT Map begin = ";
+	std::cout << "[";
+	std::cout << (*ft_it_rbeg).first;
+	std::cout << ", ";
+	std::cout << (*ft_it_rbeg).second;
+	std::cout << "]";
+	std::cout << "\n";
+	std::cout << " FT Map rend = ";
+	std::cout << "[";
+	std::cout << (*ft_it_rend).first;
+	std::cout << ", ";
+	std::cout << (*ft_it_rend).second;
+	std::cout << "]";
+	std::cout << "\n";
+	printMaps(stl_map, ft_map);
 
-    std::cout << " FT Map begin = ";
-    std::cout << "[";
-    std::cout << (*ft_it_rbeg).first;
-    std::cout << ", ";
-    std::cout << (*ft_it_rbeg).second;
-    std::cout << "]";
-    std::cout << "\n";
-    std::cout << " FT Map rend = ";
-    std::cout << "[";
-    std::cout << (*ft_it_rend).first;
-    std::cout << ", ";
-    std::cout << (*ft_it_rend).second;
-    std::cout << "]";
-    std::cout << "\n";
-    printMaps(stl_map, ft_map);
+	testName = "OPERATOR []";
 
-    //TODO: Operator [] dont work! need to be fixed
-    testName = "OPERATOR []";
+	printValues(stl_map, ft_map, testName);
+	std::cout << " STL Map[two] = " << stl_map["two"] << std::endl;
+	std::cout << " FT Map[two] = " << ft_map["two"] << std::endl;
+	std::cout << "\n";
+	printMaps(stl_map, ft_map);
 
-    printValues(stl_map, ft_map, testName);
-    std::cout << " STL Map[two] = " << stl_map["two"] << std::endl;
-   // std::cout << " FT Map[two] = " << ft_map["two"] << std::endl;
-    std::cout << "\n";
-    printMaps(stl_map, ft_map);
+	testName = "INSERT SINGLE";
 
-    testName = "INSERT SINGLE";
+	stl_map.insert(std::make_pair("six", 6));
+	ft_map.insert(ft::make_pair("six", 6));
 
-    stl_map.insert(std::make_pair("six", 6));
-		ft_map.insert(ft::make_pair("six", 6));
+	printValues(stl_map, ft_map, testName);
+	printMaps(stl_map, ft_map);
 
-    printValues(stl_map, ft_map, testName);
-    printMaps(stl_map, ft_map);
+	testName = "INSERT WITH HINT";
+	//Вставка с подсказкой. Даёт возможность оптимизировать время встравки за счет указания элемента, после которого нужно вставить
+	//Не гарантирует, что элемент будет вставлен именно так
 
-    testName = "INSERT WITH HINT";
-    //Вставка с подсказкой. Даёт возможность оптимизировать время встравки за счет указания элемента, после которого нужно вставить
-    //Не гарантирует, что элемент будет вставлен именно так
+	stl_map.insert(--stl_map.end(), std::make_pair("seven", 7));
+	ft_map.insert(--ft_map.end(), ft::make_pair("seven", 7));
 
-    stl_map.insert(--stl_map.end(), std::make_pair("seven", 7));
-		ft_map.insert(--ft_map.end(), ft::make_pair("seven", 7));
+	printValues(stl_map, ft_map, testName);
+	printMaps(stl_map, ft_map);
 
-    printValues(stl_map, ft_map, testName);
-    printMaps(stl_map, ft_map);
+	testName = "INSERT RANGE";
 
-    /* TODO: Insert range dont work. Need to be fixed!
-    testName = "INSERT RANGE";
-    
-    const std::string string_to_insert[] = {"eight", "nine", "ten"};
-    const int int_to_insert[] = {8, 9, 10};
+	std::map<char, int> mymap_stl;
+	ft::map<char, int> mymap_ft;
 
-    std::map<int, std::string> stl_map2;
-	  ft::map<int, std::string> ft_map2;
+	// first insert function version (single parameter):
+	mymap_stl.insert(std::pair<char, int>('a', 100));
+	mymap_stl.insert(std::pair<char, int>('z', 200));
+	mymap_ft.insert(ft::pair<char, int>('a', 100));
+	mymap_ft.insert(ft::pair<char, int>('z', 200));
 
-    for (int i = 0; i < 3; i++)
-    {
-      stl_map2.insert(std::make_pair(string_to_insert[i], int_to_insert[i]));
-      ft_map2.insert(ft::make_pair(string_to_insert[i], int_to_insert[i]));
-    }
+	// second insert function version (with hint position):
+	std::map<char, int>::iterator it_stl = mymap_stl.begin();
+	ft::map<char, int>::iterator it_ft = mymap_ft.begin();
+	mymap_stl.insert(it_stl, std::pair<char, int>('b', 300));  // max efficiency inserting
+	mymap_stl.insert(it_stl, std::pair<char, int>('c', 400));  // no max efficiency inserting
+	mymap_ft.insert(it_ft, ft::pair<char, int>('b', 300));  // max efficiency inserting
+	mymap_ft.insert(it_ft, ft::pair<char, int>('c', 400));  // no max efficiency inserting
 
-    printValues(stl_map, ft_map, testName);
-    printMaps(stl_map, ft_map);
-    */
+	// third insert function version (range insertion):
+	std::map<char, int> anothermap_stl;
+	ft::map<char, int> anothermap_ft;
+	anothermap_stl.insert(mymap_stl.begin(), mymap_stl.find('c'));
+	anothermap_ft.insert(mymap_ft.begin(), mymap_ft.find('c'));
 
-    testName = "ERASE SINGLE";
+	printValues(anothermap_stl, anothermap_ft, testName);
+	printMaps(anothermap_stl, anothermap_ft);
 
-    stl_map.erase(stl_map.begin());
+	testName = "ERASE SINGLE";
+
+	stl_map.erase(stl_map.begin());
 	ft_map.erase(ft_map.begin());
 
-    printValues(stl_map, ft_map, testName);
-    printMaps(stl_map, ft_map);
+	printValues(stl_map, ft_map, testName);
+	printMaps(stl_map, ft_map);
 
 	testName = "ERASE RANGE";
 
@@ -328,8 +326,7 @@ test_map()
 	ft::map<std::string, int>::iterator ft_erase_start = ft_map.begin();
 	ft::map<std::string, int>::iterator ft_erase_end = ft_map.end();
 
-	for (int i = 0; i < 3 ; i++)
-	{
+	for (int i = 0; i < 3; i++) {
 	  stl_erase_start++;
 	  ft_erase_start++;
 	}
@@ -342,8 +339,8 @@ test_map()
 
 	testName = "SWAP";
 
-	std::map<std::string , int> stl_map_swap;
-	ft::map<std::string , int> ft_map_swap;
+	std::map<std::string, int> stl_map_swap;
+	ft::map<std::string, int> ft_map_swap;
 
 	stl_map_swap = stl_map_assign;
 	ft_map_swap = ft_map_assign;
@@ -409,10 +406,9 @@ test_map()
 
 	testName = "FIND";
 
-	for (int i = 0; i < 5; i++)
-	{
-		stl_map.insert(std::make_pair(string_array[i], int_array[i]));
-		ft_map.insert(ft::make_pair(string_array[i], int_array[i]));
+	for (int i = 0; i < 5; i++) {
+	  stl_map.insert(std::make_pair(string_array[i], int_array[i]));
+	  ft_map.insert(ft::make_pair(string_array[i], int_array[i]));
 	}
 
 	std::map<std::string, int>::iterator stl_it = stl_map.find("two");
@@ -420,108 +416,107 @@ test_map()
 
 	printValues(stl_map, ft_map, testName);
 
-	  std::cout << "STL Map find (two) = ";
-	  std::cout << "[";
-	  std::cout << (*stl_it).first;
-	  std::cout << ", ";
-	  std::cout << (*stl_it).second;
-	  std::cout << "]";
-	  std::cout << "\n";
+	std::cout << "STL Map find (two) = ";
+	std::cout << "[";
+	std::cout << (*stl_it).first;
+	std::cout << ", ";
+	std::cout << (*stl_it).second;
+	std::cout << "]";
+	std::cout << "\n";
 
-	  std::cout << "FT Map find (two) = ";
-	  std::cout << "[";
-	  std::cout << (*ft_it).first;
-	  std::cout << ", ";
-	  std::cout << (*ft_it).second;
-	  std::cout << "]";
-	  std::cout << "\n";
-	  std::cout << "\n";
+	std::cout << "FT Map find (two) = ";
+	std::cout << "[";
+	std::cout << (*ft_it).first;
+	std::cout << ", ";
+	std::cout << (*ft_it).second;
+	std::cout << "]";
+	std::cout << "\n";
+	std::cout << "\n";
 
-	  ft_it = ft_map.find("fefef");
-	  stl_it = stl_map.find("fefef");
+	ft_it = ft_map.find("fefef");
+	stl_it = stl_map.find("fefef");
 
-	  if (stl_it == stl_map.end() && ft_it == ft_map.end())
-	  	std::cout << "Non existing find test OK";
-	  else
-	  	std::cout << "Non existing find test NOT OK";
-	  std::cout << "\n";
-	  std::cout << "\n";
-	  printMaps(stl_map, ft_map);
+	if (stl_it == stl_map.end() && ft_it == ft_map.end())
+	  std::cout << "Non existing find test OK";
+	else
+	  std::cout << "Non existing find test NOT OK";
+	std::cout << "\n";
+	std::cout << "\n";
+	printMaps(stl_map, ft_map);
 
-	  testName = "COUNT";
+	testName = "COUNT";
 
-	  printValues(stl_map, ft_map, testName);
+	printValues(stl_map, ft_map, testName);
 
-	  std::cout << "STL Map count = " << stl_map.count("one") << std::endl;
-	  std::cout << "FT Map count = " << ft_map.count("one") << std::endl;
+	std::cout << "STL Map count = " << stl_map.count("one") << std::endl;
+	std::cout << "FT Map count = " << ft_map.count("one") << std::endl;
 
-	  printMaps(stl_map, ft_map);
+	printMaps(stl_map, ft_map);
 
+	testName = " LOWER / UPPER BOUND";
 
-	  testName = " LOWER / UPPER BOUND";
+	printValues(stl_map, ft_map, testName);
+	stl_it = stl_map.lower_bound("two");
 
-	  printValues(stl_map, ft_map, testName);
-	  stl_it = stl_map.lower_bound("two");
+	std::cout << "STL Map lower bound (two) = ";
+	std::cout << "[";
+	std::cout << (*stl_it).first;
+	std::cout << ", ";
+	std::cout << (*stl_it).second;
+	std::cout << "]";
+	std::cout << "\n";
+	stl_it = stl_map.upper_bound("seven");
+	std::cout << "STL Map upper bound (seven) = ";
+	std::cout << "[";
+	std::cout << (*stl_it).first;
+	std::cout << ", ";
+	std::cout << (*stl_it).second;
+	std::cout << "]";
+	std::cout << "\n";
 
-	  std::cout << "STL Map lower bound (two) = ";
-	  std::cout << "[";
-	  std::cout << (*stl_it).first;
-	  std::cout << ", ";
-	  std::cout << (*stl_it).second;
-	  std::cout << "]";
-	  std::cout << "\n";
-	  stl_it = stl_map.upper_bound("seven");
-	  std::cout << "STL Map upper bound (seven) = ";
-	  std::cout << "[";
-	  std::cout << (*stl_it).first;
-	  std::cout << ", ";
-	  std::cout << (*stl_it).second;
-	  std::cout << "]";
-	  std::cout << "\n";
+	ft_it = ft_map.lower_bound("two");
+	std::cout << "FT Map lower bound  (two) = ";
+	std::cout << "[";
+	std::cout << (*ft_it).first;
+	std::cout << ", ";
+	std::cout << (*ft_it).second;
+	std::cout << "]";
+	std::cout << "\n";
 
-	  ft_it = ft_map.lower_bound("two");
-	  std::cout << "FT Map lower bound  (two) = ";
-	  std::cout << "[";
-	  std::cout << (*ft_it).first;
-	  std::cout << ", ";
-	  std::cout << (*ft_it).second;
-	  std::cout << "]";
-	  std::cout << "\n";
+	ft_it = ft_map.upper_bound("seven");
+	std::cout << "FT Map upper bound  (seven) = ";
+	std::cout << "[";
+	std::cout << (*ft_it).first;
+	std::cout << ", ";
+	std::cout << (*ft_it).second;
+	std::cout << "]";
+	std::cout << "\n";
+	std::cout << "\n";
 
-	  ft_it = ft_map.upper_bound("seven");
-	  std::cout << "FT Map upper bound  (seven) = ";
-	  std::cout << "[";
-	  std::cout << (*ft_it).first;
-	  std::cout << ", ";
-	  std::cout << (*ft_it).second;
-	  std::cout << "]";
-	  std::cout << "\n";
-	  std::cout << "\n";
+	printMaps(stl_map, ft_map);
 
-	  printMaps(stl_map, ft_map);
+	testName = "EQUAL RANGE";
 
-	  testName = "EQUAL RANGE";
+	printValues(stl_map, ft_map, testName);
 
-	  printValues(stl_map, ft_map, testName);
+	std::cout << "STL Map equal range (four) = ";
+	std::cout << "[";
+	std::cout << (*(stl_map.equal_range("four").first)).first;
+	std::cout << ", ";
+	std::cout << (*(stl_map.equal_range("four").second)).first;
+	std::cout << "]";
+	std::cout << "\n";
 
-	  std::cout << "STL Map equal range (four) = ";
-	  std::cout << "[";
-	  std::cout << (*(stl_map.equal_range("four").first)).first;
-	  std::cout << ", ";
-	  std::cout << (*(stl_map.equal_range("four").second)).first;
-	  std::cout << "]";
-	  std::cout << "\n";
+	std::cout << "FT Map equal range (four) = ";
+	std::cout << "[";
+	std::cout << (*(ft_map.equal_range("four").first)).first;
+	std::cout << ", ";
+	std::cout << (*(ft_map.equal_range("four").second)).first;
+	std::cout << "]";
+	std::cout << "\n";
+	std::cout << "\n";
 
-	  std::cout << "FT Map equal range (four) = ";
-	  std::cout << "[";
-	  std::cout << (*(ft_map.equal_range("four").first)).first;
-	  std::cout << ", ";
-	  std::cout << (*(ft_map.equal_range("four").second)).first;
-	  std::cout << "]";
-	  std::cout << "\n";
-	  std::cout << "\n";
-
-	  printMaps(stl_map, ft_map);
+	printMaps(stl_map, ft_map);
 
   }
 }

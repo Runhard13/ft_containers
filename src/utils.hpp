@@ -7,8 +7,7 @@
 
 #include <cstddef>
 #include <iterator>
-namespace ft
-{
+namespace ft {
 
 //******************************ITERATOR UTILS******************************
 
@@ -21,8 +20,7 @@ struct random_access_iterator_tag {};
 
 //Базовый шаблон для определения характеристик итераторов
 template<class Iterator>
-struct iterator_traits
-{
+struct iterator_traits {
   typedef typename Iterator::difference_type difference_type;
   typedef typename Iterator::value_type value_type;
   typedef typename Iterator::pointer pointer;
@@ -32,8 +30,7 @@ struct iterator_traits
 
 //Специализация iterator_traits по умолчанию для обычного объекта
 template<class T>
-struct iterator_traits<T *>
-{
+struct iterator_traits<T *> {
   typedef ptrdiff_t difference_type;
   typedef T value_type;
   typedef T *pointer;
@@ -43,8 +40,7 @@ struct iterator_traits<T *>
 
 //Специализация iterator_traits по умолчанию для константного объекта
 template<class T>
-struct iterator_traits<const T *>
-{
+struct iterator_traits<const T *> {
   typedef ptrdiff_t difference_type;
   typedef T value_type;
   typedef const T *pointer;
@@ -65,11 +61,9 @@ iterator_category(Iterator I)
 //Distance - разница между последним и первым элементом
 template<class Iterator>
 typename iterator_traits<Iterator>::difference_type
-distance(Iterator first, Iterator last)
-{
+distance(Iterator first, Iterator last) {
   typename iterator_traits<Iterator>::difference_type dist = 0;
-  while (first != last)
-  {
+  while (first != last) {
 	first++;
 	dist++;
   }
@@ -80,80 +74,69 @@ distance(Iterator first, Iterator last)
 // должна считаться через инкремент
 template<class Iterator>
 typename iterator_traits<Iterator>::difference_type
-distance(Iterator first, Iterator last, input_iterator_tag)
-{
+distance(Iterator first, Iterator last, input_iterator_tag) {
   return ft::distance(first, last);
 }
 
 template<class Iterator>
 typename iterator_traits<Iterator>::difference_type
-distance(Iterator first, Iterator last, forward_iterator_tag)
-{
+distance(Iterator first, Iterator last, forward_iterator_tag) {
   return ft::distance(first, last);
 }
 
 template<class Iterator>
 typename iterator_traits<Iterator>::difference_type
-distance(Iterator first, Iterator last, bidirectional_iterator_tag)
-{
+distance(Iterator first, Iterator last, bidirectional_iterator_tag) {
   return ft::distance(first, last);
 }
 
 template<class Iterator>
 typename iterator_traits<Iterator>::difference_type
-distance(Iterator first, Iterator last, random_access_iterator_tag)
-{
+distance(Iterator first, Iterator last, random_access_iterator_tag) {
   return last - first;
 }
 
 //Тоже самое, но для итераторов из стандартной библиотеки
 template<class Iterator>
 typename iterator_traits<Iterator>::difference_type
-distance(Iterator first, Iterator last, std::input_iterator_tag)
-{
+distance(Iterator first, Iterator last, std::input_iterator_tag) {
   return ft::distance(first, last);
 }
 
 template<class Iterator>
 typename iterator_traits<Iterator>::difference_type
-distance(Iterator first, Iterator last, std::forward_iterator_tag)
-{
+distance(Iterator first, Iterator last, std::forward_iterator_tag) {
   return ft::distance(first, last);
 }
 
 template<class Iterator>
 typename iterator_traits<Iterator>::difference_type
-distance(Iterator first, Iterator last, std::bidirectional_iterator_tag)
-{
+distance(Iterator first, Iterator last, std::bidirectional_iterator_tag) {
   return ft::distance(first, last);
 }
 
 template<class Iterator>
 typename iterator_traits<Iterator>::difference_type
-distance(Iterator first, Iterator last, std::random_access_iterator_tag)
-{
+distance(Iterator first, Iterator last, std::random_access_iterator_tag) {
   return last - first;
 }
 
 template<class Arg1, class Arg2, class Result>
-struct binary_function
-{
+struct binary_function {
   typedef Arg1 first_argument_type;
   typedef Arg2 second_argument_type;
   typedef Result result_type;
 };
 
 template<class T>
-struct less : binary_function<T, T, bool>
-{
+struct less : binary_function<T, T, bool> {
   bool
   operator()(const T &x, const T &y) const { return (x < y); }
 };
 
 // Класс, который создает пару из значений с разными типами
 template<class T1, class T2>
-struct pair
-{
+struct pair {
   typedef T1 first_type;
   typedef T2 second_type;
 
@@ -172,8 +155,7 @@ struct pair
 	  : first(a), second(b) {}
 
   pair &
-  operator=(const pair &pr)
-  {
+  operator=(const pair &pr) {
 	if (*this == pr)
 	  return (*this);
 	this->first = pr.first;
@@ -186,148 +168,122 @@ struct pair
 
 template<class T1, class T2>
 bool
-operator==(const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs)
-{
+operator==(const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs) {
   return (lhs.first == rhs.first && lhs.second == rhs.second);
 }
 
 template<class T1, class T2>
 bool
-operator!=(const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs)
-{
+operator!=(const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs) {
   return !(lhs == rhs);
 }
 
 template<class T1, class T2>
 bool
-operator<(const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs)
-{
+operator<(const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs) {
   return (lhs.first < rhs.first || (!(rhs.first < lhs.first) && lhs.second < rhs.second));
 }
 
 template<class T1, class T2>
 bool
-operator<=(const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs)
-{
+operator<=(const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs) {
   return !(rhs < lhs);
 }
 
 template<class T1, class T2>
 bool
-operator>(const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs)
-{
+operator>(const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs) {
   return (rhs < lhs);
 }
 
 template<class T1, class T2>
 bool
-operator>=(const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs)
-{
+operator>=(const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs) {
   return !(lhs < rhs);
 }
 
 //Тоже самое, что и ft::pair, но не нужно передавать типы
 template<class T1, class T2>
 ft::pair<T1, T2>
-make_pair(T1 x, T2 y)
-{
+make_pair(T1 x, T2 y) {
   return (ft::pair<T1, T2>(x, y));
 }
 
 template<bool Cond, class T = void>
-struct enable_if
-{
+struct enable_if {
 };
 template<class T>
-struct enable_if<true, T>
-{
+struct enable_if<true, T> {
   typedef T type;
 };
 
 template<bool is_integer, typename T>
-struct is_integer_res
-{
+struct is_integer_res {
   typedef T type;
   static const bool value = is_integer;
 };
 
 template<typename>
-struct is_integer_type : public is_integer_res<false, bool>
-{
+struct is_integer_type : public is_integer_res<false, bool> {
 };
 
 template<>
-struct is_integer_type<bool> : public is_integer_res<true, bool>
-{
+struct is_integer_type<bool> : public is_integer_res<true, bool> {
 };
 
 template<>
-struct is_integer_type<char> : public is_integer_res<true, char>
-{
+struct is_integer_type<char> : public is_integer_res<true, char> {
 };
 
 template<>
-struct is_integer_type<signed char> : public is_integer_res<true, signed char>
-{
+struct is_integer_type<signed char> : public is_integer_res<true, signed char> {
 };
 
 template<>
-struct is_integer_type<short int> : public is_integer_res<true, short int>
-{
+struct is_integer_type<short int> : public is_integer_res<true, short int> {
 };
 
 template<>
-struct is_integer_type<int> : public is_integer_res<true, int>
-{
+struct is_integer_type<int> : public is_integer_res<true, int> {
 };
 
 template<>
-struct is_integer_type<long int> : public is_integer_res<true, long int>
-{
+struct is_integer_type<long int> : public is_integer_res<true, long int> {
 };
 
 template<>
-struct is_integer_type<long long int> : public is_integer_res<true, long long int>
-{
+struct is_integer_type<long long int> : public is_integer_res<true, long long int> {
 };
 
 template<>
-struct is_integer_type<unsigned char> : public is_integer_res<true, unsigned char>
-{
+struct is_integer_type<unsigned char> : public is_integer_res<true, unsigned char> {
 };
 
 template<>
-struct is_integer_type<unsigned short int> : public is_integer_res<true, unsigned short int>
-{
+struct is_integer_type<unsigned short int> : public is_integer_res<true, unsigned short int> {
 };
 
 template<>
-struct is_integer_type<unsigned int> : public is_integer_res<true, unsigned int>
-{
+struct is_integer_type<unsigned int> : public is_integer_res<true, unsigned int> {
 };
 
 template<>
-struct is_integer_type<unsigned long int> : public is_integer_res<true, unsigned long int>
-{
+struct is_integer_type<unsigned long int> : public is_integer_res<true, unsigned long int> {
 };
 
 template<>
-struct is_integer_type<unsigned long long int> : public is_integer_res<true, unsigned long long int>
-{
+struct is_integer_type<unsigned long long int> : public is_integer_res<true, unsigned long long int> {
 };
 
 template<typename T>
-struct is_integer : public is_integer_type<T>
-{
+struct is_integer : public is_integer_type<T> {
 };
 
 template<class InputIterator1, class InputIterator2>
 bool
 lexicographical_compare(InputIterator1 first1, InputIterator1 last1,
-						InputIterator2 first2, InputIterator2 last2)
-{
-  while (first1 != last1)
-  {
+						InputIterator2 first2, InputIterator2 last2) {
+  while (first1 != last1) {
 	if (first2 == last2 || *first2 < *first1)
 	  return false;
 	else if (*first1 < *first2)
@@ -338,22 +294,21 @@ lexicographical_compare(InputIterator1 first1, InputIterator1 last1,
   return (first2 != last2);
 }
 
-template <class T> const T& max (const T& a, const T& b) {
-  return (a<b)?b:a;     // or: return comp(a,b)?b:a; for version (2)
+template<class T>
+const T &max(const T &a, const T &b) {
+  return (a < b) ? b : a;     // or: return comp(a,b)?b:a; for version (2)
 }
 
-template <class Ite1, class Ite2>
-	static bool	equal(Ite1 first1, Ite1 last1, Ite2 first2)
-	{
-	  while (first1 != last1)
-	  {
-	    if (*first1 != *first2)
-	      return (false);
-	    ++first1;
-	    ++first2;
-	  }
-	  return (true);
-	}
+template<class Ite1, class Ite2>
+static bool equal(Ite1 first1, Ite1 last1, Ite2 first2) {
+  while (first1 != last1) {
+	if (*first1 != *first2)
+	  return (false);
+	++first1;
+	++first2;
+  }
+  return (true);
+}
 }
 
 #endif //FT_CONTAINERS_SRC_CONTAINERS_UTILS_UTILS_HPP

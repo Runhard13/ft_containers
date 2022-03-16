@@ -3,29 +3,26 @@
 
 #include "vector.hpp"
 
-namespace ft
-{
+namespace ft {
 template<class T, class Container = vector<T> >
-class stack
-{
+class stack {
   //******************************MEMBER TYPES******************************
 
-public:
+ public:
   typedef T value_type;
   typedef size_t size_type;
   typedef Container container_type;
 
-protected:
+ protected:
   Container c;
 
-public:
+ public:
   explicit stack(const container_type &ctnr = container_type()) : c(ctnr) {}
   stack(const stack &x) : c(x.c) {}
   ~stack() {}
 
   stack &
-  operator=(const stack &x)
-  {
+  operator=(const stack &x) {
 	stack tmp(x);
 	swap(c, tmp.c);
 	return *this;
@@ -54,14 +51,12 @@ public:
   pop() { c.pop_back(); }
 
   friend bool
-  operator==(const stack<T, Container> &lhs, const stack<T, Container> &rhs)
-  {
+  operator==(const stack<T, Container> &lhs, const stack<T, Container> &rhs) {
 	return (lhs.c == rhs.c);
   }
 
   friend bool
-  operator<(const stack<T, Container> &lhs, const stack<T, Container> &rhs)
-  {
+  operator<(const stack<T, Container> &lhs, const stack<T, Container> &rhs) {
 	return (lhs.c < rhs.c);
   }
 };
@@ -70,29 +65,25 @@ public:
 
 template<class T, class Container>
 bool
-operator!=(const stack<T, Container> &lhs, const stack<T, Container> &rhs)
-{
+operator!=(const stack<T, Container> &lhs, const stack<T, Container> &rhs) {
   return (!(lhs == rhs));
 }
 
 template<class T, class Container>
 bool
-operator<=(const stack<T, Container> &lhs, const stack<T, Container> &rhs)
-{
+operator<=(const stack<T, Container> &lhs, const stack<T, Container> &rhs) {
   return (!(rhs < lhs));
 }
 
 template<class T, class Container>
 bool
-operator>(const stack<T, Container> &lhs, const stack<T, Container> &rhs)
-{
+operator>(const stack<T, Container> &lhs, const stack<T, Container> &rhs) {
   return (rhs < lhs);
 }
 
 template<class T, class Container>
 bool
-operator>=(const stack<T, Container> &lhs, const stack<T, Container> &rhs)
-{
+operator>=(const stack<T, Container> &lhs, const stack<T, Container> &rhs) {
   return (!(lhs < rhs));
 }
 

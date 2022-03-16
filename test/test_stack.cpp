@@ -11,15 +11,13 @@ is_equal(const T &t1, const T &t2) { return t1 == t2 ? "ok" : "not ok"; }
 
 template<class T>
 std::string
-is_equal_content(std::stack<T> &stl_stack, ft::stack<T> &ft_stack)
-{
+is_equal_content(std::stack<T> &stl_stack, ft::stack<T> &ft_stack) {
 
   if (ft_stack.size() != stl_stack.size())
 	return ("NOT EQUAL");
-  if (!ft_stack.empty() && !stl_stack.empty())
-  {
-    if (stl_stack.top() != ft_stack.top())
-      return ("NOT EQUAL");
+  if (!ft_stack.empty() && !stl_stack.empty()) {
+	if (stl_stack.top() != ft_stack.top())
+	  return ("NOT EQUAL");
   }
   return ("EQUAL");
 }
@@ -29,8 +27,7 @@ void
 printValues(
 	std::stack<T> &stl_stack,
 	ft::stack<T> &ft_stack, std::string testName
-)
-{
+) {
   //stl_stack
   std::string stl_empty = ((stl_stack.empty() == 1) ? "true" : "false");
   size_t stl_size = stl_stack.size();
@@ -71,27 +68,24 @@ printValues(
 
 template<class T>
 void
-printPop( std::stack<T> &stl_stack, ft::stack<T> &ft_stack)
-{
+printPop(std::stack<T> &stl_stack, ft::stack<T> &ft_stack) {
 
-  if (!ft_stack.empty() && !stl_stack.empty())
-  {
-    //печать STL
-    std::cout << "STL Stack top: " << stl_stack.top() << std::endl;
-    //печать FT
-    std::cout << "FT Stack top: " << ft_stack.top() << std::endl;
-  }
-  else
-    std::cout << "CONTENT IS EMPTY " << std::endl;
+  if (!ft_stack.empty() && !stl_stack.empty()) {
+	//печать STL
+	std::cout << "STL Stack top: " << stl_stack.top() << std::endl;
+	//печать FT
+	std::cout << "FT Stack top: " << ft_stack.top() << std::endl;
+  } else
+	std::cout << "CONTENT IS EMPTY " << std::endl;
 
   std::cout << "**********************************************************************" << std::endl;
   std::cout << "\n\n";
 }
 
 void
-test_stack()
-{
+test_stack() {
   std::string testName;
+  std::cout << "**********STACK TEST**********\n";
 
   {
 	testName = "DEFAULT CONSTRUCTOR";
@@ -117,8 +111,7 @@ test_stack()
 
 	testName = "SIZE";
 
-	for (int i = 1; i < 10; i++)
-	{
+	for (int i = 1; i < 10; i++) {
 	  stl_stack.push(i);
 	  ft_stack.push(i);
 	}
@@ -139,12 +132,10 @@ test_stack()
 	ft::stack<int> ft_stack2;
 	std::stack<int> stl_stack2;
 
-	for (int i = 10; i < 0; i--)
-	{
+	for (int i = 10; i < 0; i--) {
 	  stl_stack.push(i);
 	  ft_stack.push(i);
 	}
-
 
 	bool stl;
 	bool ft;
