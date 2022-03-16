@@ -26,11 +26,14 @@ struct Buffer
 
 void test_vector();
 void test_stack();
+void test_map();
 
 int main()
 {
 
+
+  //test_stack();
+  //test_map();
   //test_vector();
-  test_stack();
   return (0);
 }

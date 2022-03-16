@@ -5,6 +5,8 @@
 #ifndef FT_CONTAINERS_SRC_CONTAINERS_UTILS_UTILS_HPP
 #define FT_CONTAINERS_SRC_CONTAINERS_UTILS_UTILS_HPP
 
+#include <cstddef>
+#include <iterator>
 namespace ft
 {
 
@@ -335,6 +337,23 @@ lexicographical_compare(InputIterator1 first1, InputIterator1 last1,
   }
   return (first2 != last2);
 }
+
+template <class T> const T& max (const T& a, const T& b) {
+  return (a<b)?b:a;     // or: return comp(a,b)?b:a; for version (2)
+}
+
+template <class Ite1, class Ite2>
+	static bool	equal(Ite1 first1, Ite1 last1, Ite2 first2)
+	{
+	  while (first1 != last1)
+	  {
+	    if (*first1 != *first2)
+	      return (false);
+	    ++first1;
+	    ++first2;
+	  }
+	  return (true);
+	}
 }
 
 #endif //FT_CONTAINERS_SRC_CONTAINERS_UTILS_UTILS_HPP

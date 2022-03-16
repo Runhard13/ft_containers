@@ -1,5 +1,5 @@
 #include "../src/map.hpp"
-#include <vector>
+#include <map>
 #include <iostream>
 #include <iomanip>
 
@@ -7,60 +7,54 @@ template<class T>
 std::string
 is_equal(const T &t1, const T &t2) { return t1 == t2 ? "ok" : "not ok"; }
 
-template<class T>
-std::string
-is_equal_content(
-	std::vector<T> &stl_vector,
-	ft::vector<T> &ft_vector
-)
-{
-  typename ft::vector<T>::iterator ft_it;
-  typename std::vector<T>::iterator stl_it;
 
-  if (ft_vector.size() != stl_vector.size())
-	return ("NOT EQUAL");
-  stl_it = stl_vector.begin();
-  ft_it = ft_vector.begin();
-  while (ft_it != ft_vector.end())
+template <class Ta, class Tb>
+	std::string is_equal_content(
+		const std::map<Ta, Tb> & stl_map,
+		const ft::map<Ta, Tb> & ft_map
+		)
   {
-	if (*ft_it != *stl_it)
-	  return ("NOT EQUAL");
-	stl_it++;
-	ft_it++;
+    typename ft::map<Ta, Tb>::const_iterator ft_it;
+    typename std::map<Ta, Tb>::const_iterator stl_it;
+    if (ft_map.size() != stl_map.size())
+      return ("NOT EQUAL");
+    stl_it = stl_map.begin();
+    for(ft_it = ft_map.begin(); ft_it != ft_map.end(); ft_it++)
+    {
+      if ((*ft_it).first != (*stl_it).first || (*ft_it).second != (*stl_it).second)
+        return ("NOT EQUAL");
+      stl_it++;
+    }
+    return ("EQUAL");
   }
-  return ("EQUAL");
-}
 
-template<class T>
+template<class Ta, class Tb>
 void
 printValues(
-	std::vector<T> &stl_vector,
-	ft::vector<T> &ft_vector, std::string testName
+	std::map<Ta, Tb> &stl_map,
+	ft::map<Ta, Tb> &ft_map, const std::string& testName
 )
 {
-  //real vector
-  std::string stl_empty = ((stl_vector.empty() == 1) ? "true" : "false");
-  size_t stl_size = stl_vector.size();
-  size_t stl_max_size = stl_vector.max_size();
-  size_t stl_capacity = stl_vector.capacity();
+  //stl map
+  std::string stl_empty = ((stl_map.empty() == 1) ? "true" : "false");
+  size_t stl_size = stl_map.size();
+  size_t stl_max_size = stl_map.max_size();
 
-  //ft_vector
-  std::string ft_empty = ((ft_vector.empty() == 1) ? "true" : "false");
-  size_t ft_size = ft_vector.size();
-  size_t ft_max_size = ft_vector.max_size();
-  size_t ft_capacity = ft_vector.capacity();
+  //ft map
+  std::string ft_empty = ((ft_map.empty() == 1) ? "true" : "false");
+  size_t ft_size = ft_map.size();
+  size_t ft_max_size = ft_map.max_size();
 
   //сравнение
   std::string empty = is_equal(ft_empty, stl_empty);
   std::string size = is_equal(ft_size, stl_size);
   std::string max_size = is_equal(ft_max_size, stl_max_size);
-  std::string capacity = is_equal(ft_capacity, stl_capacity);
-  std::string content = is_equal_content(stl_vector, ft_vector);
+  std::string content = is_equal_content(stl_map, ft_map);
 
   std::cout << std::setfill('*') << std::setw(70) << std::left << testName << std::endl;
   std::cout << std::setfill(' ') << std::setw(20) << std::left << "Attribute";
-  std::cout << std::setfill(' ') << std::setw(20) << std::left << "STL Vector";
-  std::cout << std::setfill(' ') << std::setw(20) << std::left << "FT Vector";
+  std::cout << std::setfill(' ') << std::setw(20) << std::left << "STL Map";
+  std::cout << std::setfill(' ') << std::setw(20) << std::left << "FT Map";
   std::cout << std::setfill(' ') << std::setw(20) << std::left << "Result" << std::endl;
 
   std::cout << std::setfill(' ') << std::setw(20) << std::left << "Empty";
@@ -73,11 +67,6 @@ printValues(
   std::cout << std::setfill(' ') << std::setw(20) << std::left << ft_size;
   std::cout << std::setfill(' ') << std::setw(20) << std::left << size << std::endl;
 
-  std::cout << std::setw(20) << std::left << "Capacity";
-  std::cout << std::setw(20) << std::left << stl_capacity;
-  std::cout << std::setw(20) << std::left << ft_capacity;
-  std::cout << std::setw(20) << std::left << capacity << std::endl;
-
   std::cout << std::setw(20) << std::left << "Max_size";
   std::cout << std::setw(20) << std::left << stl_max_size;
   std::cout << std::setw(20) << std::left << ft_max_size;
@@ -85,505 +74,454 @@ printValues(
   std::cout << "\n";
 
   std::cout << std::left << "Result of content comparison: " << content << std::endl;
-  if (empty == "not ok" || size == "not ok" || max_size == "not ok" || content == "NOT EQUAL" || capacity == "not ok")
+  if (empty == "not ok" || size == "not ok" || max_size == "not ok" || content == "NOT EQUAL")
 	std::cout << "\33[1;31m" << "TOTAL: NOT OK" << "\33[1;0m" << std::endl;
   else
 	std::cout << "\33[1;32m" << "TOTAL: OK" << "\33[1;0m" << std::endl;
   std::cout << "**********************************************************************" << std::endl;
 }
 
-template<class T>
+template<class Ta, class Tb>
 void
-printVectors(
-	std::vector<T> &stl_vector,
-	ft::vector<T> &ft_vector
+printMaps(
+	std::map<Ta, Tb> &stl_map,
+	ft::map<Ta, Tb> &ft_map
 )
 {
-  typename std::vector<T>::iterator stl_it;
-  typename ft::vector<T>::iterator ft_it;
-  stl_it = stl_vector.begin();
-  ft_it = ft_vector.begin();
+  typename ft::map<Ta, Tb>::const_iterator ft_it;
+  typename std::map<Ta, Tb>::const_iterator stl_it;
+  stl_it = stl_map.begin();
+  ft_it = ft_map.begin();
 
   //печать STL
-  std::cout << "STL Vector content: ";
-  while (stl_it != stl_vector.end())
+  std::cout << "STL Map content: ";
+  while (stl_it != stl_map.end())
   {
-	std::cout << *stl_it;
-	stl_it++;
-	if (stl_it != stl_vector.end())
-	  std::cout << ", ";
+    std::cout << "[";
+    std::cout << (*stl_it).first;
+    std::cout << ", ";
+    std::cout << (*stl_it).second;
+    std::cout << "]";
+    stl_it++;
+    if (stl_it != stl_map.end())
+      std::cout << ", ";
   }
   std::cout << "\n";
 
   //печать FT
-  std::cout << "FT Vector content: ";
-  while (ft_it != ft_vector.end())
+  std::cout << "FT Map content: ";
+  while (ft_it != ft_map.end())
   {
-	std::cout << *ft_it;
-	ft_it++;
-	if (ft_it != ft_vector.end())
-	  std::cout << ", ";
+    std::cout << "[";
+    std::cout << (*ft_it).first;
+    std::cout << ", ";
+    std::cout << (*ft_it).second;
+    std::cout << "]";
+    ft_it++;
+    if (ft_it != ft_map.end())
+      std::cout << ", ";
   }
+
   std::cout << "\n";
   std::cout << "**********************************************************************" << std::endl;
   std::cout << "\n\n";
 }
 
 void
-test_vector()
+test_map()
 {
   std::string testName;
-  std::vector<int> myvector;
-  for (int i = 1; i <= 5; i++)
-	myvector.push_back(i);
+  const std::string string_array[] = {"one", "two", "three", "four", "five"};
+  const int int_array[] = {1, 2, 3, 4, 5};
+
 
   {
-	testName = "DEFAULT INT VECTOR";
+	testName = "DEFAULT CONSTRUCTOR";
 
-	std::vector<int> stl_vector_default_int;
-	ft::vector<int> ft_vector_default_int;
+	std::map<int, std::string> stl_map;
+	ft::map<int, std::string> ft_map;
 
-	printValues(stl_vector_default_int, ft_vector_default_int, testName);
-	printVectors(stl_vector_default_int, ft_vector_default_int);
-  }
-
-  {
-	testName = "DEFAULT STRING VECTOR";
-
-	std::vector<std::string> stl_vector_default_string;
-	ft::vector<std::string> ft_vector_default_string;
-
-	printValues(stl_vector_default_string, ft_vector_default_string, testName);
-	printVectors(stl_vector_default_string, ft_vector_default_string);
+	printValues(stl_map, ft_map, testName);
+	printMaps(stl_map, ft_map);
 
   }
 
   {
-	testName = "FILL CONSTRUCTOR";
-
-	std::vector<int> stl_fill_vector(11);
-	ft::vector<int> ft_fill_vector(11);
-
-	printValues(stl_fill_vector, ft_fill_vector, testName);
-	printVectors(stl_fill_vector, ft_fill_vector);
-
-	testName = "FILL CONSTRUCTOR WITH VALUE";
-
-	std::vector<int> stl_fill_vector_with_value(11, 22);
-	ft::vector<int> ft_fill_vector_with_value(11, 22);
-
-	printValues(stl_fill_vector_with_value, ft_fill_vector_with_value, testName);
-	printVectors(stl_fill_vector_with_value, ft_fill_vector_with_value);
-  }
-
-  {
-	testName = "RANGE CONSTRUCTOR";
-
-	std::vector<int> stl_range_vector(myvector.begin(), myvector.end());
-	ft::vector<int> ft_range_vector(myvector.begin(), myvector.end());
-
-	printValues(stl_range_vector, ft_range_vector, testName);
-	printVectors(stl_range_vector, ft_range_vector);
-  }
-
-  {
-	testName = "OPERATOR=";
-
-	std::vector<int> stl_range_vector(myvector.begin(), myvector.end());
-	ft::vector<int> ft_range_vector(myvector.begin(), myvector.end());
-
-	std::vector<int> stl_assign_vector = stl_range_vector;
-	ft::vector<int> ft_assign_vector = ft_range_vector;
-
-	printValues(stl_assign_vector, ft_assign_vector, testName);
-	printVectors(stl_assign_vector, ft_assign_vector);
-  }
-
-  {
-	testName = "ITER BEGIN() and END()";
-
-	std::vector<int> stl_range_vector(myvector.begin(), myvector.end());
-	ft::vector<int> ft_range_vector(myvector.begin(), myvector.end());
-
-	int from_stl = *(stl_range_vector.begin());
-	int from_ft = *(ft_range_vector.begin());
-	int from_stl_end = *(stl_range_vector.end() - 1);
-	int from_ft_end = *(ft_range_vector.end() - 1);
-
-	printValues(stl_range_vector, ft_range_vector, testName);
-	std::cout << ".begin() from STL — " << from_stl << std::endl;
-	std::cout << ".end() from STL — " << from_stl_end << std::endl;
-	std::cout << "\n";
-	std::cout << ".begin() from FT — " << from_ft << std::endl;
-	std::cout << ".end() from FT — " << from_ft_end << std::endl;
-	std::cout << "\n";
-	printVectors(stl_range_vector, ft_range_vector);
-
-  }
-
-  {
-	testName = "CONST ITER BEGIN() and END()";
-
-	std::vector<int> stl_range_vector(myvector.begin(), myvector.end());
-	ft::vector<int> ft_range_vector(myvector.begin(), myvector.end());
-
-	int from_stl = *(stl_range_vector.begin());
-	int from_ft = *(ft_range_vector.begin());
-	int from_stl_end = *(stl_range_vector.end() - 1);
-	int from_ft_end = *(ft_range_vector.end() - 1);
-
-	printValues(stl_range_vector, ft_range_vector, testName);
-	std::cout << ".const_begin() from STL — " << from_stl << std::endl;
-	std::cout << ".const_end() from STL — " << from_stl_end << std::endl;
-	std::cout << "\n";
-	std::cout << ".const_begin() from FT — " << from_ft << std::endl;
-	std::cout << ".const_end() from FT — " << from_ft_end << std::endl;
-	std::cout << "\n";
-	printVectors(stl_range_vector, ft_range_vector);
-
-  }
-
-  {
-	testName = "REVERSE ITER BEGIN() and END()";
-
-	std::vector<int> stl_range_vector(myvector.begin(), myvector.end());
-	ft::vector<int> ft_range_vector(myvector.begin(), myvector.end());
-
-	int from_stl = *(stl_range_vector.rbegin());
-	int from_ft = *(ft_range_vector.rbegin());
-	int from_stl_end = *(stl_range_vector.rend() - 1);
-	int from_ft_end = *(ft_range_vector.rend() - 1);
-
-	printValues(stl_range_vector, ft_range_vector, testName);
-	std::cout << ".rbegin() from STL — " << from_stl << std::endl;
-	std::cout << ".rend() from STL — " << from_stl_end << std::endl;
-	std::cout << "\n";
-	std::cout << ".rbegin() from FT — " << from_ft << std::endl;
-	std::cout << ".rend() from FT — " << from_ft_end << std::endl;
-	std::cout << "\n";
-	printVectors(stl_range_vector, ft_range_vector);
-
-  }
-  {
-	testName = "CONST REV ITER";
-
-	std::vector<int> stl_range_vector(myvector.begin(), myvector.end());
-	ft::vector<int> ft_range_vector(myvector.begin(), myvector.end());
-
-	int from_stl = *(stl_range_vector.rbegin());
-	int from_ft = *(ft_range_vector.rbegin());
-	int from_stl_end = *(stl_range_vector.rend() - 1);
-	int from_ft_end = *(ft_range_vector.rend() - 1);
-
-	printValues(stl_range_vector, ft_range_vector, testName);
-	std::cout << ".const_rbegin() from STL — " << from_stl << std::endl;
-	std::cout << ".const_rend() from STL — " << from_stl_end << std::endl;
-	std::cout << "\n";
-	std::cout << ".const_rbegin() from FT — " << from_ft << std::endl;
-	std::cout << ".const_rend() from FT — " << from_ft_end << std::endl;
-	std::cout << "\n";
-	printVectors(stl_range_vector, ft_range_vector);
-  }
-
-  {
-	testName = "SIZE MANITULATIONS";
-	std::vector<int> stl_vector(1);
-	ft::vector<int> ft_vector(1);
-
-	stl_vector.resize(2);
-	ft_vector.resize(2);
-
-	stl_vector.push_back(11);
-	ft_vector.push_back(11);
-	stl_vector.push_back(14444444);
-	ft_vector.push_back(14444444);
-
-	stl_vector.reserve(1);
-	ft_vector.reserve(1);
-
-	stl_vector.push_back(11);
-	ft_vector.push_back(11);
-	stl_vector.push_back(11);
-	ft_vector.push_back(11);
-	stl_vector.push_back(11);
-	ft_vector.push_back(11);
-
-	stl_vector.reserve(100);
-	ft_vector.reserve(100);
-
-	stl_vector.push_back(345);
-	ft_vector.push_back(345);
-
-	printValues(stl_vector, ft_vector, testName);
-	printVectors(stl_vector, ft_vector);
-  }
-
-  {
-	testName = "OPERATOR[]";
-
-	std::vector<int> stl_vector(10);
-	ft::vector<int> ft_vector(10);
-
-	unsigned i = 0;
-	while (i++ < 4)
-	  stl_vector[i] = i;
-
-	i = 0;
-	while (i++ < 4)
-	  ft_vector[i] = i;
-
-	printValues(stl_vector, ft_vector, testName);
-	printVectors(stl_vector, ft_vector);
-  }
-
-  {
-	testName = "OPERATOR AT.VALID";
-	std::vector<int> stl_vector(3);
-	ft::vector<int> ft_vector(3);
-
-	stl_vector.push_back(11);
-	ft_vector.push_back(11);
-	stl_vector.push_back(22);
-	ft_vector.push_back(22);
-	stl_vector.push_back(33);
-	ft_vector.push_back(33);
-
-	int ft = ft_vector.at(3);
-	int stl = stl_vector.at(3);
-
-	printValues(stl_vector, ft_vector, testName);
-	std::cout << "STL operator at(3) = " << stl << std::endl;
-	std::cout << "FT operator at(3) = " << ft << std::endl;
-	printVectors(stl_vector, ft_vector);
-  }
-
-  {
-	testName = "FRONT / BACK";
-
-	std::vector<int> stl_vector(myvector.begin(), myvector.end());
-	ft::vector<int> ft_vector(myvector.begin(), myvector.end());
-
-	printValues(stl_vector, ft_vector, testName);
-	std::cout << "STL.front = " << stl_vector.front() << std::endl;
-	std::cout << "STL.back = " << stl_vector.back() << std::endl;
-	std::cout << "FT.front = " << ft_vector.front() << std::endl;
-	std::cout << "FT.back = " << ft_vector.back() << std::endl;
-	printVectors(stl_vector, ft_vector);
-
-	printValues(stl_vector, ft_vector, testName);
-	printVectors(stl_vector, ft_vector);
-  }
-
-  {
-	testName = "ASSIGN RANGE";
-
-	std::vector<int> stl_vector(3);
-	ft::vector<int> ft_vector(3);
-
-	stl_vector.assign(myvector.begin(), myvector.end());
-	ft_vector.assign(myvector.begin(), myvector.end());
-
-	printValues(stl_vector, ft_vector, testName);
-	printVectors(stl_vector, ft_vector);
-  }
-
-  {
-	testName = "ASSIGN FILL";
-
-	std::vector<int> stl_vector(3);
-	ft::vector<int> ft_vector(3);
-
-	stl_vector.assign(10, 1);
-	ft_vector.assign(10, 1);
-
-	printValues(stl_vector, ft_vector, testName);
-	printVectors(stl_vector, ft_vector);
-  }
-
-  {
-	testName = "PUSH BACK";
-
-	std::vector<int> stl_vector(3);
-	ft::vector<int> ft_vector(3);
-
-	stl_vector.push_back(11);
-	ft_vector.push_back(11);
-	stl_vector.push_back(22);
-	ft_vector.push_back(22);
-	stl_vector.push_back(33);
-	ft_vector.push_back(33);
-
-	printValues(stl_vector, ft_vector, testName);
-	printVectors(stl_vector, ft_vector);
-
-	testName = "POP BACK";
-
-	stl_vector.pop_back();
-	stl_vector.pop_back();
-	stl_vector.pop_back();
-	ft_vector.pop_back();
-	ft_vector.pop_back();
-	ft_vector.pop_back();
-
-	printValues(stl_vector, ft_vector, testName);
-	printVectors(stl_vector, ft_vector);
-
-  }
-
-  {
-	testName = "INSERT SINGLE ELEMENT";
-
-	std::vector<int> stl_vector(3);
-	ft::vector<int> ft_vector(3);
-
-	stl_vector.insert(stl_vector.begin() + 1, 99);
-	ft_vector.insert(ft_vector.begin() + 1, 99);
-
-	printValues(stl_vector, ft_vector, testName);
-	printVectors(stl_vector, ft_vector);
-
-	testName = "INSERT RANGE";
-
-	int array[] = {501, 502, 503};
-	stl_vector.insert(stl_vector.begin(), array, array + 3);
-	ft_vector.insert(ft_vector.begin(), array, array + 3);
-
-	printValues(stl_vector, ft_vector, testName);
-	printVectors(stl_vector, ft_vector);
-
-	testName = "INSERT FILL";
-
-	stl_vector.insert(stl_vector.begin() + 3, 3, 88);
-	ft_vector.insert(ft_vector.begin() + 3, 3, 88);
-
-	printValues(stl_vector, ft_vector, testName);
-	printVectors(stl_vector, ft_vector);
-  }
-
-  {
-	testName = "ERASE SINGLE";
-
-	std::vector<int> stl_vector(myvector.begin(), myvector.end());
-	ft::vector<int> ft_vector(myvector.begin(), myvector.end());
-
-	stl_vector.erase(stl_vector.begin());
-	ft_vector.erase(ft_vector.begin());
-
-	printValues(stl_vector, ft_vector, testName);
-	printVectors(stl_vector, ft_vector);
+    testName = "RANGE CONSTRUCTOR";
+
+    std::map<std::string , int> stl_map;
+    ft::map<std::string , int> ft_map;
+
+    for (int i = 0; i < 5; i++)
+    {
+      stl_map.insert(std::make_pair(string_array[i], int_array[i]));
+      ft_map.insert(ft::make_pair(string_array[i], int_array[i]));
+    }
+
+    printValues(stl_map, ft_map, testName);
+    printMaps(stl_map, ft_map);
+
+    testName = "COPY CONSTRUCTOR";
+
+    ft::map<std::string, int> ft_map_copy(ft_map);
+    std::map<std::string, int> stl_map_copy(stl_map);
+
+    printValues(stl_map_copy, ft_map_copy, testName);
+    printMaps(stl_map_copy, ft_map_copy);
+
+    testName = "OPERATOR=";
+
+    ft::map<std::string, int> ft_map_assign(ft_map);
+    std::map<std::string, int> stl_map_assign(stl_map);
+
+    ft_map_assign = ft_map;
+    stl_map_assign = stl_map;
+
+    printValues(stl_map_assign, ft_map_assign, testName);
+    printMaps(stl_map_assign, ft_map_assign);
+
+    /* TODO: end dont work! need to be fixed!
+    testName = "BEGIN / END";
+
+    std::map<std::string, int>::const_iterator stl_it_beg = stl_map.begin();
+    ft::map<std::string, int>::const_iterator ft_it_beg = ft_map.begin();
+
+    std::map<std::string, int>::const_iterator stl_it_end = stl_map.end();
+    ft::map<std::string, int>::const_iterator ft_it_end = ft_map.end();
+    stl_it_end--;
+    ft_it_end--;
+
+
+    std::cout << " STL Map begin = ";
+    std::cout << "[";
+    std::cout << (*stl_it_beg).first;
+    std::cout << ", ";
+    std::cout << (*stl_it_beg).second;
+    std::cout << "]";
+    std::cout << "\n";
+    std::cout << " STL Map end = ";
+    std::cout << "[";
+    std::cout << (*stl_it_end).first;
+    std::cout << ", ";
+    std::cout << (*stl_it_end).second;
+    std::cout << "]";
+    std::cout << "\n";
+
+    std::cout << " FT Map begin = ";
+    std::cout << "[";
+    std::cout << (*ft_it_beg).first;
+    std::cout << ", ";
+    std::cout << (*ft_it_beg).second;
+    std::cout << "]";
+    std::cout << "\n";
+    std::cout << " STL Map end = ";
+    std::cout << "[";
+    std::cout << (*ft_it_end).first;
+    std::cout << ", ";
+    std::cout << (*ft_it_end).second;
+    std::cout << "]";
+    std::cout << "\n";
+    */
+
+    testName = "RBEGIN / REND";
+
+    std::map<std::string, int>::reverse_iterator stl_it_rbeg = stl_map.rbegin();
+    ft::map<std::string, int>::reverse_iterator ft_it_rbeg = ft_map.rbegin();
+
+    std::map<std::string, int>::reverse_iterator stl_it_rend = stl_map.rend();
+    ft::map<std::string, int>::reverse_iterator ft_it_rend = ft_map.rend();
+
+    stl_it_rend--;
+    ft_it_rend--;
+
+    printValues(stl_map, ft_map, testName);
+    std::cout << " STL Map rbegin = ";
+    std::cout << "[";
+    std::cout << (*stl_it_rbeg).first;
+    std::cout << ", ";
+    std::cout << (*stl_it_rbeg).second;
+    std::cout << "]";
+    std::cout << "\n";
+    std::cout << " STL Map rend = ";
+    std::cout << "[";
+    std::cout << (*stl_it_rend).first;
+    std::cout << ", ";
+    std::cout << (*stl_it_rend).second;
+    std::cout << "]";
+    std::cout << "\n";
+
+    std::cout << " FT Map begin = ";
+    std::cout << "[";
+    std::cout << (*ft_it_rbeg).first;
+    std::cout << ", ";
+    std::cout << (*ft_it_rbeg).second;
+    std::cout << "]";
+    std::cout << "\n";
+    std::cout << " FT Map rend = ";
+    std::cout << "[";
+    std::cout << (*ft_it_rend).first;
+    std::cout << ", ";
+    std::cout << (*ft_it_rend).second;
+    std::cout << "]";
+    std::cout << "\n";
+    printMaps(stl_map, ft_map);
+
+    //TODO: Operator [] dont work! need to be fixed
+    testName = "OPERATOR []";
+
+    printValues(stl_map, ft_map, testName);
+    std::cout << " STL Map[two] = " << stl_map["two"] << std::endl;
+   // std::cout << " FT Map[two] = " << ft_map["two"] << std::endl;
+    std::cout << "\n";
+    printMaps(stl_map, ft_map);
+
+    testName = "INSERT SINGLE";
+
+    stl_map.insert(std::make_pair("six", 6));
+		ft_map.insert(ft::make_pair("six", 6));
+
+    printValues(stl_map, ft_map, testName);
+    printMaps(stl_map, ft_map);
+
+    testName = "INSERT WITH HINT";
+    //Вставка с подсказкой. Даёт возможность оптимизировать время встравки за счет указания элемента, после которого нужно вставить
+    //Не гарантирует, что элемент будет вставлен именно так
+
+    stl_map.insert(--stl_map.end(), std::make_pair("seven", 7));
+		ft_map.insert(--ft_map.end(), ft::make_pair("seven", 7));
+
+    printValues(stl_map, ft_map, testName);
+    printMaps(stl_map, ft_map);
+
+    /* TODO: Insert range dont work. Need to be fixed!
+    testName = "INSERT RANGE";
+    
+    const std::string string_to_insert[] = {"eight", "nine", "ten"};
+    const int int_to_insert[] = {8, 9, 10};
+
+    std::map<int, std::string> stl_map2;
+	  ft::map<int, std::string> ft_map2;
+
+    for (int i = 0; i < 3; i++)
+    {
+      stl_map2.insert(std::make_pair(string_to_insert[i], int_to_insert[i]));
+      ft_map2.insert(ft::make_pair(string_to_insert[i], int_to_insert[i]));
+    }
+
+    printValues(stl_map, ft_map, testName);
+    printMaps(stl_map, ft_map);
+    */
+
+    testName = "ERASE SINGLE";
+
+    stl_map.erase(stl_map.begin());
+	ft_map.erase(ft_map.begin());
+
+    printValues(stl_map, ft_map, testName);
+    printMaps(stl_map, ft_map);
 
 	testName = "ERASE RANGE";
 
-	stl_vector.erase(stl_vector.begin() + 1, stl_vector.begin() + 4);
-	ft_vector.erase(ft_vector.begin() + 1, ft_vector.begin() + 4);
+	std::map<std::string, int>::iterator stl_erase_start = stl_map.begin();
+	std::map<std::string, int>::iterator stl_erase_end = stl_map.end();
 
-	printValues(stl_vector, ft_vector, testName);
-	printVectors(stl_vector, ft_vector);
+	ft::map<std::string, int>::iterator ft_erase_start = ft_map.begin();
+	ft::map<std::string, int>::iterator ft_erase_end = ft_map.end();
+
+	for (int i = 0; i < 3 ; i++)
+	{
+	  stl_erase_start++;
+	  ft_erase_start++;
+	}
+
+	stl_map.erase(stl_erase_start, stl_erase_end);
+	ft_map.erase(ft_erase_start, ft_erase_end);
+
+	printValues(stl_map, ft_map, testName);
+	printMaps(stl_map, ft_map);
+
+	testName = "SWAP";
+
+	std::map<std::string , int> stl_map_swap;
+	ft::map<std::string , int> ft_map_swap;
+
+	stl_map_swap = stl_map_assign;
+	ft_map_swap = ft_map_assign;
+
+	stl_map.swap(stl_map_swap);
+	ft_map.swap(ft_map_swap);
+
+	printValues(stl_map, ft_map, testName);
+	printMaps(stl_map, ft_map);
 
 	testName = "CLEAR";
 
-	stl_vector.clear();
-	ft_vector.clear();
+	stl_map.clear();
+	ft_map.clear();
 
-	printValues(stl_vector, ft_vector, testName);
-	printVectors(stl_vector, ft_vector);
+	printValues(stl_map, ft_map, testName);
+	printMaps(stl_map, ft_map);
 
+	testName = "KEY COMPARE";
+
+	std::map<std::string, int>::key_compare stl_key = std::map<std::string, int>().key_comp();
+	ft::map<std::string, int>::key_compare ft_key = ft::map<std::string, int>().key_comp();
+
+	printValues(stl_map, ft_map, testName);
+	bool stl_res = stl_key("A", "B");
+	std::cout << "STL key compare result (A < B?) = " << stl_res << std::endl;
+	stl_res = stl_key("X", "A");
+	std::cout << "STL key compare result (X < A?) = " << stl_res << std::endl;
+	std::cout << "\n";
+
+	bool ft_res = ft_key("A", "B");
+	std::cout << "FT key compare result (A < B?) = " << ft_res << std::endl;
+	ft_res = ft_key("X", "A");
+	std::cout << "FT key compare result (X < A?) = " << ft_res << std::endl;
+	std::cout << "\n";
+	printMaps(stl_map, ft_map);
   }
 
   {
-	testName = "SWAP";
+	testName = "VALUE COMPARE";
 
-	std::vector<int> stl_vector(5);
-	ft::vector<int> ft_vector(5);
-	ft::vector<int> ft_for_swap(myvector.begin(), myvector.end());
-	std::vector<int> stl_for_swap(myvector.begin(), myvector.end());
+	std::map<std::string, int> stl_map;
+	ft::map<std::string, int> ft_map;
 
-	ft_vector.swap(ft_for_swap);
-	stl_vector.swap(stl_for_swap);
+	std::map<std::string, int>::value_compare stl_key = std::map<std::string, int>().value_comp();
+	ft::map<std::string, int>::value_compare ft_key = ft::map<std::string, int>().value_comp();
 
-	printValues(stl_vector, ft_vector, testName);
-	printVectors(stl_vector, ft_vector);
+	printValues(stl_map, ft_map, testName);
 
-  }
-
-  {
-	testName = "RELATIONAL OPERATORS";
-
-	std::vector<int> stl_vector(myvector.begin(), myvector.end());
-	ft::vector<int> ft_vector(myvector.begin(), myvector.end());
-
-	std::vector<int> stl_not_equal(5);
-	ft::vector<int> ft_not_equal(5);
-
-	std::vector<int> stl_equal(myvector.begin(), myvector.end());
-	ft::vector<int> ft_equal(myvector.begin(), myvector.end());
-
-	printValues(stl_vector, ft_vector, testName);
-
-	bool stl;
-	bool ft;
-
-	stl = (stl_vector == stl_not_equal);
-	ft = (ft_vector == ft_not_equal);
-	std::cout << "STL: vector1 == vector2? " << stl << std::endl;
-	std::cout << "FT: vector1 == vector2? " << ft << std::endl;
+	bool stl_res = stl_key(std::make_pair("A", 1), std::make_pair("B", 2));
+	std::cout << "STL value compare result= " << stl_res << std::endl;
+	stl_res = stl_key(std::make_pair("A", 10), std::make_pair("A", 2));
+	std::cout << "STL value compare result = " << stl_res << std::endl;
 	std::cout << "\n";
 
-	stl = (stl_vector == stl_equal);
-	ft = (ft_vector == ft_equal);
-	std::cout << "STL: vector1 == vector2? " << stl << std::endl;
-	std::cout << "FT: vector1 == vector2? " << ft << std::endl;
+	bool ft_res = ft_key(ft::make_pair("A", 1), ft::make_pair("B", 2));
+	std::cout << "FT value compare result2 = " << ft_res << std::endl;
+	ft_res = ft_key(ft::make_pair("A", 10), ft::make_pair("A", 2));
+	std::cout << "FT value compare result2 = " << ft_res << std::endl;
 	std::cout << "\n";
 
-	stl = (stl_vector != stl_not_equal);
-	ft = (ft_vector != ft_not_equal);
-	std::cout << "STL: vector1 != vector2? " << stl << std::endl;
-	std::cout << "FT: vector1 != vector2? " << ft << std::endl;
-	std::cout << "\n";
+	printMaps(stl_map, ft_map);
 
-	stl = (stl_vector < stl_not_equal);
-	ft = (ft_vector < ft_not_equal);
-	std::cout << "STL: vector1 < vector2? " << stl << std::endl;
-	std::cout << "FT: vector1 < vector2? " << ft << std::endl;
-	std::cout << "\n";
+	testName = "FIND";
 
-	stl = (stl_vector > stl_not_equal);
-	ft = (ft_vector > ft_not_equal);
-	std::cout << "STL: vector1 > vector2? " << stl << std::endl;
-	std::cout << "FT: vector1 > vector2? " << ft << std::endl;
-	std::cout << "\n";
-
-	stl = (stl_vector <= stl_not_equal);
-	ft = (ft_vector <= ft_not_equal);
-	std::cout << "STL: vector1 <= vector2? " << stl << std::endl;
-	std::cout << "FT: vector1 <= vector2? " << ft << std::endl;
-	std::cout << "\n";
-
-	stl = (stl_vector >= stl_not_equal);
-	ft = (ft_vector >= ft_not_equal);
-	std::cout << "STL: vector1 >= vector2? " << stl << std::endl;
-	std::cout << "FT: vector1 >= vector2? " << ft << std::endl;
-	std::cout << "\n";
-
-	printVectors(stl_vector, ft_vector);
-
-  }
-  //тестируем эксепшн, который должен бросать at при попытке получить доступ к элементу вне границ контейнера
-  {
-	ft::vector<int> ft_vector(3);
-
-	ft_vector.push_back(11);
-	ft_vector.push_back(22);
-	ft_vector.push_back(33);
-
-	try
+	for (int i = 0; i < 5; i++)
 	{
-	  ft_vector.at(3333333) = 50;
+		stl_map.insert(std::make_pair(string_array[i], int_array[i]));
+		ft_map.insert(ft::make_pair(string_array[i], int_array[i]));
 	}
-	catch (const std::out_of_range &e)
-	{
-	  std::cerr << "Error: " << e.what() << std::endl;
-	}
-  }
 
+	std::map<std::string, int>::iterator stl_it = stl_map.find("two");
+	ft::map<std::string, int>::iterator ft_it = ft_map.find("two");
+
+	printValues(stl_map, ft_map, testName);
+
+	  std::cout << "STL Map find (two) = ";
+	  std::cout << "[";
+	  std::cout << (*stl_it).first;
+	  std::cout << ", ";
+	  std::cout << (*stl_it).second;
+	  std::cout << "]";
+	  std::cout << "\n";
+
+	  std::cout << "FT Map find (two) = ";
+	  std::cout << "[";
+	  std::cout << (*ft_it).first;
+	  std::cout << ", ";
+	  std::cout << (*ft_it).second;
+	  std::cout << "]";
+	  std::cout << "\n";
+	  std::cout << "\n";
+
+	  ft_it = ft_map.find("fefef");
+	  stl_it = stl_map.find("fefef");
+
+	  if (stl_it == stl_map.end() && ft_it == ft_map.end())
+	  	std::cout << "Non existing find test OK";
+	  else
+	  	std::cout << "Non existing find test NOT OK";
+	  std::cout << "\n";
+	  std::cout << "\n";
+	  printMaps(stl_map, ft_map);
+
+	  testName = "COUNT";
+
+	  printValues(stl_map, ft_map, testName);
+
+	  std::cout << "STL Map count = " << stl_map.count("one") << std::endl;
+	  std::cout << "FT Map count = " << ft_map.count("one") << std::endl;
+
+	  printMaps(stl_map, ft_map);
+
+
+	  testName = " LOWER / UPPER BOUND";
+
+	  printValues(stl_map, ft_map, testName);
+	  stl_it = stl_map.lower_bound("two");
+
+	  std::cout << "STL Map lower bound (two) = ";
+	  std::cout << "[";
+	  std::cout << (*stl_it).first;
+	  std::cout << ", ";
+	  std::cout << (*stl_it).second;
+	  std::cout << "]";
+	  std::cout << "\n";
+	  stl_it = stl_map.upper_bound("seven");
+	  std::cout << "STL Map upper bound (seven) = ";
+	  std::cout << "[";
+	  std::cout << (*stl_it).first;
+	  std::cout << ", ";
+	  std::cout << (*stl_it).second;
+	  std::cout << "]";
+	  std::cout << "\n";
+
+	  ft_it = ft_map.lower_bound("two");
+	  std::cout << "FT Map lower bound  (two) = ";
+	  std::cout << "[";
+	  std::cout << (*ft_it).first;
+	  std::cout << ", ";
+	  std::cout << (*ft_it).second;
+	  std::cout << "]";
+	  std::cout << "\n";
+
+	  ft_it = ft_map.upper_bound("seven");
+	  std::cout << "FT Map upper bound  (seven) = ";
+	  std::cout << "[";
+	  std::cout << (*ft_it).first;
+	  std::cout << ", ";
+	  std::cout << (*ft_it).second;
+	  std::cout << "]";
+	  std::cout << "\n";
+	  std::cout << "\n";
+
+	  printMaps(stl_map, ft_map);
+
+	  testName = "EQUAL RANGE";
+
+	  printValues(stl_map, ft_map, testName);
+
+	  std::cout << "STL Map equal range (four) = ";
+	  std::cout << "[";
+	  std::cout << (*(stl_map.equal_range("four").first)).first;
+	  std::cout << ", ";
+	  std::cout << (*(stl_map.equal_range("four").second)).first;
+	  std::cout << "]";
+	  std::cout << "\n";
+
+	  std::cout << "FT Map equal range (four) = ";
+	  std::cout << "[";
+	  std::cout << (*(ft_map.equal_range("four").first)).first;
+	  std::cout << ", ";
+	  std::cout << (*(ft_map.equal_range("four").second)).first;
+	  std::cout << "]";
+	  std::cout << "\n";
+	  std::cout << "\n";
+
+	  printMaps(stl_map, ft_map);
+
+  }
 }
