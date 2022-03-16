@@ -393,18 +393,135 @@ test_map()
 
 	printValues(stl_map, ft_map, testName);
 
-	bool stl_res = stl_key(std::make_pair("A", 1), std::make_pair("A", 2));
-	std::cout << "STL value compare result (1 < 2?) = " << stl_res << std::endl;
+	bool stl_res = stl_key(std::make_pair("A", 1), std::make_pair("B", 2));
+	std::cout << "STL value compare result= " << stl_res << std::endl;
 	stl_res = stl_key(std::make_pair("A", 10), std::make_pair("A", 2));
-	std::cout << "STL value compare result (10 < 2?) = " << stl_res << std::endl;
+	std::cout << "STL value compare result = " << stl_res << std::endl;
 	std::cout << "\n";
 
 	bool ft_res = ft_key(ft::make_pair("A", 1), ft::make_pair("B", 2));
-	std::cout << "FT value compare result (1 < 2?) = " << ft_res << std::endl;
-	ft_res = ft_key(ft::make_pair("A", 10), ft::make_pair("B", 2));
-	std::cout << "FT value compare result (10 < 2?) = " << ft_res << std::endl;
+	std::cout << "FT value compare result2 = " << ft_res << std::endl;
+	ft_res = ft_key(ft::make_pair("A", 10), ft::make_pair("A", 2));
+	std::cout << "FT value compare result2 = " << ft_res << std::endl;
 	std::cout << "\n";
 
 	printMaps(stl_map, ft_map);
+
+	testName = "FIND";
+
+	for (int i = 0; i < 5; i++)
+	{
+		stl_map.insert(std::make_pair(string_array[i], int_array[i]));
+		ft_map.insert(ft::make_pair(string_array[i], int_array[i]));
+	}
+
+	std::map<std::string, int>::iterator stl_it = stl_map.find("two");
+	ft::map<std::string, int>::iterator ft_it = ft_map.find("two");
+
+	printValues(stl_map, ft_map, testName);
+
+	  std::cout << "STL Map find (two) = ";
+	  std::cout << "[";
+	  std::cout << (*stl_it).first;
+	  std::cout << ", ";
+	  std::cout << (*stl_it).second;
+	  std::cout << "]";
+	  std::cout << "\n";
+
+	  std::cout << "FT Map find (two) = ";
+	  std::cout << "[";
+	  std::cout << (*ft_it).first;
+	  std::cout << ", ";
+	  std::cout << (*ft_it).second;
+	  std::cout << "]";
+	  std::cout << "\n";
+	  std::cout << "\n";
+
+	  ft_it = ft_map.find("fefef");
+	  stl_it = stl_map.find("fefef");
+
+	  if (stl_it == stl_map.end() && ft_it == ft_map.end())
+	  	std::cout << "Non existing find test OK";
+	  else
+	  	std::cout << "Non existing find test NOT OK";
+	  std::cout << "\n";
+	  std::cout << "\n";
+	  printMaps(stl_map, ft_map);
+
+	  testName = "COUNT";
+
+	  printValues(stl_map, ft_map, testName);
+
+	  std::cout << "STL Map count = " << stl_map.count("one") << std::endl;
+	  std::cout << "FT Map count = " << ft_map.count("one") << std::endl;
+
+	  printMaps(stl_map, ft_map);
+
+
+	  testName = " LOWER / UPPER BOUND";
+
+	  printValues(stl_map, ft_map, testName);
+	  stl_it = stl_map.lower_bound("two");
+
+	  std::cout << "STL Map lower bound (two) = ";
+	  std::cout << "[";
+	  std::cout << (*stl_it).first;
+	  std::cout << ", ";
+	  std::cout << (*stl_it).second;
+	  std::cout << "]";
+	  std::cout << "\n";
+	  stl_it = stl_map.upper_bound("seven");
+	  std::cout << "STL Map upper bound (seven) = ";
+	  std::cout << "[";
+	  std::cout << (*stl_it).first;
+	  std::cout << ", ";
+	  std::cout << (*stl_it).second;
+	  std::cout << "]";
+	  std::cout << "\n";
+
+	  ft_it = ft_map.lower_bound("two");
+	  std::cout << "FT Map lower bound  (two) = ";
+	  std::cout << "[";
+	  std::cout << (*ft_it).first;
+	  std::cout << ", ";
+	  std::cout << (*ft_it).second;
+	  std::cout << "]";
+	  std::cout << "\n";
+
+	  ft_it = ft_map.upper_bound("seven");
+	  std::cout << "FT Map upper bound  (seven) = ";
+	  std::cout << "[";
+	  std::cout << (*ft_it).first;
+	  std::cout << ", ";
+	  std::cout << (*ft_it).second;
+	  std::cout << "]";
+	  std::cout << "\n";
+	  std::cout << "\n";
+
+	  printMaps(stl_map, ft_map);
+
+	  testName = "EQUAL RANGE";
+
+	  printValues(stl_map, ft_map, testName);
+
+	  std::cout << "STL Map equal range (four) = ";
+	  std::cout << "[";
+	  std::cout << (*(stl_map.equal_range("four").first)).first;
+	  std::cout << ", ";
+	  std::cout << (*(stl_map.equal_range("four").second)).first;
+	  std::cout << "]";
+	  std::cout << "\n";
+
+	  std::cout << "FT Map equal range (four) = ";
+	  std::cout << "[";
+	  std::cout << (*(ft_map.equal_range("four").first)).first;
+	  std::cout << ", ";
+	  std::cout << (*(ft_map.equal_range("four").second)).first;
+	  std::cout << "]";
+	  std::cout << "\n";
+	  std::cout << "\n";
+
+	  printMaps(stl_map, ft_map);
+
   }
 }

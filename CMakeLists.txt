@@ -9,4 +9,9 @@ add_executable(ft_containers
 
         test/test_vector.cpp
         test/test_stack.cpp
-        test/test_map.cpp)
+        test/test_map.cpp
+		)
+
+add_executable(performance
+		test/performance_test.cpp
+		)

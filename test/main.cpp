@@ -33,7 +33,7 @@ int main()
 
 
   //test_stack();
-  test_map();
+  //test_map();
   //test_vector();
   return (0);
 }
