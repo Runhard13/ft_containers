@@ -143,14 +143,16 @@ struct pair {
   first_type first;
   second_type second;
 
+  //default consructor
   pair()
 	  : first(), second() {}
 
-  // Создает pair-объект из переданного в конструктор pair-объекта
+  // copy constructor. Создает pair-объект из переданного в конструктор pair-объекта
   template<class U, class V>
   pair(const pair<U, V> &pr)
 	  : first(pr.first), second(pr.second) {}
 
+  //initialization constructor
   pair(const first_type &a, const second_type &b)
 	  : first(a), second(b) {}
 
@@ -202,7 +204,7 @@ operator>=(const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs) {
   return !(lhs < rhs);
 }
 
-//Тоже самое, что и ft::pair, но не нужно передавать типы
+//Создает pair-объект с первым элементом Х, вторым У
 template<class T1, class T2>
 ft::pair<T1, T2>
 make_pair(T1 x, T2 y) {

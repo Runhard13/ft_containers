@@ -7,12 +7,14 @@
 #include <limits>
 #include "vector_iterator.hpp"
 
-namespace ft {
+namespace ft
+{
 template<class T, class Alloc = std::allocator<T> >
-class vector {
+class vector
+{
   //******************************MEMBER TYPES******************************
 
- public:
+public:
   typedef T value_type;
   typedef Alloc allocator_type;
 
@@ -29,18 +31,19 @@ class vector {
   typedef ptrdiff_t difference_type;
   typedef size_t size_type;
 
- private:
+private:
   size_type _size;
   size_type _capacity;
   Alloc _alloc;
   pointer _head;
 
- public:
+public:
   //default constructor
   vector() : _size(0), _capacity(0), _head(NULL) {};
 
   //fill constructor
-  vector(size_type n, const_reference val = value_type()) : _size(n), _capacity(n), _head(NULL) {
+  vector(size_type n, const_reference val = value_type()) : _size(n), _capacity(n), _head(NULL)
+  {
 	_head = _alloc.allocate(_capacity);
 	for (size_type i = 0; i < _size; i++)
 	  _alloc.construct(&_head[i], val);
@@ -50,20 +53,23 @@ class vector {
   template<class InputIterator>
   vector(InputIterator first, InputIterator last,
 		 typename ft::enable_if<!ft::is_integer<InputIterator>::value, InputIterator>::type * = NULL)
-	  : _size(0), _capacity(0) {
+	  : _size(0), _capacity(0)
+  {
 	assign(first, last);
   }
 
   //copy constructor
   vector(vector const &x)
-	  : _size(x._size), _capacity(x._capacity), _alloc(x._alloc) {
+	  : _size(x._size), _capacity(x._capacity), _alloc(x._alloc)
+  {
 	_head = _alloc.allocate(_capacity);
 	for (size_type i = 0; i < _size; i++)
 	  _alloc.construct(&_head[i], x._head[i]);
   }
 
   //деструктор
-  ~vector() {
+  ~vector()
+  {
 	size_type i = 0;
 	while (i++ < _size)
 	  _alloc.destroy(&_head[i]);
@@ -71,7 +77,8 @@ class vector {
   }
 
   vector &
-  operator=(const vector &x) {
+  operator=(const vector &x)
+  {
 	vector copy(x);
 	swap(copy);
 	return (*this);
@@ -80,35 +87,43 @@ class vector {
   //******************************ITERATORS******************************
 
   iterator
-  begin() {
+  begin()
+  {
 	return (iterator(this->_head));
   }
   const_iterator
-  begin() const {
+  begin() const
+  {
 	return (const_iterator(this->_head));
   }
   reverse_iterator
-  rbegin() {
+  rbegin()
+  {
 	return (reverse_iterator(this->end()));
   }
   const_reverse_iterator
-  rbegin() const {
+  rbegin() const
+  {
 	return (const_reverse_iterator(this->end()));
   }
   iterator
-  end() {
+  end()
+  {
 	return (iterator(&(this->_head[this->_size])));
   }
   const_iterator
-  end() const {
+  end() const
+  {
 	return (const_iterator(&(this->_head[this->_size])));
   }
   reverse_iterator
-  rend() {
+  rend()
+  {
 	return (reverse_iterator(this->begin()));
   }
   const_reverse_iterator
-  rend() const {
+  rend() const
+  {
 	return (const_reverse_iterator(this->begin()));
   }
 
@@ -123,7 +138,8 @@ class vector {
   max_size() { return _alloc.max_size(); }
 
   void
-  resize(size_type n, value_type val = value_type()) {
+  resize(size_type n, value_type val = value_type())
+  {
 	if (n > _capacity)
 	  reallocate(n);
 	while (n > _size)
@@ -142,7 +158,8 @@ class vector {
   //Запрос на изменение капасити. Если запрашивается капасити больше, чем есть сейчас, то происходит реаллокация
   //во всех остальных случаях не происходит ничего
   void
-  reserve(size_type n) {
+  reserve(size_type n)
+  {
 	if (n > this->max_size())
 	  throw std::length_error("n > max_size");
 	if (n > _capacity)
@@ -159,14 +176,16 @@ class vector {
 
   //тоже самое, но бросает эксепшн в случае, если n находится вне границ контейнера
   reference
-  at(size_type n) {
+  at(size_type n)
+  {
 	if (n >= _size)
 	  throw std::out_of_range("out-of-range");
 	return (_head[n]);
   }
 
   const_reference
-  at(size_type n) const {
+  at(size_type n) const
+  {
 	if (n >= _size)
 	  throw std::out_of_range("out-of-range");
 	return (_head[n]);
@@ -190,18 +209,21 @@ class vector {
   template<class InputIterator>
   void
   assign(InputIterator first, InputIterator last,
-		 typename ft::enable_if<!ft::is_integer<InputIterator>::value, InputIterator>::type * = NULL) {
+		 typename ft::enable_if<!ft::is_integer<InputIterator>::value, InputIterator>::type * = NULL)
+  {
 	// сначала ищем n, затем создаем контейнер с нужным количеством памяти, чтобы при каждом push_back по
 	// новой не аллоцировать память и не копировать туда данные
 	difference_type n = 0;
 	InputIterator count(first);
-	while (count != last) {
+	while (count != last)
+	{
 	  ++count;
 	  ++n;
 	}
 	clear();
 	reserve(n);
-	while (first != last) {
+	while (first != last)
+	{
 	  push_back(*first);
 	  first++;
 	}
@@ -209,7 +231,8 @@ class vector {
 
   //assign fill - создает n элементов со значением val
   void
-  assign(size_type n, const value_type &val) {
+  assign(size_type n, const value_type &val)
+  {
 	this->clear();
 	this->reserve(n);
 	size_type i = 0;
@@ -218,7 +241,8 @@ class vector {
   }
 
   void
-  push_back(const value_type &val) {
+  push_back(const value_type &val)
+  {
 	if (_size >= _capacity)
 	  reallocate(capacity_extension(_size + 1));
 	_alloc.construct(&_head[_size++], val);
@@ -230,7 +254,8 @@ class vector {
   //single element insert - Вставляем элемент перед элементом на указанной позиции. Реаллокация должна
   // происходить только в том случае, если новый размер контейнера превышает капасити.
   iterator
-  insert(iterator position, const value_type &val) {
+  insert(iterator position, const value_type &val)
+  {
 	difference_type shift = (position - this->begin());
 	if (_size + 1 > _capacity)
 	  reallocate(capacity_extension(_size + 1));
@@ -240,7 +265,8 @@ class vector {
 
   // fill insert - тоже самое что и single insert, но вставляем не один, а n элементов
   void
-  insert(iterator position, size_type n, const value_type &val) {
+  insert(iterator position, size_type n, const value_type &val)
+  {
 	if (n == 0)
 	  return;
 	if (_size + n > _capacity)
@@ -252,7 +278,8 @@ class vector {
 	iterator end = this->end();
 	position = this->begin() + shift;
 	iterator tmp_end = this->begin() + tmp;
-	while (tmp_end != position) {
+	while (tmp_end != position)
+	{
 	  --end;
 	  --tmp_end;
 	  *end = *tmp_end;
@@ -266,15 +293,18 @@ class vector {
   void
   insert(iterator position,
 		 typename ft::enable_if<!ft::is_integer<InputIterator>::value, InputIterator>::type first,
-		 InputIterator last) {
+		 InputIterator last)
+  {
 	difference_type shift = (position - this->begin());
 	size_type n = 0;
 	InputIterator tmp(first);
-	while (tmp != last) {
+	while (tmp != last)
+	{
 	  ++tmp;
 	  ++n;
 	}
-	if ((_size + n) > _capacity) {
+	if ((_size + n) > _capacity)
+	{
 	  size_type i = _capacity;
 	  while ((_size + n) > i)
 		i = i * 2;
@@ -296,7 +326,8 @@ class vector {
 
   //range erase
   iterator
-  erase(iterator first, iterator last) {
+  erase(iterator first, iterator last)
+  {
 	if (this->empty())
 	  return (last);
 	size_type n = last - first;
@@ -310,7 +341,8 @@ class vector {
   }
 
   void
-  swap(vector &x) {
+  swap(vector &x)
+  {
 	swap(_size, x._size);
 	swap(_capacity, x._capacity);
 	swap(_alloc, x._alloc);
@@ -318,7 +350,8 @@ class vector {
   }
 
   void
-  clear() {
+  clear()
+  {
 	size_type i = 0;
 	while (i++ < _size)
 	  _alloc.destroy(&_head[i]);
@@ -329,9 +362,10 @@ class vector {
   allocator_type
   get_allocator() const { return _alloc; }
 
- private:
+private:
   size_type
-  capacity_extension(size_type new_size) {
+  capacity_extension(size_type new_size)
+  {
 	size_type multiplier = 2;
 
 	size_type new_capacity = (_capacity > 0 ? _capacity : 1);
@@ -341,10 +375,12 @@ class vector {
   }
 
   void
-  reallocate(size_type new_capacity) {
+  reallocate(size_type new_capacity)
+  {
 	pointer new_vector = _alloc.allocate(new_capacity);
 	size_type i = 0;
-	while (i++ < _size) {
+	while (i++ < _size)
+	{
 	  _alloc.construct(&new_vector[i], _head[i]);
 	  _alloc.destroy(&_head[i]);
 	}
@@ -356,7 +392,8 @@ class vector {
 
   template<class U>
   void
-  swap(U &u1, U &u2) {
+  swap(U &u1, U &u2)
+  {
 	U tmp = u2;
 	u2 = u1;
 	u1 = tmp;
@@ -368,7 +405,8 @@ class vector {
 
 template<typename T>
 bool
-operator==(ft::vector<T> const &lhs, ft::vector<T> const &rhs) {
+operator==(ft::vector<T> const &lhs, ft::vector<T> const &rhs)
+{
   if (lhs.size() != rhs.size())
 	return (false);
   for (size_t i = 0; i < lhs.size(); i++)
@@ -379,37 +417,43 @@ operator==(ft::vector<T> const &lhs, ft::vector<T> const &rhs) {
 
 template<typename T>
 bool
-operator!=(ft::vector<T> const &lhs, ft::vector<T> const &rhs) {
+operator!=(ft::vector<T> const &lhs, ft::vector<T> const &rhs)
+{
   return (!(lhs == rhs));
 }
 
 template<typename T>
 bool
-operator<(ft::vector<T> const &lhs, ft::vector<T> const &rhs) {
+operator<(ft::vector<T> const &lhs, ft::vector<T> const &rhs)
+{
   return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 }
 
 template<typename T>
 bool
-operator<=(ft::vector<T> const &lhs, ft::vector<T> const &rhs) {
+operator<=(ft::vector<T> const &lhs, ft::vector<T> const &rhs)
+{
   return (!(rhs < lhs));
 }
 
 template<typename T>
 bool
-operator>(ft::vector<T> const &lhs, ft::vector<T> const &rhs) {
+operator>(ft::vector<T> const &lhs, ft::vector<T> const &rhs)
+{
   return (rhs < lhs);
 }
 
 template<typename T>
 bool
-operator>=(ft::vector<T> const &lhs, ft::vector<T> const &rhs) {
+operator>=(ft::vector<T> const &lhs, ft::vector<T> const &rhs)
+{
   return (!(lhs < rhs));
 }
 
 template<typename T>
 void
-swap(ft::vector<T> &x, ft::vector<T> &y) {
+swap(ft::vector<T> &x, ft::vector<T> &y)
+{
   x.swap(y);
 }
 
