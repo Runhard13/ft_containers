@@ -189,12 +189,8 @@ class vector {
   void
   assign(InputIterator first, InputIterator last,
 		 typename ft::enable_if<!ft::is_integer<InputIterator>::value, InputIterator>::type * = NULL) {
-	difference_type n = 0;
-	InputIterator count(first);
-	while (count != last) {
-	  ++count;
-	  ++n;
-	}
+
+	difference_type n = ft::distance(first, last);
 	clear();
 	reserve(n);
 	while (first != last) {
