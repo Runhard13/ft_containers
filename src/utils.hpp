@@ -166,8 +166,6 @@ struct pair {
   }
 };
 
-//******************************Сравнение 2 pair-объектор******************************
-
 template<class T1, class T2>
 bool
 operator==(const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs) {
@@ -226,60 +224,33 @@ struct is_integer_res {
 };
 
 template<typename>
-struct is_integer_type : public is_integer_res<false, bool> {
-};
-
+struct is_integer_type : public is_integer_res<false, bool> {};
 template<>
-struct is_integer_type<bool> : public is_integer_res<true, bool> {
-};
-
+struct is_integer_type<bool> : public is_integer_res<true, bool> {};
 template<>
-struct is_integer_type<char> : public is_integer_res<true, char> {
-};
-
+struct is_integer_type<char> : public is_integer_res<true, char> {};
 template<>
-struct is_integer_type<signed char> : public is_integer_res<true, signed char> {
-};
-
+struct is_integer_type<signed char> : public is_integer_res<true, signed char> {};
 template<>
-struct is_integer_type<short int> : public is_integer_res<true, short int> {
-};
-
+struct is_integer_type<short int> : public is_integer_res<true, short int> {};
 template<>
-struct is_integer_type<int> : public is_integer_res<true, int> {
-};
-
+struct is_integer_type<int> : public is_integer_res<true, int> {};
 template<>
-struct is_integer_type<long int> : public is_integer_res<true, long int> {
-};
-
+struct is_integer_type<long int> : public is_integer_res<true, long int> {};
 template<>
-struct is_integer_type<long long int> : public is_integer_res<true, long long int> {
-};
-
+struct is_integer_type<long long int> : public is_integer_res<true, long long int> {};
 template<>
-struct is_integer_type<unsigned char> : public is_integer_res<true, unsigned char> {
-};
-
+struct is_integer_type<unsigned char> : public is_integer_res<true, unsigned char> {};
 template<>
-struct is_integer_type<unsigned short int> : public is_integer_res<true, unsigned short int> {
-};
-
+struct is_integer_type<unsigned short int> : public is_integer_res<true, unsigned short int> {};
 template<>
-struct is_integer_type<unsigned int> : public is_integer_res<true, unsigned int> {
-};
-
+struct is_integer_type<unsigned int> : public is_integer_res<true, unsigned int> {};
 template<>
-struct is_integer_type<unsigned long int> : public is_integer_res<true, unsigned long int> {
-};
-
+struct is_integer_type<unsigned long int> : public is_integer_res<true, unsigned long int> {};
 template<>
-struct is_integer_type<unsigned long long int> : public is_integer_res<true, unsigned long long int> {
-};
-
+struct is_integer_type<unsigned long long int> : public is_integer_res<true, unsigned long long int> {};
 template<typename T>
-struct is_integer : public is_integer_type<T> {
-};
+struct is_integer : public is_integer_type<T> {};
 
 template<class InputIterator1, class InputIterator2>
 bool

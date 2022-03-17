@@ -1,6 +1,4 @@
 #include "../src/stack.hpp"
-#include "../src/vector.hpp"
-#include <vector>
 #include <stack>
 #include <iostream>
 #include <iomanip>
@@ -95,46 +93,27 @@ test_stack() {
 
 	printValues(stl_stack, ft_stack, testName);
 	printPop(stl_stack, ft_stack);
+  }
 
+  {
 	testName = "EMPTY TRUE";
+	std::stack<int> stl_stack;
+	ft::stack<int> ft_stack;
 
 	printValues(stl_stack, ft_stack, testName);
 	printPop(stl_stack, ft_stack);
+  }
 
-	testName = "EMPTY FALSE";
-
-	stl_stack.push(1);
-	ft_stack.push(1);
-
-	printValues(stl_stack, ft_stack, testName);
-	printPop(stl_stack, ft_stack);
-
-	testName = "SIZE";
-
-	for (int i = 1; i < 10; i++) {
-	  stl_stack.push(i);
-	  ft_stack.push(i);
-	}
-
-	printValues(stl_stack, ft_stack, testName);
-	printPop(stl_stack, ft_stack);
-
-	testName = "POP";
-
-	stl_stack.pop();
-	ft_stack.pop();
-
-	printValues(stl_stack, ft_stack, testName);
-	printPop(stl_stack, ft_stack);
-
+  {
 	testName = "RELATION OPERATORS";
-
+	std::stack<int> stl_stack;
+	ft::stack<int> ft_stack;
 	ft::stack<int> ft_stack2;
 	std::stack<int> stl_stack2;
 
 	for (int i = 10; i < 0; i--) {
-	  stl_stack.push(i);
-	  ft_stack.push(i);
+	  stl_stack2.push(i);
+	  ft_stack2.push(i);
 	}
 
 	bool stl;
@@ -178,6 +157,5 @@ test_stack() {
 	std::cout << "\n";
 
 	printPop(stl_stack, ft_stack);
-
   }
 }
